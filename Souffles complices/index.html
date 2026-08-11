@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Souffles Complices — Refuge équicie & ferme pédagogique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.location.hash && window.location.hash.match(/invite_token|confirmation_token|recovery_token/)) {
+    window.location.href = "/admin/" + window.location.hash;
+  }
+</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav">
+    <a href="#association">L'association</a>
+    <a href="#animaux">Nos animaux</a>
+    <a href="#soutenir">Nous soutenir</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <svg class="hero-blob b1" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <path fill="var(--teal-pale)" d="M320,60 C370,110 380,200 340,270 C300,340 200,380 130,340 C60,300 20,210 50,140 C80,70 170,20 240,20 C270,20 290,30 320,60 Z"/>
+  </svg>
+  <svg class="hero-blob b2" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <path fill="var(--teal-wash)" d="M300,50 C360,100 390,190 350,260 C310,330 210,370 140,330 C70,290 30,200 60,130 C90,60 180,10 250,10 C270,10 280,20 300,50 Z"/>
+  </svg>
+
+  <div class="hero-inner">
+    <span class="pill">Association loi 1901</span>
+    <h1>Un refuge, une ferme,<br><span class="hand-tag hand">des souffles complices.</span></h1>
+    <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
+    <div class="hero-actions">
+      <a href="#animaux" class="btn btn-primary">Rencontrer nos animaux</a>
+      <a href="#soutenir" class="btn btn-outline">Faire un don</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="n">—</div><div class="l">Animaux résidents</div></div>
+  <div class="stat"><div class="n">—</div><div class="l">Ateliers de médiation / an</div></div>
+  <div class="stat"><div class="n">—</div><div class="l">Bénévoles</div></div>
+  <div class="stat"><div class="n">—</div><div class="l">Années d'engagement</div></div>
+</div>
+
+<section id="association">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Notre mission</span>
+      <h2>Un lieu de soin, de lien et de pédagogie.</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Souffles Complices est un refuge équicie et une ferme pédagogique. Nous accueillons des animaux (chevaux, poneys, ânes, moutons...) en difficulté, souvent issus de situations de maltraitance ou de négligence, et leur offrons un cadre de vie stable et bienveillant.</p>
+        <p>Au-delà de l'accueil, nous proposons des séances de médiation animale et des visites pédagogiques, pour créer du lien entre les humains et ces animaux, souvent porteurs d'histoires difficiles.</p>
+      </div>
+      <div class="about-card">
+        <h3>Ce que nous faisons</h3>
+        <ul>
+          <li>Accueil et soin d'animaux en difficulté sur le long terme</li>
+          <li>Séances de médiation équicie et animale</li>
+          <li>Visites pédagogiques pour groupes et scolaires</li>
+          <li>Sensibilisation au bien-être animal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="animaux" style="background:var(--teal-wash);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Fiches animaux</span>
+      <h2>Ils vivent au refuge.</h2>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="resident">Résidents</button>
+      <button class="filter-btn" data-filter="soins">En soins</button>
+      <button class="filter-btn" data-filter="parrainable">Parrainables</button>
+    </div>
+
+    <!-- Fiches générées automatiquement depuis content/animaux.json -->
+    <div class="animal-grid" id="animalGrid"></div>
+  </div>
+</section>
+
+<section id="soutenir">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Nous soutenir</span>
+      <h2>Trois façons d'aider dès aujourd'hui.</h2>
+    </div>
+
+    <div class="support-grid">
+      <div class="support-card">
+        <h3>Faire un don ponctuel</h3>
+        <p>Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.</p>
+        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Faire un don sur HelloAsso</a>
+      </div>
+      <div class="support-card">
+        <h3>Devenir adhérent</h3>
+        <p>L'adhésion annuelle soutient nos actions de médiation et de pédagogie sur le long terme.</p>
+        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Adhérer via HelloAsso</a>
+      </div>
+      <div class="support-card">
+        <h3>Parrainer un animal</h3>
+        <p>Parrainez Killerine, Uddy, Inesso ou un autre résident et suivez son quotidien.</p>
+        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Parrainer sur HelloAsso</a>
+      </div>
+    </div>
+
+    <div class="helloasso-note hand" style="font-size:1.1rem;">
+      Remplace les liens HelloAsso ci-dessus par les vraies URLs de tes campagnes, une fois ton compte association créé.
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Logo Souffles Complices" style="height:40px;width:40px;">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+      </div>
+      <p style="margin-top:14px;">Association loi 1901</p>
+      <p>Refuge équicie & ferme pédagogique</p>
+    </div>
+    <div class="col">
+      <p>06 20 35 14 31</p>
+      <p>contact@souffles-complices.fr</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.helloasso.com/" target="_blank" rel="noopener">HelloAsso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
+  let ANIMAUX = [];
+
+  function renderAnimaux(list) {
+    const grid = document.getElementById('animalGrid');
+    grid.innerHTML = list.map(a => `
+      <article class="kcard ${a.statut}" data-status="${a.statut}">
+        <div class="blob-photo">
+          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}">` : `<span class="placeholder">Photo à venir</span>`}
+        </div>
+        <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
+        <h3 class="hand">${a.nom}</h3>
+        <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
+        <p class="story">${a.histoire}</p>
+      </article>
+    `).join('');
+  }
+
+  fetch('content/animaux.json')
+    .then(r => r.json())
+    .then(data => {
+      ANIMAUX = data.animaux || [];
+      renderAnimaux(ANIMAUX);
+    })
+    .catch(() => {
+      document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
+    });
+
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      const filtered = filter === 'all' ? ANIMAUX : ANIMAUX.filter(a => a.statut === filter);
+      renderAnimaux(filtered);
+    });
+  });
+</script>
+
+</body>
+</html>

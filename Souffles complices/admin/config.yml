@@ -1,0 +1,38 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Là où le CMS écrit le site après une modification
+site_url: https://VOTRE-SITE.netlify.app
+display_url: https://VOTRE-SITE.netlify.app
+
+media_folder: "photos"
+public_folder: "/photos"
+
+collections:
+  - name: "animaux"
+    label: "Animaux du refuge"
+    files:
+      - file: "content/animaux.json"
+        label: "Liste des animaux"
+        name: "animaux"
+        fields:
+          - label: "Animaux"
+            name: "animaux"
+            widget: "list"
+            summary: "{{nom}} — {{statut}}"
+            fields:
+              - {label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312"}
+              - {label: "Nom", name: "nom", widget: "string"}
+              - {label: "Espèce", name: "espece", widget: "string", hint: "Ex : Chien, Chat..."}
+              - {label: "Race", name: "race", widget: "string"}
+              - {label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans"}
+              - label: "Statut"
+                name: "statut"
+                widget: "select"
+                options:
+                  - {label: "Résident", value: "resident"}
+                  - {label: "En soins", value: "soins"}
+                  - {label: "Parrainable", value: "parrainable"}
+              - {label: "Histoire", name: "histoire", widget: "text"}
+              - {label: "Photo", name: "photo", widget: "image", required: false}

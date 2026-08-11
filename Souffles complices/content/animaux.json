@@ -1,0 +1,44 @@
+{
+  "animaux": [
+    {
+      "numero": "0001",
+      "nom": "Killerine",
+      "espece": "Cheval",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Killerine vit au refuge et participe à nos temps de médiation. Complète son histoire depuis l'espace admin.",
+      "photo": ""
+    },
+    {
+      "numero": "0002",
+      "nom": "Uddy",
+      "espece": "Poney",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Uddy vit au refuge. Complète son histoire depuis l'espace admin.",
+      "photo": ""
+    },
+    {
+      "numero": "0003",
+      "nom": "Inesso",
+      "espece": "Âne",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Inesso vit au refuge. Complète son histoire depuis l'espace admin.",
+      "photo": ""
+    },
+    {
+      "numero": "0004",
+      "nom": "Le troupeau de moutons",
+      "espece": "Moutons",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Les moutons vivent ensemble au refuge. Tu peux créer une fiche par animal si tu préfères.",
+      "photo": ""
+    }
+  ]
+}

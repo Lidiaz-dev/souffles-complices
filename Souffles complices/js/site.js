@@ -44,7 +44,6 @@ function renderContact(data) {
     <div class="socials">
       <a href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
     </div>
-    <a class="btn btn-primary btn-adherer footer-cta" href="${data.helloasso}" target="_blank" rel="noopener"><span class="label">Soutenir sur HelloAsso</span><span class="arrow" aria-hidden="true">→</span></a>
   `;
 }
 
@@ -58,8 +57,16 @@ function markActiveNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
   markActiveNav();
-  contactPromise.then(async d => {
-    if (!d.telephone && !d.email) return;
-    renderContact({ ...d, helloasso: await helloassoPromise });
+  helloassoPromise.then(lien => {
+    const cta = document.createElement('a');
+    cta.className = 'btn btn-primary btn-adherer sticky-cta';
+    cta.href = lien;
+    cta.target = '_blank';
+    cta.rel = 'noopener';
+    cta.innerHTML = '<span class="label">Soutenir sur HelloAsso</span><span class="arrow" aria-hidden="true">→</span>';
+    document.body.appendChild(cta);
+  });
+  contactPromise.then(d => {
+    if (d.telephone || d.email) renderContact(d);
   });
 });

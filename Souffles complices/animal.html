@@ -168,7 +168,7 @@
           <h2>Ses photos</h2>
           <div class="polaroid-grid">
             ${galerie.map((g, i) => `
-              <button type="button" class="polaroid" style="--rot:${ROTATIONS[i % ROTATIONS.length]}" data-i="${i}" aria-label="Agrandir la photo ${i + 1}${g.legende ? ' : ' + esc(g.legende) : ''}">
+              <button type="button" class="polaroid" style="--rot:${ROTATIONS[i % ROTATIONS.length]}; --i:${Math.min(i, 8)}" data-i="${i}" aria-label="Agrandir la photo ${i + 1}${g.legende ? ' : ' + esc(g.legende) : ''}">
                 <span class="cadre"><img src="${esc(g.image)}" alt="${esc(g.legende || 'Photo de ' + a.nom)}" loading="lazy"></span>
                 <span class="legende">${esc(g.legende)}</span>
               </button>`).join('')}

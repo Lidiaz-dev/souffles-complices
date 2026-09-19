@@ -458,3 +458,23 @@ footer .socials a:hover, footer .socials a:focus-visible{background:rgba(255,255
   .stats{grid-template-columns:repeat(2,1fr); row-gap:24px;}
   .support-grid{grid-template-columns:1fr;}
 }
+
+/* ---- Transitions entre les pages ---- */
+@keyframes page-in{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;}}
+@keyframes fondu-in{from{opacity:0;} to{opacity:1;}}
+@keyframes carte-in{from{opacity:0; transform:translateY(26px) scale(.96);} to{opacity:1; transform:none;}}
+@keyframes polaroid-in{
+  from{opacity:0; transform:translateY(28px) rotate(calc(var(--rot) * 1deg + 6deg)) scale(.94);}
+  to{opacity:1; transform:rotate(calc(var(--rot) * 1deg));}
+}
+body > :not(header):not(footer):not(script):not(.sticky-cta):not(.lightbox){animation:page-in .55s cubic-bezier(.22,.8,.3,1) backwards;}
+body > footer{animation:fondu-in .7s ease .2s backwards;}
+.kcard{animation:carte-in .6s cubic-bezier(.22,.8,.3,1) backwards; animation-delay:calc(var(--i, 0) * 80ms + 150ms);}
+.polaroid{animation:polaroid-in .65s cubic-bezier(.22,.8,.3,1) backwards; animation-delay:calc(var(--i, 0) * 90ms + 200ms);}
+html.page-out body > :not(header):not(script):not(.sticky-cta):not(.lightbox){
+  opacity:0; transform:translateY(-12px);
+  transition:opacity .22s ease, transform .22s ease;
+}
+@media (prefers-reduced-motion:reduce){
+  body > :not(header):not(footer):not(script):not(.sticky-cta):not(.lightbox), body > footer, .kcard, .polaroid{animation:none;}
+}

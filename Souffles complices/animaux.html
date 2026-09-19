@@ -71,13 +71,13 @@
       grid.innerHTML = "<p style='grid-column:1/-1;text-align:center;'>Aucun animal ne correspond à ces filtres.</p>";
       return;
     }
-    grid.innerHTML = list.map(a => {
+    grid.innerHTML = list.map((a, i) => {
       const parrainageLien = lienOuDefaut(a.lien_parrainage, PARRAINAGE_LIEN_DEFAUT);
       const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
         ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
         : '';
       return `
-      <article class="kcard ${a.statut}" data-status="${a.statut}">
+      <article class="kcard ${a.statut}" data-status="${a.statut}" style="--i:${Math.min(i, 9)}">
         <div class="bulle-wrap">
           <div class="blob-photo">
             ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}

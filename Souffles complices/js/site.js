@@ -77,6 +77,24 @@ function initParade() {
   });
 }
 
+// Transition de sortie : la page s'estompe avant de charger la suivante (liens internes uniquement).
+document.addEventListener('click', e => {
+  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const a = e.target.closest('a[href]');
+  if (!a || (a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+  const url = new URL(a.href, location.href);
+  if (url.origin !== location.origin) return;
+  if (url.pathname === location.pathname && url.search === location.search) return;
+  e.preventDefault();
+  document.documentElement.classList.add('page-out');
+  setTimeout(() => { location.href = a.href; }, 230);
+});
+// Retour arrière : on retire l'état "sortie" si la page revient du cache du navigateur.
+window.addEventListener('pageshow', e => {
+  if (e.persisted) document.documentElement.classList.remove('page-out');
+});
+
 // Un clic sur un animal décoratif le fait sauter.
 document.addEventListener('click', e => {
   const el = e.target.closest('.emoji-vivant');

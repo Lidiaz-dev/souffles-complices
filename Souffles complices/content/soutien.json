@@ -7,9 +7,9 @@
   },
   "parrainage": {
     "titre": "Parrainer un animal",
-    "texte": "Parrainez un résident du refuge et suivez son quotidien. Choisissez un animal ci-dessus puis cliquez sur son bouton « Parrainer ».",
+    "texte": "Parrainez un résident du refuge et suivez son quotidien. Retrouvez tous les animaux parrainables sur la page dédiée.",
     "bouton": "Voir les animaux parrainables",
-    "lien": "#animaux"
+    "lien": "animaux.html"
   },
   "note": "Pense à remplacer les liens HelloAsso ci-dessus (et ceux de chaque animal) par les vraies URLs de tes campagnes, une fois ton compte association créé."
 }

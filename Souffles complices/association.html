@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'association — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="section-inner">
+    <span class="pill">Notre mission</span>
+    <h1>Un lieu de soin, de lien et de pédagogie.</h1>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="about-grid">
+      <div id="assoIntro"></div>
+      <div class="about-card">
+        <h3>Ce que nous faisons</h3>
+        <ul id="assoActions"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Logo Souffles Complices" style="height:40px;width:40px;">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+      </div>
+      <p style="margin-top:14px;">Association loi 1901</p>
+      <p>Refuge équicie & ferme pédagogique</p>
+    </div>
+    <div class="col" id="footerContact"></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+  fetchJSON('content/asso.json').then(data => {
+    document.getElementById('assoIntro').innerHTML = (data.intro || []).map(p => `<p>${p}</p>`).join('');
+    document.getElementById('assoActions').innerHTML = (data.actions || []).map(a => `<li>${a}</li>`).join('');
+  }).catch(() => {
+    document.getElementById('assoIntro').innerHTML = "<p>Impossible de charger la présentation pour le moment.</p>";
+  });
+</script>
+
+</body>
+</html>

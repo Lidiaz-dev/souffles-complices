@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nous soutenir — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="section-inner">
+    <span class="pill">Nous soutenir</span>
+    <h1>Aidez le refuge dès aujourd'hui.</h1>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="section-inner">
+    <div class="support-grid" id="soutenirGrid"></div>
+    <div class="helloasso-note hand" id="soutenirNote" style="font-size:1.1rem;"></div>
+  </div>
+</section>
+
+<section id="adherer" style="background:var(--teal-wash);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Nous rejoindre</span>
+      <h2>Comment adhérer à l'association.</h2>
+    </div>
+    <div class="adherer-grid" id="adhererContent"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Logo Souffles Complices" style="height:40px;width:40px;">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+      </div>
+      <p style="margin-top:14px;">Association loi 1901</p>
+      <p>Refuge équicie & ferme pédagogique</p>
+    </div>
+    <div class="col" id="footerContact"></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+  fetchJSON('content/soutien.json').then(data => {
+    document.getElementById('soutenirGrid').innerHTML = ['don', 'parrainage'].map(key => {
+      const c = data[key];
+      if (!c) return '';
+      const external = /^https?:\/\//.test(c.lien);
+      const attrs = external ? ' target="_blank" rel="noopener"' : '';
+      return `
+        <div class="support-card">
+          <h3>${c.titre}</h3>
+          <p>${c.texte}</p>
+          <a class="btn btn-primary" href="${c.lien}"${attrs}>${c.bouton}</a>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('soutenirNote').textContent = data.note || '';
+  }).catch(() => {
+    document.getElementById('soutenirGrid').innerHTML = "<p>Impossible de charger cette section pour le moment.</p>";
+  });
+
+  fetchJSON('content/adhesion.json').then(data => {
+    document.getElementById('adhererContent').innerHTML = `
+      <div>
+        <p>${data.intro}</p>
+        <div class="tarif-badge">${data.tarif}</div>
+        <div><a class="btn btn-primary" href="${data.lien}" target="_blank" rel="noopener">${data.bouton}</a></div>
+      </div>
+      <div class="adherer-cards">
+        <div class="adherer-card">
+          <h3>Avantages</h3>
+          <ul>${(data.avantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
+        </div>
+        <div class="adherer-card">
+          <h3>Les étapes</h3>
+          <ul>${(data.etapes || []).map(e => `<li>${e}</li>`).join('')}</ul>
+        </div>
+      </div>
+    `;
+  }).catch(() => {
+    document.getElementById('adhererContent').innerHTML = "<p>Impossible de charger cette section pour le moment.</p>";
+  });
+</script>
+
+</body>
+</html>

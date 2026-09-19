@@ -92,7 +92,7 @@ collections:
               - { label: "Titre", name: "titre", widget: "string" }
               - { label: "Texte", name: "texte", widget: "text" }
               - { label: "Texte du bouton", name: "bouton", widget: "string" }
-              - { label: "Lien (HelloAsso ou #animaux)", name: "lien", widget: "string" }
+              - { label: "Lien (HelloAsso ou animaux.html)", name: "lien", widget: "string" }
           - { label: "Note (rappel visible sous les cartes)", name: "note", widget: "text", required: false }
 
   - name: "coordonnees"

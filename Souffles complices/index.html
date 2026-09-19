@@ -22,11 +22,10 @@
     <div class="logo-word">Souffles <span>Complices</span></div>
   </div>
   <nav class="site-nav">
-    <a href="#association">L'association</a>
-    <a href="#animaux">Nos animaux</a>
-    <a href="#adherer">Adhérer</a>
-    <a href="#soutenir">Nous soutenir</a>
-    <a href="#contact">Contact</a>
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
   </nav>
 </header>
 
@@ -43,69 +42,37 @@
     <h1>Un refuge, une ferme,<br><span class="hand-tag hand">des souffles complices.</span></h1>
     <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
     <div class="hero-actions">
-      <a href="#animaux" class="btn btn-primary">Rencontrer nos animaux</a>
-      <a href="#soutenir" class="btn btn-outline">Faire un don</a>
+      <a href="animaux.html" class="btn btn-primary">Rencontrer nos animaux</a>
+      <a href="soutenir.html" class="btn btn-outline">Faire un don</a>
     </div>
   </div>
 </section>
 
 <div class="stats" id="statsGrid"></div>
 
-<section id="association">
+<section>
   <div class="section-inner">
     <div class="section-head">
-      <span class="pill">Notre mission</span>
-      <h2>Un lieu de soin, de lien et de pédagogie.</h2>
+      <span class="pill">Bienvenue</span>
+      <h2>Trois façons de découvrir le refuge.</h2>
     </div>
-    <div class="about-grid">
-      <div id="assoIntro"></div>
-      <div class="about-card">
-        <h3>Ce que nous faisons</h3>
-        <ul id="assoActions"></ul>
+    <div class="support-grid">
+      <div class="support-card">
+        <h3>L'association</h3>
+        <p>Notre mission, nos actions et notre engagement auprès des animaux en difficulté.</p>
+        <a class="btn btn-primary" href="association.html">Découvrir l'association</a>
+      </div>
+      <div class="support-card">
+        <h3>Les animaux</h3>
+        <p>Chevaux, ânes, moutons, poules, canards... rencontrez les résidents du refuge.</p>
+        <a class="btn btn-primary" href="animaux.html">Voir les animaux</a>
+      </div>
+      <div class="support-card">
+        <h3>Nous soutenir</h3>
+        <p>Don, parrainage ou adhésion : plusieurs façons d'aider le refuge dès aujourd'hui.</p>
+        <a class="btn btn-primary" href="soutenir.html">Nous soutenir</a>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="animaux" style="background:var(--teal-wash);">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="pill">Fiches animaux</span>
-      <h2>Ils vivent au refuge.</h2>
-    </div>
-
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">Tous</button>
-      <button class="filter-btn" data-filter="resident">Résidents</button>
-      <button class="filter-btn" data-filter="soins">En soins</button>
-      <button class="filter-btn" data-filter="parrainable">Parrainables</button>
-    </div>
-
-    <!-- Fiches générées automatiquement depuis content/animaux.json -->
-    <div class="animal-grid" id="animalGrid"></div>
-  </div>
-</section>
-
-<section id="adherer">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="pill">Nous rejoindre</span>
-      <h2>Comment adhérer à l'association.</h2>
-    </div>
-    <div class="adherer-grid" id="adhererContent"></div>
-  </div>
-</section>
-
-<section id="soutenir" style="background:var(--teal-wash);">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="pill">Nous soutenir</span>
-      <h2>Aidez le refuge dès aujourd'hui.</h2>
-    </div>
-
-    <div class="support-grid" id="soutenirGrid"></div>
-
-    <div class="helloasso-note hand" id="soutenirNote" style="font-size:1.1rem;"></div>
   </div>
 </section>
 
@@ -123,118 +90,13 @@
   </div>
 </footer>
 
+<script src="js/site.js"></script>
 <script>
-  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
-  let ANIMAUX = [];
-  let SOUTIEN = null;
-
-  function renderAnimaux(list) {
-    const grid = document.getElementById('animalGrid');
-    grid.innerHTML = list.map(a => {
-      const parrainageLien = a.lien_parrainage || (SOUTIEN && SOUTIEN.parrainage && SOUTIEN.parrainage.lien) || '';
-      const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
-        ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
-        : '';
-      return `
-      <article class="kcard ${a.statut}" data-status="${a.statut}">
-        <div class="blob-photo">
-          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}">` : `<span class="placeholder">Photo à venir</span>`}
-        </div>
-        <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
-        <h3 class="hand">${a.nom}</h3>
-        <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
-        <p class="story">${a.histoire}</p>
-        ${parrainageBtn}
-      </article>
-    `;
-    }).join('');
-  }
-
-  function renderStats(stats) {
-    document.getElementById('statsGrid').innerHTML = (stats || []).map(s => `
+  fetchJSON('content/asso.json').then(data => {
+    document.getElementById('statsGrid').innerHTML = (data.stats || []).map(s => `
       <div class="stat"><div class="n">${s.nombre}</div><div class="l">${s.label}</div></div>
     `).join('');
-  }
-
-  function renderAsso(data) {
-    document.getElementById('assoIntro').innerHTML = (data.intro || []).map(p => `<p>${p}</p>`).join('');
-    document.getElementById('assoActions').innerHTML = (data.actions || []).map(a => `<li>${a}</li>`).join('');
-    renderStats(data.stats);
-  }
-
-  function renderAdhesion(data) {
-    document.getElementById('adhererContent').innerHTML = `
-      <div>
-        <p>${data.intro}</p>
-        <div class="tarif-badge">${data.tarif}</div>
-        <div><a class="btn btn-primary" href="${data.lien}" target="_blank" rel="noopener">${data.bouton}</a></div>
-      </div>
-      <div class="adherer-cards">
-        <div class="adherer-card">
-          <h3>Avantages</h3>
-          <ul>${(data.avantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
-        </div>
-        <div class="adherer-card">
-          <h3>Les étapes</h3>
-          <ul>${(data.etapes || []).map(e => `<li>${e}</li>`).join('')}</ul>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderSoutien(data) {
-    SOUTIEN = data;
-    document.getElementById('soutenirGrid').innerHTML = ['don', 'parrainage'].map(key => {
-      const c = data[key];
-      if (!c) return '';
-      return `
-        <div class="support-card">
-          <h3>${c.titre}</h3>
-          <p>${c.texte}</p>
-          <a class="btn btn-primary" href="${c.lien}" target="_blank" rel="noopener">${c.bouton}</a>
-        </div>
-      `;
-    }).join('');
-    document.getElementById('soutenirNote').textContent = data.note || '';
-    if (ANIMAUX.length) renderAnimaux(ANIMAUX);
-  }
-
-  function renderContact(data) {
-    document.getElementById('footerContact').innerHTML = `
-      <p>${data.telephone}</p>
-      <p>${data.email}</p>
-      <div class="socials">
-        <a href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
-        <a href="${data.helloasso}" target="_blank" rel="noopener">HelloAsso</a>
-      </div>
-    `;
-  }
-
-  fetch('content/animaux.json')
-    .then(r => r.json())
-    .then(data => {
-      ANIMAUX = data.animaux || [];
-      renderAnimaux(ANIMAUX);
-    })
-    .catch(() => {
-      document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
-    });
-
-  fetch('content/asso.json').then(r => r.json()).then(renderAsso).catch(() => {});
-  fetch('content/adhesion.json').then(r => r.json()).then(renderAdhesion).catch(() => {});
-  fetch('content/soutien.json').then(r => r.json()).then(renderSoutien).catch(() => {});
-  fetch('content/contact.json').then(r => r.json()).then(renderContact).catch(() => {});
-
-  const buttons = document.querySelectorAll('.filter-btn');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      const filtered = filter === 'all' ? ANIMAUX : ANIMAUX.filter(a => a.statut === filter);
-      renderAnimaux(filtered);
-    });
-  });
+  }).catch(() => {});
 </script>
 
 </body>

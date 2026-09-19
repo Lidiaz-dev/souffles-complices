@@ -1,5 +1,16 @@
 Dossier pour tes photos d'animaux (ex: nala.jpg)
 
+--- Structure du site ---
+
+Le site comporte 4 pages, chacune avec un rôle différent :
+- index.html        -> Accueil (hero + liens vers les 3 pages)
+- association.html  -> L'association (mission, actions, chiffres clés)
+- animaux.html       -> Les animaux (fiches filtrables, parrainage HelloAsso)
+- soutenir.html      -> Nous soutenir (don, parrainage, et "Comment adhérer")
+
+La navigation et le pied de page (coordonnées) sont dupliqués sur chaque page
+et se chargent via js/site.js + content/contact.json.
+
 --- Contenu administrable ---
 
 Une fois le site déployé sur Netlify (avec Identity + Git Gateway activés),

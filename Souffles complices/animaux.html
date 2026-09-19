@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les animaux — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="section-inner">
+    <span class="pill">Fiches animaux</span>
+    <h1>Ils vivent au refuge.</h1>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="section-inner">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="resident">Résidents</button>
+      <button class="filter-btn" data-filter="soins">En soins</button>
+      <button class="filter-btn" data-filter="parrainable">Parrainables</button>
+    </div>
+
+    <!-- Fiches générées automatiquement depuis content/animaux.json -->
+    <div class="animal-grid" id="animalGrid"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Logo Souffles Complices" style="height:40px;width:40px;">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+      </div>
+      <p style="margin-top:14px;">Association loi 1901</p>
+      <p>Refuge équicie & ferme pédagogique</p>
+    </div>
+    <div class="col" id="footerContact"></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
+  let ANIMAUX = [];
+  let PARRAINAGE_LIEN_DEFAUT = '';
+
+  function renderAnimaux(list) {
+    const grid = document.getElementById('animalGrid');
+    grid.innerHTML = list.map(a => {
+      const parrainageLien = a.lien_parrainage || PARRAINAGE_LIEN_DEFAUT;
+      const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
+        ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
+        : '';
+      return `
+      <article class="kcard ${a.statut}" data-status="${a.statut}">
+        <div class="blob-photo">
+          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}">` : `<span class="placeholder">Photo à venir</span>`}
+        </div>
+        <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
+        <h3 class="hand">${a.nom}</h3>
+        <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
+        <p class="story">${a.histoire}</p>
+        ${parrainageBtn}
+      </article>
+    `;
+    }).join('');
+  }
+
+  fetchJSON('content/soutien.json')
+    .then(data => { PARRAINAGE_LIEN_DEFAUT = (data.parrainage && data.parrainage.lien) || ''; })
+    .catch(() => {})
+    .then(() => fetchJSON('content/animaux.json'))
+    .then(data => {
+      ANIMAUX = data.animaux || [];
+      renderAnimaux(ANIMAUX);
+    })
+    .catch(() => {
+      document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
+    });
+
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      const filtered = filter === 'all' ? ANIMAUX : ANIMAUX.filter(a => a.statut === filter);
+      renderAnimaux(filtered);
+    });
+  });
+</script>
+
+</body>
+</html>

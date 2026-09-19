@@ -55,6 +55,38 @@ function markActiveNav() {
   });
 }
 
+// Bouton fixe : se cache quand on descend, réapparaît quand on remonte,
+// et se pose au-dessus du pied de page quand celui-ci est visible.
+function initStickyCta(cta) {
+  const footer = document.querySelector('footer');
+  const marge = window.matchMedia('(max-width:820px)').matches ? 16 : 24;
+  let dernierY = window.scrollY;
+  let attente = false;
+
+  function maj() {
+    attente = false;
+    const y = window.scrollY;
+    const delta = y - dernierY;
+    if (y < 80 || delta < -6) cta.classList.remove('is-hidden');
+    else if (delta > 6) cta.classList.add('is-hidden');
+    if (Math.abs(delta) > 6 || y < 80) dernierY = y;
+
+    let bas = marge;
+    if (footer) {
+      const visible = window.innerHeight - footer.getBoundingClientRect().top;
+      if (visible > 0) bas = visible + marge;
+    }
+    cta.style.bottom = bas + 'px';
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!attente) { attente = true; requestAnimationFrame(maj); }
+  }, { passive: true });
+  window.addEventListener('resize', maj);
+  if (window.ResizeObserver) new ResizeObserver(maj).observe(document.body);
+  maj();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   markActiveNav();
   helloassoPromise.then(lien => {
@@ -63,8 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     cta.href = lien;
     cta.target = '_blank';
     cta.rel = 'noopener';
-    cta.innerHTML = '<span class="label">Soutenir sur HelloAsso</span><span class="arrow" aria-hidden="true">→</span>';
+    cta.innerHTML = '<span class="label"><span class="l-full">Soutenir sur HelloAsso</span><span class="l-short">Soutenir</span></span><span class="arrow" aria-hidden="true">→</span>';
     document.body.appendChild(cta);
+    initStickyCta(cta);
   });
   contactPromise.then(d => {
     if (d.telephone || d.email) renderContact(d);

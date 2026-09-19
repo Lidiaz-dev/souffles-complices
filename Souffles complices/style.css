@@ -55,7 +55,7 @@ nav.site-nav a{transition:background .15s, transform .2s cubic-bezier(.34,1.56,.
 nav.site-nav a:hover, nav.site-nav a:focus-visible{transform:translateY(-2px);}
 
 /* ---- Page hero (pages internes) ---- */
-.page-hero{background:rgba(234,250,249,.72); padding:56px 28px 46px; text-align:center;}
+.page-hero{background:var(--teal-wash); padding:56px 28px 46px; text-align:center;}
 .page-hero .pill{background:transparent; color:var(--teal-deep); border:2px solid var(--teal);}
 .page-hero h1{font-size:clamp(1.8rem,3.6vw,2.5rem); margin:0;}
 
@@ -482,10 +482,10 @@ html.page-out body > :not(header):not(script):not(.sticky-cta):not(.lightbox):no
 /* ---- Fond vivant ---- */
 .fond-vivant{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
 .forme{position:absolute; border-radius:63% 37% 54% 46% / 45% 41% 59% 55%; will-change:transform;}
-.forme.f1{width:52vw; height:52vw; top:-14vw; left:-12vw; background:var(--teal-pale); opacity:.75; animation:derive-a 26s ease-in-out infinite alternate;}
-.forme.f2{width:44vw; height:44vw; top:24vh; right:-14vw; background:#FFE9D6; opacity:.7; animation:derive-b 32s ease-in-out infinite alternate;}
-.forme.f3{width:40vw; height:40vw; bottom:-16vw; left:22vw; background:var(--teal-wash); opacity:.95; animation:derive-c 30s ease-in-out infinite alternate;}
-.forme.f4{width:26vw; height:26vw; top:52vh; left:-8vw; background:#FFF3C9; opacity:.6; animation:derive-b 22s ease-in-out infinite alternate-reverse;}
+.forme.f1{width:52vw; height:52vw; top:-14vw; left:-12vw; background:var(--teal-wash); animation:derive-a 26s ease-in-out infinite alternate;}
+.forme.f2{width:44vw; height:44vw; top:24vh; right:-14vw; background:var(--teal-wash); animation:derive-b 32s ease-in-out infinite alternate;}
+.forme.f3{width:40vw; height:40vw; bottom:-16vw; left:22vw; background:var(--teal-wash); animation:derive-c 30s ease-in-out infinite alternate;}
+.forme.f4{width:26vw; height:26vw; top:52vh; left:-8vw; background:var(--teal-wash); animation:derive-b 22s ease-in-out infinite alternate-reverse;}
 @keyframes derive-a{from{transform:translate(0,0) rotate(0deg) scale(1);} to{transform:translate(12vw,14vh) rotate(38deg) scale(1.14);}}
 @keyframes derive-b{from{transform:translate(0,0) rotate(0deg) scale(1);} to{transform:translate(-10vw,-12vh) rotate(-30deg) scale(1.18);}}
 @keyframes derive-c{from{transform:translate(0,0) rotate(10deg) scale(1.05);} to{transform:translate(-14vw,-9vh) rotate(-24deg) scale(.92);}}

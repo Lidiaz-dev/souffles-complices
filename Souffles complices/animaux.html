@@ -82,7 +82,6 @@
           <div class="blob-photo">
             ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}
           </div>
-          <span class="espece-badge" aria-hidden="true">${emojiPourType(a.type)}</span>
         </div>
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
         <h3 class="hand"><a class="card-link" href="animal.html?id=${encodeURIComponent(a.numero)}">${a.nom}</a></h3>

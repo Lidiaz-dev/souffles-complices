@@ -268,15 +268,7 @@ section{padding:80px 28px; position:relative;}
 .deco.gauche.d2{left:15%; bottom:10%; animation-duration:6s; animation-delay:-3s;}
 .deco.droite.d2{right:15%; bottom:10%; animation-duration:5.2s; animation-delay:-2.4s;}
 
-.espece-badge{
-  position:absolute; right:-8px; bottom:-4px; z-index:2; width:56px; height:56px; border-radius:50%;
-  background:#fff; border:3px solid var(--teal-pale); box-shadow:0 6px 14px rgba(0,0,0,.16);
-  display:flex; align-items:center; justify-content:center; font-size:1.7rem; line-height:1;
-  pointer-events:none; animation:pas 3.2s ease-in-out infinite;
-}
 .fiche-photo .bulle-wrap{position:relative;}
-.fiche .espece-badge{width:78px; height:78px; font-size:2.5rem; right:3%; bottom:2%; pointer-events:auto;}
-.kcard:hover .espece-badge{animation:tremble .55s ease-in-out infinite;}
 
 .emoji-vivant.saute{animation:saute .75s cubic-bezier(.3,1.6,.5,1);}
 
@@ -298,10 +290,9 @@ section{padding:80px 28px; position:relative;}
   .parade-piste{gap:52px;}
   .deco.d2{display:none;}
   .deco.d1{top:8px; font-size:1.7rem;}
-  .fiche .espece-badge{width:64px; height:64px; font-size:2rem;}
 }
 @media (prefers-reduced-motion:reduce){
-  .hero-anim, .marcheur, .parade-piste, .deco, .espece-badge, .kcard:hover .espece-badge, .emoji-vivant.saute{animation:none;}
+  .hero-anim, .marcheur, .parade-piste, .deco, .emoji-vivant.saute{animation:none;}
   .parade-piste{width:auto; flex-wrap:wrap; justify-content:center;}
 }
 

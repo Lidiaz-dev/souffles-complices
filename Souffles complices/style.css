@@ -550,3 +550,8 @@ header.site .logo-word, header.site nav.site-nav a{white-space:nowrap;}
   header.site, header.site .logo-wrap img, header.site .logo-word, header.site nav.site-nav a{transition:none;}
   header.site nav.site-nav a:hover, header.site .logo-wrap:hover img{transform:none;}
 }
+
+/* ---- Dégradés sans coupure aux extrémités ---- */
+header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adherer:focus-visible{
+  background-origin:border-box; background-clip:border-box;
+}

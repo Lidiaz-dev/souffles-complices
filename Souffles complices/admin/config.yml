@@ -3,6 +3,7 @@ backend:
   branch: main
 
 # Là où le CMS écrit le site après une modification
+# Remplace ces deux lignes par l'URL réelle de ton site une fois déployé sur Netlify
 site_url: https://VOTRE-SITE.netlify.app
 display_url: https://VOTRE-SITE.netlify.app
 
@@ -22,17 +23,86 @@ collections:
             widget: "list"
             summary: "{{nom}} — {{statut}}"
             fields:
-              - {label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312"}
-              - {label: "Nom", name: "nom", widget: "string"}
-              - {label: "Espèce", name: "espece", widget: "string", hint: "Ex : Chien, Chat..."}
-              - {label: "Race", name: "race", widget: "string"}
-              - {label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans"}
+              - { label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312" }
+              - { label: "Nom", name: "nom", widget: "string" }
+              - { label: "Espèce", name: "espece", widget: "string", hint: "Ex : Cheval, Poney, Âne, Mouton, Poule, Canard..." }
+              - { label: "Race", name: "race", widget: "string" }
+              - { label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans" }
               - label: "Statut"
                 name: "statut"
                 widget: "select"
                 options:
-                  - {label: "Résident", value: "resident"}
-                  - {label: "En soins", value: "soins"}
-                  - {label: "Parrainable", value: "parrainable"}
-              - {label: "Histoire", name: "histoire", widget: "text"}
-              - {label: "Photo", name: "photo", widget: "image", required: false}
+                  - { label: "Résident", value: "resident" }
+                  - { label: "En soins", value: "soins" }
+                  - { label: "Parrainable", value: "parrainable" }
+              - { label: "Histoire", name: "histoire", widget: "text" }
+              - { label: "Photo", name: "photo", widget: "image", required: false }
+              - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien de parrainage général. Utile surtout si le statut est « Parrainable »." }
+
+  - name: "association"
+    label: "Présentation de l'association"
+    files:
+      - file: "content/asso.json"
+        label: "Présentation"
+        name: "asso"
+        fields:
+          - { label: "Introduction (un paragraphe par ligne)", name: "intro", widget: "list" }
+          - { label: "Ce que nous faisons", name: "actions", widget: "list" }
+          - label: "Chiffres clés"
+            name: "stats"
+            widget: "list"
+            summary: "{{label}}"
+            fields:
+              - { label: "Nombre", name: "nombre", widget: "string" }
+              - { label: "Libellé", name: "label", widget: "string" }
+
+  - name: "adhesion"
+    label: "Comment adhérer"
+    files:
+      - file: "content/adhesion.json"
+        label: "Adhésion"
+        name: "adhesion"
+        fields:
+          - { label: "Texte d'introduction", name: "intro", widget: "text" }
+          - { label: "Tarif", name: "tarif", widget: "string" }
+          - { label: "Avantages de l'adhésion", name: "avantages", widget: "list" }
+          - { label: "Étapes pour adhérer", name: "etapes", widget: "list" }
+          - { label: "Texte du bouton", name: "bouton", widget: "string" }
+          - { label: "Lien HelloAsso", name: "lien", widget: "string" }
+
+  - name: "soutenir"
+    label: "Nous soutenir"
+    files:
+      - file: "content/soutien.json"
+        label: "Dons & parrainage"
+        name: "soutien"
+        fields:
+          - label: "Don ponctuel"
+            name: "don"
+            widget: "object"
+            fields:
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Texte", name: "texte", widget: "text" }
+              - { label: "Texte du bouton", name: "bouton", widget: "string" }
+              - { label: "Lien HelloAsso", name: "lien", widget: "string" }
+          - label: "Parrainage (encart général)"
+            name: "parrainage"
+            widget: "object"
+            fields:
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Texte", name: "texte", widget: "text" }
+              - { label: "Texte du bouton", name: "bouton", widget: "string" }
+              - { label: "Lien (HelloAsso ou #animaux)", name: "lien", widget: "string" }
+          - { label: "Note (rappel visible sous les cartes)", name: "note", widget: "text", required: false }
+
+  - name: "coordonnees"
+    label: "Coordonnées"
+    files:
+      - file: "content/contact.json"
+        label: "Coordonnées"
+        name: "contact"
+        fields:
+          - { label: "Téléphone", name: "telephone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Lien Facebook", name: "facebook", widget: "string" }
+          - { label: "Lien HelloAsso", name: "helloasso", widget: "string" }

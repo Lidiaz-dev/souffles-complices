@@ -8,7 +8,8 @@
       "age": "À préciser",
       "statut": "resident",
       "histoire": "Killerine vit au refuge et participe à nos temps de médiation. Complète son histoire depuis l'espace admin.",
-      "photo": ""
+      "photo": "",
+      "lien_parrainage": ""
     },
     {
       "numero": "0002",
@@ -18,7 +19,8 @@
       "age": "À préciser",
       "statut": "resident",
       "histoire": "Uddy vit au refuge. Complète son histoire depuis l'espace admin.",
-      "photo": ""
+      "photo": "",
+      "lien_parrainage": ""
     },
     {
       "numero": "0003",
@@ -28,7 +30,8 @@
       "age": "À préciser",
       "statut": "resident",
       "histoire": "Inesso vit au refuge. Complète son histoire depuis l'espace admin.",
-      "photo": ""
+      "photo": "",
+      "lien_parrainage": ""
     },
     {
       "numero": "0004",
@@ -38,7 +41,30 @@
       "age": "À préciser",
       "statut": "resident",
       "histoire": "Les moutons vivent ensemble au refuge. Tu peux créer une fiche par animal si tu préfères.",
-      "photo": ""
+      "photo": "",
+      "lien_parrainage": ""
+    },
+    {
+      "numero": "0005",
+      "nom": "Les poules du refuge",
+      "espece": "Poules",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Les poules picorent en liberté dans l'enclos pédagogique. Tu peux créer une fiche par animal si tu préfères.",
+      "photo": "",
+      "lien_parrainage": ""
+    },
+    {
+      "numero": "0006",
+      "nom": "Les canards du refuge",
+      "espece": "Canards",
+      "race": "À préciser",
+      "age": "À préciser",
+      "statut": "resident",
+      "histoire": "Les canards profitent de la mare du refuge. Tu peux créer une fiche par animal si tu préfères.",
+      "photo": "",
+      "lien_parrainage": ""
     }
   ]
 }

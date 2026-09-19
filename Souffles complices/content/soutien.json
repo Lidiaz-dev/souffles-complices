@@ -1,0 +1,15 @@
+{
+  "don": {
+    "titre": "Faire un don ponctuel",
+    "texte": "Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.",
+    "bouton": "Faire un don sur HelloAsso",
+    "lien": "https://www.helloasso.com/"
+  },
+  "parrainage": {
+    "titre": "Parrainer un animal",
+    "texte": "Parrainez un résident du refuge et suivez son quotidien. Choisissez un animal ci-dessus puis cliquez sur son bouton « Parrainer ».",
+    "bouton": "Voir les animaux parrainables",
+    "lien": "#animaux"
+  },
+  "note": "Pense à remplacer les liens HelloAsso ci-dessus (et ceux de chaque animal) par les vraies URLs de tes campagnes, une fois ton compte association créé."
+}

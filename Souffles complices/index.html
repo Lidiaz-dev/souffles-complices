@@ -24,6 +24,7 @@
   <nav class="site-nav">
     <a href="#association">L'association</a>
     <a href="#animaux">Nos animaux</a>
+    <a href="#adherer">Adhérer</a>
     <a href="#soutenir">Nous soutenir</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -48,12 +49,7 @@
   </div>
 </section>
 
-<div class="stats">
-  <div class="stat"><div class="n">—</div><div class="l">Animaux résidents</div></div>
-  <div class="stat"><div class="n">—</div><div class="l">Ateliers de médiation / an</div></div>
-  <div class="stat"><div class="n">—</div><div class="l">Bénévoles</div></div>
-  <div class="stat"><div class="n">—</div><div class="l">Années d'engagement</div></div>
-</div>
+<div class="stats" id="statsGrid"></div>
 
 <section id="association">
   <div class="section-inner">
@@ -62,18 +58,10 @@
       <h2>Un lieu de soin, de lien et de pédagogie.</h2>
     </div>
     <div class="about-grid">
-      <div>
-        <p>Souffles Complices est un refuge équicie et une ferme pédagogique. Nous accueillons des animaux (chevaux, poneys, ânes, moutons...) en difficulté, souvent issus de situations de maltraitance ou de négligence, et leur offrons un cadre de vie stable et bienveillant.</p>
-        <p>Au-delà de l'accueil, nous proposons des séances de médiation animale et des visites pédagogiques, pour créer du lien entre les humains et ces animaux, souvent porteurs d'histoires difficiles.</p>
-      </div>
+      <div id="assoIntro"></div>
       <div class="about-card">
         <h3>Ce que nous faisons</h3>
-        <ul>
-          <li>Accueil et soin d'animaux en difficulté sur le long terme</li>
-          <li>Séances de médiation équicie et animale</li>
-          <li>Visites pédagogiques pour groupes et scolaires</li>
-          <li>Sensibilisation au bien-être animal</li>
-        </ul>
+        <ul id="assoActions"></ul>
       </div>
     </div>
   </div>
@@ -98,34 +86,26 @@
   </div>
 </section>
 
-<section id="soutenir">
+<section id="adherer">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Nous rejoindre</span>
+      <h2>Comment adhérer à l'association.</h2>
+    </div>
+    <div class="adherer-grid" id="adhererContent"></div>
+  </div>
+</section>
+
+<section id="soutenir" style="background:var(--teal-wash);">
   <div class="section-inner">
     <div class="section-head">
       <span class="pill">Nous soutenir</span>
-      <h2>Trois façons d'aider dès aujourd'hui.</h2>
+      <h2>Aidez le refuge dès aujourd'hui.</h2>
     </div>
 
-    <div class="support-grid">
-      <div class="support-card">
-        <h3>Faire un don ponctuel</h3>
-        <p>Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.</p>
-        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Faire un don sur HelloAsso</a>
-      </div>
-      <div class="support-card">
-        <h3>Devenir adhérent</h3>
-        <p>L'adhésion annuelle soutient nos actions de médiation et de pédagogie sur le long terme.</p>
-        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Adhérer via HelloAsso</a>
-      </div>
-      <div class="support-card">
-        <h3>Parrainer un animal</h3>
-        <p>Parrainez Killerine, Uddy, Inesso ou un autre résident et suivez son quotidien.</p>
-        <a class="btn btn-primary" href="https://www.helloasso.com/" target="_blank" rel="noopener">Parrainer sur HelloAsso</a>
-      </div>
-    </div>
+    <div class="support-grid" id="soutenirGrid"></div>
 
-    <div class="helloasso-note hand" style="font-size:1.1rem;">
-      Remplace les liens HelloAsso ci-dessus par les vraies URLs de tes campagnes, une fois ton compte association créé.
-    </div>
+    <div class="helloasso-note hand" id="soutenirNote" style="font-size:1.1rem;"></div>
   </div>
 </section>
 
@@ -139,24 +119,23 @@
       <p style="margin-top:14px;">Association loi 1901</p>
       <p>Refuge équicie & ferme pédagogique</p>
     </div>
-    <div class="col">
-      <p>06 20 35 14 31</p>
-      <p>contact@souffles-complices.fr</p>
-      <div class="socials">
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.helloasso.com/" target="_blank" rel="noopener">HelloAsso</a>
-      </div>
-    </div>
+    <div class="col" id="footerContact"></div>
   </div>
 </footer>
 
 <script>
   const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
   let ANIMAUX = [];
+  let SOUTIEN = null;
 
   function renderAnimaux(list) {
     const grid = document.getElementById('animalGrid');
-    grid.innerHTML = list.map(a => `
+    grid.innerHTML = list.map(a => {
+      const parrainageLien = a.lien_parrainage || (SOUTIEN && SOUTIEN.parrainage && SOUTIEN.parrainage.lien) || '';
+      const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
+        ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
+        : '';
+      return `
       <article class="kcard ${a.statut}" data-status="${a.statut}">
         <div class="blob-photo">
           ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}">` : `<span class="placeholder">Photo à venir</span>`}
@@ -165,8 +144,70 @@
         <h3 class="hand">${a.nom}</h3>
         <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
         <p class="story">${a.histoire}</p>
+        ${parrainageBtn}
       </article>
+    `;
+    }).join('');
+  }
+
+  function renderStats(stats) {
+    document.getElementById('statsGrid').innerHTML = (stats || []).map(s => `
+      <div class="stat"><div class="n">${s.nombre}</div><div class="l">${s.label}</div></div>
     `).join('');
+  }
+
+  function renderAsso(data) {
+    document.getElementById('assoIntro').innerHTML = (data.intro || []).map(p => `<p>${p}</p>`).join('');
+    document.getElementById('assoActions').innerHTML = (data.actions || []).map(a => `<li>${a}</li>`).join('');
+    renderStats(data.stats);
+  }
+
+  function renderAdhesion(data) {
+    document.getElementById('adhererContent').innerHTML = `
+      <div>
+        <p>${data.intro}</p>
+        <div class="tarif-badge">${data.tarif}</div>
+        <div><a class="btn btn-primary" href="${data.lien}" target="_blank" rel="noopener">${data.bouton}</a></div>
+      </div>
+      <div class="adherer-cards">
+        <div class="adherer-card">
+          <h3>Avantages</h3>
+          <ul>${(data.avantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
+        </div>
+        <div class="adherer-card">
+          <h3>Les étapes</h3>
+          <ul>${(data.etapes || []).map(e => `<li>${e}</li>`).join('')}</ul>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderSoutien(data) {
+    SOUTIEN = data;
+    document.getElementById('soutenirGrid').innerHTML = ['don', 'parrainage'].map(key => {
+      const c = data[key];
+      if (!c) return '';
+      return `
+        <div class="support-card">
+          <h3>${c.titre}</h3>
+          <p>${c.texte}</p>
+          <a class="btn btn-primary" href="${c.lien}" target="_blank" rel="noopener">${c.bouton}</a>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('soutenirNote').textContent = data.note || '';
+    if (ANIMAUX.length) renderAnimaux(ANIMAUX);
+  }
+
+  function renderContact(data) {
+    document.getElementById('footerContact').innerHTML = `
+      <p>${data.telephone}</p>
+      <p>${data.email}</p>
+      <div class="socials">
+        <a href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
+        <a href="${data.helloasso}" target="_blank" rel="noopener">HelloAsso</a>
+      </div>
+    `;
   }
 
   fetch('content/animaux.json')
@@ -178,6 +219,11 @@
     .catch(() => {
       document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
     });
+
+  fetch('content/asso.json').then(r => r.json()).then(renderAsso).catch(() => {});
+  fetch('content/adhesion.json').then(r => r.json()).then(renderAdhesion).catch(() => {});
+  fetch('content/soutien.json').then(r => r.json()).then(renderSoutien).catch(() => {});
+  fetch('content/contact.json').then(r => r.json()).then(renderContact).catch(() => {});
 
   const buttons = document.querySelectorAll('.filter-btn');
   buttons.forEach(btn => {

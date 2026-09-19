@@ -131,8 +131,10 @@
     const lien = lienOuDefaut(a.lien_parrainage, parrainageDefaut);
     const btnOr = lien
       ? `<a class="btn-gold" href="${esc(lien)}" target="_blank" rel="noopener">
-           <span class="label">Parrainer ${esc(a.nom)}</span>
-           <span class="arrow" aria-hidden="true">→</span>
+           <span class="label">
+             <span class="ligne1">Parrainer <span class="arrow" aria-hidden="true">→</span></span>
+             <span class="nom">${esc(a.nom)}</span>
+           </span>
          </a>` : '';
     // Deux emplacements : sous la bulle (ordinateur) ou avant le texte (mobile) ; un seul est affiché.
     const parrainBureau = btnOr ? `<div class="parrainage-bloc parrain-bureau">${btnOr}</div>` : '';

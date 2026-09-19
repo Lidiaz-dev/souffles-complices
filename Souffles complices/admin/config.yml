@@ -36,7 +36,7 @@ collections:
                   - { label: "Mouton", value: "mouton" }
                   - { label: "Poule", value: "poule" }
                   - { label: "Canard", value: "canard" }
-              - { label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans" }
+              - { label: "Année de naissance", name: "naissance", widget: "number", value_type: "int", min: 1980, max: 2100, required: false, hint: "L'âge est calculé automatiquement sur le site. Laisse vide si inconnue." }
               - label: "Statut"
                 name: "statut"
                 widget: "select"

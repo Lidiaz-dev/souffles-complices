@@ -83,7 +83,7 @@
         </div>
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
         <h3 class="hand"><a class="card-link" href="animal.html?id=${encodeURIComponent(a.numero)}">${a.nom}</a></h3>
-        <div class="meta">${[a.espece, a.age].filter(Boolean).join(' · ')}</div>
+        <div class="meta">${[a.espece, calculerAge(a.naissance)].filter(Boolean).join(' · ')}</div>
         <p class="story">${a.resume || a.histoire || ''}</p>
         <span class="more-link">Voir la fiche →</span>
         ${parrainageBtn}

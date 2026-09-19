@@ -4,6 +4,15 @@ function fetchJSON(path) {
   return fetch(path, { cache: 'no-cache' }).then(r => r.json());
 }
 
+function calculerAge(naissance) {
+  const annee = parseInt(naissance, 10);
+  if (!annee) return '';
+  const age = new Date().getFullYear() - annee;
+  if (age < 0) return '';
+  if (age === 0) return "Moins d'un an";
+  return age + (age > 1 ? ' ans' : ' an');
+}
+
 function renderContact(data) {
   const el = document.getElementById('footerContact');
   if (!el) return;

@@ -43,7 +43,7 @@
     <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
     <div class="hero-actions">
       <a href="animaux.html" class="btn btn-primary">Rencontrer nos animaux</a>
-      <a href="soutenir.html" class="btn btn-outline">Faire un don</a>
+      <a href="soutenir.html" class="btn btn-outline" id="btnDon" data-masque-sticky>Faire un don</a>
     </div>
   </div>
 
@@ -110,6 +110,14 @@
 
 <script src="js/site.js"></script>
 <script>
+  // "Faire un don" mène directement à HelloAsso (lien du don, sinon lien par défaut).
+  Promise.all([helloassoPromise, fetchJSON('content/soutien.json').catch(() => ({}))]).then(([defaut, soutien]) => {
+    const b = document.getElementById('btnDon');
+    b.href = lienOuDefaut(soutien.don && soutien.don.lien, defaut);
+    b.target = '_blank';
+    b.rel = 'noopener';
+  });
+
   fetchJSON('content/asso.json').then(data => {
     document.getElementById('statsGrid').innerHTML = (data.stats || []).map(s => `
       <div class="stat"><div class="n">${s.nombre}</div><div class="l">${s.label}</div></div>

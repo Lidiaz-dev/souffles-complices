@@ -36,7 +36,6 @@ collections:
                   - { label: "Mouton", value: "mouton" }
                   - { label: "Poule", value: "poule" }
                   - { label: "Canard", value: "canard" }
-              - { label: "Race", name: "race", widget: "string" }
               - { label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans" }
               - label: "Statut"
                 name: "statut"

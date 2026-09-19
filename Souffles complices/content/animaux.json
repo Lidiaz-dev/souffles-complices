@@ -9,8 +9,19 @@
       "statut": "resident",
       "resume": "Killerine est une jument de 28 ans. Elle a vécu de nombreuses années dans l'isolement et le manque de soins avant d'être sauvée et accueillie au refuge.",
       "histoire": "Bonjour, moi je suis une jument de 28 ans ONC (origine non constatée). Dans ma longue vie, j'ai d'abord servi de poulinière, j'ai eu des petits que l'on m'a arraché trop tôt pour le supporter et j'ai aussi porté des bébés qui n'ont pas pu naître. Mon cœur a été abîmé en profondeur et mon corps a gardé les traces de ces années-là... Après, je suis devenue la jument d'une propriétaire d'écurie qui m'a mis au travail dans son club. Jument à tout faire !   Et un beau jour, cette même personne a tout arrêté. Elle m'a donné moi et le reste de mes compagnons de route à un éleveur de moutons qui nous a tous entassé dans une grange, avec trop peu de nourriture pour le nombre de chevaux que nous étions. Et puis nous n'avions pas l'habitude de vivre ensemble. Alors tout est devenu conflits, manques, blessures, le tout sans aucun soin. Cet homme a revendu tous mes compagnons et je suis restée là, seule, oubliée !! Il s'apprêtait à m'offrir mon 'dernier voyage', direction l'abattoir.   C'est là qu'une belle âme a eu pitié de moi et a négocié pour me sortir de cette impasse. Je suis partie rejoindre 'L'Arche de Chachou' et découvrir une nouvelle vie, où il m'a fallu réapprendre la confiance en l'humain et le partage avec d'autres sauvetages. Petit à petit, les mois passant, j'ai commencé à y croire ! J'ai été parrainé par un jeune homme en souffrance qui a fait de moi sa 'Princesse' et nous nous sommes porté tous les deux pour aller mieux... Nous étions protégés, enfin !   Entouré de personnes bienveillantes et aimantes. Ma reconstruction s'est faite en douceur et après plusieurs années dans les Alpes, je suis partie avec ma soigneuse finir ma vie paisiblement chez 'Souffles complices' en Touraine. Aujourd'hui, je participe aux séances d'équicie pour aider les gens à s'aider, quel que soit leur parcours. Je vis avec mon troupeau en paix dans un bel environnement et je vieillis sereinement entourée d'amour. ",
-      "photo": "",
-      "lien_parrainage": ""
+      "photo": "/photos/killerine.jpg",
+      "lien_parrainage": "",
+      "photo_position": "30% 50%",
+      "galerie": [
+        {
+          "image": "/photos/killerine-1.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/killerine-2.jpg",
+          "legende": ""
+        }
+      ]
     },
     {
       "numero": "0002",

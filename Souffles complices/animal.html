@@ -79,8 +79,7 @@
             ${fact('Arrivée au refuge', a.arrivee)}${fact('Caractère', a.caractere)}
           </dl>
           <div class="fiche-text">
-            ${paragraphs(a.histoire)}
-            ${paragraphs(a.histoire_complete)}
+            ${paragraphs(a.histoire || a.resume)}
           </div>
           ${parrainBtn}
         </div>

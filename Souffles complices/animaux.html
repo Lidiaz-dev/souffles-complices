@@ -84,7 +84,7 @@
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
         <h3 class="hand"><a class="card-link" href="animal.html?id=${encodeURIComponent(a.numero)}">${a.nom}</a></h3>
         <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
-        <p class="story">${a.histoire}</p>
+        <p class="story">${a.resume || a.histoire || ''}</p>
         <span class="more-link">Voir la fiche →</span>
         ${parrainageBtn}
       </article>

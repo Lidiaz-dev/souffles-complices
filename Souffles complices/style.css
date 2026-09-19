@@ -623,3 +623,12 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   .support-card:hover, .support-card:hover .bulle-tuile, .support-card:hover .bulle-tuile img{transform:none;}
 }
 .support-card{cursor:pointer;}
+
+/* ---- Filtre des animaux : une seule rangée, compacte ---- */
+#typeFilters{gap:6px; margin-bottom:32px;}
+#typeFilters .filter-btn{padding:7px 12px; font-size:.82rem; gap:.35em;}
+@media (max-width:820px){
+  #typeFilters{flex-wrap:nowrap; overflow-x:auto; justify-content:safe center; scrollbar-width:none; padding:6px 4px 10px; margin-bottom:22px;}
+  #typeFilters::-webkit-scrollbar{display:none;}
+  #typeFilters .filter-btn{flex:0 0 auto; white-space:nowrap;}
+}

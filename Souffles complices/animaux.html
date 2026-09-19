@@ -32,12 +32,6 @@
 
 <section style="padding-top:0;">
   <div class="section-inner">
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">Tous</button>
-      <button class="filter-btn" data-filter="resident">Résidents</button>
-      <button class="filter-btn" data-filter="soins">En soins</button>
-      <button class="filter-btn" data-filter="parrainable">Parrainables</button>
-    </div>
     <div class="filters" id="typeFilters"></div>
 
     <!-- Fiches générées automatiquement depuis content/animaux.json -->
@@ -107,13 +101,10 @@
     });
 
   const TYPE_LABEL = { cheval: "Chevaux", poney: "Poneys", ane: "Ânes", mouton: "Moutons", poule: "Poules", canard: "Canards" };
-  const filtres = { statut: 'all', type: 'all' };
+  const filtres = { type: 'all' };
 
   function appliquerFiltres() {
-    renderAnimaux(ANIMAUX.filter(a =>
-      (filtres.statut === 'all' || a.statut === filtres.statut) &&
-      (filtres.type === 'all' || a.type === filtres.type)
-    ));
+    renderAnimaux(ANIMAUX.filter(a => filtres.type === 'all' || a.type === filtres.type));
   }
 
   function bindFilters(container, key) {
@@ -131,12 +122,11 @@
     const presents = Object.keys(TYPE_LABEL).filter(t => ANIMAUX.some(a => a.type === t));
     const container = document.getElementById('typeFilters');
     container.innerHTML = presents.length < 2 ? '' :
-      `<button class="filter-btn active" data-filter="all"><span class="emo">🐾</span><span>Tous les animaux</span></button>` +
+      `<button class="filter-btn active" data-filter="all"><span class="emo">🐾</span><span>Tous</span></button>` +
       presents.map(t => `<button class="filter-btn" data-filter="${t}"><span class="emo">${emojiPourType(t)}</span><span>${TYPE_LABEL[t]}</span></button>`).join('');
     bindFilters(container, 'type');
   }
 
-  bindFilters(document.querySelector('.filters'), 'statut');
 </script>
 
 </body>

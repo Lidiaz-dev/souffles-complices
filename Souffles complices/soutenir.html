@@ -63,31 +63,38 @@
 
 <script src="js/site.js"></script>
 <script>
-  fetchJSON('content/soutien.json').then(data => {
+  fetchJSON('content/soutien.json').then(async data => {
+    const helloasso = await helloassoPromise;
     document.getElementById('soutenirGrid').innerHTML = ['don', 'parrainage'].map(key => {
       const c = data[key];
       if (!c) return '';
-      const external = /^https?:\/\//.test(c.lien);
-      const attrs = external ? ' target="_blank" rel="noopener"' : '';
+      const interne = key === 'parrainage';
+      const lien = interne && String(c.lien || '').trim() && !estLienExterne(c.lien)
+        ? c.lien.trim()
+        : lienOuDefaut(c.lien, interne ? 'animaux.html' : helloasso);
+      const attrs = estLienExterne(lien) ? ' target="_blank" rel="noopener"' : '';
       return `
         <div class="support-card">
           <h3>${c.titre}</h3>
           <p>${c.texte}</p>
-          <a class="btn btn-primary" href="${c.lien}"${attrs}>${c.bouton}</a>
+          <a class="btn btn-primary" href="${lien}"${attrs}>${c.bouton}</a>
         </div>
       `;
     }).join('');
-    document.getElementById('soutenirNote').textContent = data.note || '';
+    const note = document.getElementById('soutenirNote');
+    note.textContent = data.note || '';
+    note.hidden = !data.note;
   }).catch(() => {
     document.getElementById('soutenirGrid').innerHTML = "<p>Impossible de charger cette section pour le moment.</p>";
   });
 
-  fetchJSON('content/adhesion.json').then(data => {
+  Promise.all([fetchJSON('content/adhesion.json'), helloassoPromise]).then(([data, helloasso]) => {
+    const lien = lienOuDefaut(data.lien, helloasso);
     document.getElementById('adhererContent').innerHTML = `
       <div>
         <p>${data.intro}</p>
         <div class="tarif-badge">${data.tarif}</div>
-        <div><a class="btn btn-primary" href="${data.lien}" target="_blank" rel="noopener">${data.bouton}</a></div>
+        <div><a class="btn btn-primary btn-adherer" href="${lien}" target="_blank" rel="noopener"><span class="label">${data.bouton}</span><span class="arrow" aria-hidden="true">→</span></a></div>
       </div>
       <div class="adherer-cards">
         <div class="adherer-card">

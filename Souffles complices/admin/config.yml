@@ -50,7 +50,7 @@ collections:
               - { label: "Caractère", name: "caractere", widget: "string", required: false, hint: "Ex : Curieux, câlin, timide" }
               - { label: "Photo principale", name: "photo", widget: "image", required: false }
               - { label: "Galerie photos", name: "galerie", widget: "list", required: false, field: { label: "Photo", name: "image", widget: "image" } }
-              - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien de parrainage général. Utile surtout si le statut est « Parrainable »." }
+              - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut de l'association. Le bouton « Parrainer » n'apparaît que si le statut est « Parrainable »." }
 
   - name: "association"
     label: "Présentation de l'association"
@@ -81,7 +81,7 @@ collections:
           - { label: "Avantages de l'adhésion", name: "avantages", widget: "list" }
           - { label: "Étapes pour adhérer", name: "etapes", widget: "list" }
           - { label: "Texte du bouton", name: "bouton", widget: "string" }
-          - { label: "Lien HelloAsso", name: "lien", widget: "string" }
+          - { label: "Lien HelloAsso", name: "lien", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut." }
 
   - name: "soutenir"
     label: "Nous soutenir"
@@ -97,7 +97,7 @@ collections:
               - { label: "Titre", name: "titre", widget: "string" }
               - { label: "Texte", name: "texte", widget: "text" }
               - { label: "Texte du bouton", name: "bouton", widget: "string" }
-              - { label: "Lien HelloAsso", name: "lien", widget: "string" }
+              - { label: "Lien HelloAsso", name: "lien", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut." }
           - label: "Parrainage (encart général)"
             name: "parrainage"
             widget: "object"
@@ -105,7 +105,7 @@ collections:
               - { label: "Titre", name: "titre", widget: "string" }
               - { label: "Texte", name: "texte", widget: "text" }
               - { label: "Texte du bouton", name: "bouton", widget: "string" }
-              - { label: "Lien (HelloAsso ou animaux.html)", name: "lien", widget: "string" }
+              - { label: "Lien (vide = page des animaux)", name: "lien", widget: "string", required: false }
           - { label: "Note (rappel visible sous les cartes)", name: "note", widget: "text", required: false }
 
   - name: "coordonnees"
@@ -118,4 +118,4 @@ collections:
           - { label: "Téléphone", name: "telephone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Lien Facebook", name: "facebook", widget: "string" }
-          - { label: "Lien HelloAsso", name: "helloasso", widget: "string" }
+          - { label: "Lien HelloAsso par défaut de l'association", name: "helloasso", widget: "string", hint: "Utilisé partout (dons, adhésion, parrainage, pied de page) quand aucun lien spécifique n'est renseigné." }

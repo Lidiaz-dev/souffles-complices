@@ -63,7 +63,7 @@
 <script>
   const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
   let ANIMAUX = [];
-  let PARRAINAGE_LIEN_DEFAUT = '';
+  let PARRAINAGE_LIEN_DEFAUT = HELLOASSO_FALLBACK;
 
   function renderAnimaux(list) {
     const grid = document.getElementById('animalGrid');
@@ -72,7 +72,7 @@
       return;
     }
     grid.innerHTML = list.map(a => {
-      const parrainageLien = a.lien_parrainage || PARRAINAGE_LIEN_DEFAUT;
+      const parrainageLien = lienOuDefaut(a.lien_parrainage, PARRAINAGE_LIEN_DEFAUT);
       const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
         ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
         : '';
@@ -92,12 +92,8 @@
     }).join('');
   }
 
-  fetchJSON('content/soutien.json')
-    .then(data => {
-      const lien = (data.parrainage && data.parrainage.lien) || '';
-      PARRAINAGE_LIEN_DEFAUT = /^https?:\/\//.test(lien) ? lien : '';
-    })
-    .catch(() => {})
+  helloassoPromise
+    .then(lien => { PARRAINAGE_LIEN_DEFAUT = lien; })
     .then(() => fetchJSON('content/animaux.json'))
     .then(data => {
       ANIMAUX = data.animaux || [];

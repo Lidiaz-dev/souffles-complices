@@ -28,5 +28,5 @@ Pour activer l'admin :
 3. Remplacer site_url et display_url dans admin/config.yml par l'URL réelle du site Netlify.
 4. Créer ton compte via Identity, puis te rendre sur /admin pour éditer le contenu.
 
-Pense aussi à remplacer les liens HelloAsso placeholder (https://www.helloasso.com/)
-par tes vraies campagnes une fois ton compte association créé.
+Le lien HelloAsso par défaut se règle dans l'admin (Coordonnées). Il est utilisé partout
+quand un lien spécifique (don, adhésion, animal) est vide ou invalide.

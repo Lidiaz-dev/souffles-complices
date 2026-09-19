@@ -62,7 +62,7 @@
 
   function renderFiche(a, parrainageDefaut) {
     document.title = `${a.nom} — Souffles Complices`;
-    const lien = a.lien_parrainage || parrainageDefaut;
+    const lien = lienOuDefaut(a.lien_parrainage, parrainageDefaut);
     const parrainBtn = (a.statut === 'parrainable' && lien)
       ? `<p><a class="btn btn-primary" href="${esc(lien)}" target="_blank" rel="noopener">Parrainer ${esc(a.nom)}</a></p>` : '';
     const galerie = (a.galerie || []).filter(Boolean);
@@ -88,17 +88,13 @@
   }
 
   const id = new URLSearchParams(location.search).get('id');
-  Promise.all([
-    fetchJSON('content/animaux.json'),
-    fetchJSON('content/soutien.json').catch(() => ({}))
-  ]).then(([data, soutien]) => {
+  Promise.all([fetchJSON('content/animaux.json'), helloassoPromise]).then(([data, helloasso]) => {
     const a = (data.animaux || []).find(x => String(x.numero) === id);
     if (!a) {
       document.getElementById('fiche').innerHTML = "<p>Cet animal est introuvable. <a href='animaux.html'>Voir tous les animaux</a></p>";
       return;
     }
-    const defaut = (soutien.parrainage && soutien.parrainage.lien) || '';
-    renderFiche(a, /^https?:\/\//.test(defaut) ? defaut : '');
+    renderFiche(a, helloasso);
   }).catch(() => {
     document.getElementById('fiche').innerHTML = "<p>Impossible de charger la fiche pour le moment.</p>";
   });

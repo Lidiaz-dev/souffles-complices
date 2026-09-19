@@ -4,6 +4,21 @@ function fetchJSON(path) {
   return fetch(path, { cache: 'no-cache' }).then(r => r.json());
 }
 
+// Lien HelloAsso de base : utilisé partout dès qu'aucun lien valide n'est renseigné.
+// Modifiable dans l'admin (Coordonnées > Lien HelloAsso par défaut).
+const HELLOASSO_FALLBACK = 'https://www.helloasso.com/associations/souffles-complices';
+
+function estLienExterne(lien) {
+  return /^https?:\/\//.test(String(lien || '').trim());
+}
+
+const contactPromise = fetchJSON('content/contact.json').catch(() => ({}));
+const helloassoPromise = contactPromise.then(d => estLienExterne(d.helloasso) ? d.helloasso.trim() : HELLOASSO_FALLBACK);
+
+function lienOuDefaut(lien, defaut) {
+  return estLienExterne(lien) ? String(lien).trim() : defaut;
+}
+
 // Accepte "1998", "1998-06-24" ou "24/06/1998". Avec la date exacte, l'âge change le jour de l'anniversaire.
 function calculerAge(naissance) {
   const s = String(naissance == null ? '' : naissance).trim();
@@ -43,5 +58,8 @@ function markActiveNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
   markActiveNav();
-  fetchJSON('content/contact.json').then(renderContact).catch(() => {});
+  contactPromise.then(async d => {
+    if (!d.telephone && !d.email) return;
+    renderContact({ ...d, helloasso: await helloassoPromise });
+  });
 });

@@ -3,7 +3,7 @@
     "titre": "Faire un don ponctuel",
     "texte": "Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.",
     "bouton": "Faire un don sur HelloAsso",
-    "lien": "https://www.helloasso.com/"
+    "lien": ""
   },
   "parrainage": {
     "titre": "Parrainer un animal",
@@ -11,5 +11,5 @@
     "bouton": "Voir les animaux parrainables",
     "lien": "animaux.html"
   },
-  "note": "Pense à remplacer les liens HelloAsso ci-dessus (et ceux de chaque animal) par les vraies URLs de tes campagnes, une fois ton compte association créé."
+  "note": ""
 }

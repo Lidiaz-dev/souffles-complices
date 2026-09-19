@@ -26,6 +26,16 @@ collections:
               - { label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312" }
               - { label: "Nom", name: "nom", widget: "string" }
               - { label: "Espèce", name: "espece", widget: "string", hint: "Ex : Cheval, Poney, Âne, Mouton, Poule, Canard..." }
+              - label: "Type d'animal (pour le filtre)"
+                name: "type"
+                widget: "select"
+                options:
+                  - { label: "Cheval", value: "cheval" }
+                  - { label: "Poney", value: "poney" }
+                  - { label: "Âne", value: "ane" }
+                  - { label: "Mouton", value: "mouton" }
+                  - { label: "Poule", value: "poule" }
+                  - { label: "Canard", value: "canard" }
               - { label: "Race", name: "race", widget: "string" }
               - { label: "Âge", name: "age", widget: "string", hint: "Ex : 3 ans" }
               - label: "Statut"

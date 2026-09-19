@@ -38,6 +38,7 @@
       <button class="filter-btn" data-filter="soins">En soins</button>
       <button class="filter-btn" data-filter="parrainable">Parrainables</button>
     </div>
+    <div class="filters" id="typeFilters"></div>
 
     <!-- Fiches générées automatiquement depuis content/animaux.json -->
     <div class="animal-grid" id="animalGrid"></div>
@@ -66,6 +67,10 @@
 
   function renderAnimaux(list) {
     const grid = document.getElementById('animalGrid');
+    if (!list.length) {
+      grid.innerHTML = "<p style='grid-column:1/-1;text-align:center;'>Aucun animal ne correspond à ces filtres.</p>";
+      return;
+    }
     grid.innerHTML = list.map(a => {
       const parrainageLien = a.lien_parrainage || PARRAINAGE_LIEN_DEFAUT;
       const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
@@ -92,22 +97,44 @@
     .then(() => fetchJSON('content/animaux.json'))
     .then(data => {
       ANIMAUX = data.animaux || [];
+      renderTypeFilters();
       renderAnimaux(ANIMAUX);
     })
     .catch(() => {
       document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
     });
 
-  const buttons = document.querySelectorAll('.filter-btn');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      const filtered = filter === 'all' ? ANIMAUX : ANIMAUX.filter(a => a.statut === filter);
-      renderAnimaux(filtered);
+  const TYPE_LABEL = { cheval: "Chevaux", poney: "Poneys", ane: "Ânes", mouton: "Moutons", poule: "Poules", canard: "Canards" };
+  const filtres = { statut: 'all', type: 'all' };
+
+  function appliquerFiltres() {
+    renderAnimaux(ANIMAUX.filter(a =>
+      (filtres.statut === 'all' || a.statut === filtres.statut) &&
+      (filtres.type === 'all' || a.type === filtres.type)
+    ));
+  }
+
+  function bindFilters(container, key) {
+    container.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filtres[key] = btn.dataset.filter;
+        appliquerFiltres();
+      });
     });
-  });
+  }
+
+  function renderTypeFilters() {
+    const presents = Object.keys(TYPE_LABEL).filter(t => ANIMAUX.some(a => a.type === t));
+    const container = document.getElementById('typeFilters');
+    container.innerHTML = presents.length < 2 ? '' :
+      `<button class="filter-btn active" data-filter="all">Tous les animaux</button>` +
+      presents.map(t => `<button class="filter-btn" data-filter="${t}">${TYPE_LABEL[t]}</button>`).join('');
+    bindFilters(container, 'type');
+  }
+
+  bindFilters(document.querySelector('.filters'), 'statut');
 </script>
 
 </body>

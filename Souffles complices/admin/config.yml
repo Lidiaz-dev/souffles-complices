@@ -69,13 +69,6 @@ collections:
         fields:
           - { label: "Introduction (un paragraphe par ligne)", name: "intro", widget: "list" }
           - { label: "Ce que nous faisons", name: "actions", widget: "list" }
-          - label: "Chiffres clés"
-            name: "stats"
-            widget: "list"
-            summary: "{{label}}"
-            fields:
-              - { label: "Nombre", name: "nombre", widget: "string" }
-              - { label: "Libellé", name: "label", widget: "string" }
 
   - name: "adhesion"
     label: "Comment adhérer"

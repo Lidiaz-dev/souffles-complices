@@ -66,8 +66,6 @@
   </div>
 </section>
 
-<div class="stats" id="statsGrid"></div>
-
 <section>
   <div class="section-inner">
     <div class="section-head">
@@ -118,11 +116,6 @@
     b.rel = 'noopener';
   });
 
-  fetchJSON('content/asso.json').then(data => {
-    document.getElementById('statsGrid').innerHTML = (data.stats || []).map(s => `
-      <div class="stat"><div class="n">${s.nombre}</div><div class="l">${s.label}</div></div>
-    `).join('');
-  }).catch(() => {});
 </script>
 
 </body>

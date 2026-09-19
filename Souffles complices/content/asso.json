@@ -8,11 +8,5 @@
     "Séances de médiation équicie et animale",
     "Visites pédagogiques pour groupes et scolaires",
     "Sensibilisation au bien-être animal"
-  ],
-  "stats": [
-    { "nombre": "—", "label": "Animaux résidents" },
-    { "nombre": "—", "label": "Ateliers de médiation / an" },
-    { "nombre": "—", "label": "Bénévoles" },
-    { "nombre": "—", "label": "Années d'engagement" }
   ]
 }

@@ -120,6 +120,12 @@ function markActiveNav() {
   document.querySelectorAll('nav.site-nav a').forEach(a => {
     if (a.getAttribute('href') === path) a.classList.add('active');
   });
+  // Sur mobile le menu défile : on centre le lien de la page en cours.
+  const nav = document.querySelector('nav.site-nav');
+  const actif = nav && nav.querySelector('a.active');
+  if (actif && nav.scrollWidth > nav.clientWidth) {
+    nav.scrollLeft = actif.offsetLeft - (nav.clientWidth - actif.offsetWidth) / 2;
+  }
 }
 
 // Bouton fixe : se cache quand on descend, réapparaît quand on remonte,
@@ -156,6 +162,12 @@ function initStickyCta(cta) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initFond();
+  const entete = document.querySelector('header.site');
+  if (entete) {
+    const majEntete = () => entete.classList.toggle('compact', window.scrollY > 40);
+    window.addEventListener('scroll', majEntete, { passive: true });
+    majEntete();
+  }
   markActiveNav();
   decorerPageHero();
   initParade();

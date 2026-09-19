@@ -129,18 +129,22 @@
   function renderFiche(a, parrainageDefaut) {
     document.title = `${a.nom} — Souffles Complices`;
     const lien = lienOuDefaut(a.lien_parrainage, parrainageDefaut);
-    const parrainBtn = lien
-      ? `<div class="parrainage-bloc">
-           <a class="btn-gold" href="${esc(lien)}" target="_blank" rel="noopener">
-             <span class="label">Parrainer ${esc(a.nom)}</span>
-             <span class="arrow" aria-hidden="true">→</span>
-           </a>
-         </div>` : '';
+    const btnOr = lien
+      ? `<a class="btn-gold" href="${esc(lien)}" target="_blank" rel="noopener">
+           <span class="label">Parrainer ${esc(a.nom)}</span>
+           <span class="arrow" aria-hidden="true">→</span>
+         </a>` : '';
+    // Deux emplacements : sous la bulle (ordinateur) ou avant le texte (mobile) ; un seul est affiché.
+    const parrainBureau = btnOr ? `<div class="parrainage-bloc parrain-bureau">${btnOr}</div>` : '';
+    const parrainMobile = btnOr ? `<div class="parrainage-bloc parrain-mobile">${btnOr}</div>` : '';
     const galerie = normaliserGalerie(a.galerie);
     document.getElementById('fiche').innerHTML = `
       <div class="fiche">
-        <div class="blob-photo">
+        <div class="fiche-photo">
+         <div class="blob-photo">
           ${a.photo ? `<img src="${esc(a.photo)}" alt="Photo de ${esc(a.nom)}"${styleCadrage(a.photo_position)}>` : `<span>Photo à venir</span>`}
+         </div>
+         ${parrainBureau}
         </div>
         <div>
           <span class="status-pill ${esc(a.statut)}">${esc(STATUT_LABEL[a.statut] || a.statut)}</span>
@@ -148,10 +152,10 @@
           <dl class="fiche-facts">
             ${fact('Espèce', a.espece)}${fact('Âge', calculerAge(a.naissance))}            ${fact('Arrivée au refuge', a.arrivee)}${fact('Caractère', a.caractere)}
           </dl>
+          ${parrainMobile}
           <div class="fiche-text">
             ${paragraphs(a.histoire || a.resume)}
           </div>
-          ${parrainBtn}
         </div>
       </div>
       ${galerie.length ? `

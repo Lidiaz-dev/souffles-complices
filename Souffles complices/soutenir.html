@@ -40,10 +40,10 @@
 <section id="adherer" style="background:var(--teal-wash);">
   <div class="section-inner">
     <div class="section-head">
-      <span class="pill">Nous rejoindre</span>
-      <h2>Comment adhérer à l'association.</h2>
+      <span class="pill">Adhésion</span>
+      <h2>Modalités d'adhésion.</h2>
     </div>
-    <div class="adherer-grid" id="adhererContent"></div>
+    <div id="adhererContent"></div>
   </div>
 </section>
 
@@ -63,52 +63,57 @@
 
 <script src="js/site.js"></script>
 <script>
-  fetchJSON('content/soutien.json').then(async data => {
-    const helloasso = await helloassoPromise;
-    document.getElementById('soutenirGrid').innerHTML = ['don', 'parrainage'].map(key => {
-      const c = data[key];
+  Promise.all([fetchJSON('content/soutien.json'), fetchJSON('content/adhesion.json'), helloassoPromise]).then(([soutien, adh, helloasso]) => {
+    const cotisation = [adh.cotisation, adh.periode].filter(Boolean).join(' ');
+
+    // --- Les trois tuiles : don, parrainage, adhésion (mêmes tailles, boutons alignés)
+    const tuiles = [
+      { cle: 'don', helloasso: true },
+      { cle: 'parrainage', helloasso: false },
+      { cle: 'adhesion', helloasso: true, badge: cotisation }
+    ];
+    document.getElementById('soutenirGrid').innerHTML = tuiles.map(t => {
+      const c = soutien[t.cle];
       if (!c) return '';
-      const interne = key === 'parrainage';
-      const lien = interne && String(c.lien || '').trim() && !estLienExterne(c.lien)
-        ? c.lien.trim()
-        : lienOuDefaut(c.lien, interne ? 'animaux.html' : helloasso);
+      const lien = t.helloasso
+        ? lienOuDefaut(t.cle === 'adhesion' ? (c.lien || adh.lien) : c.lien, helloasso)
+        : (String(c.lien || '').trim() || 'animaux.html');
       const attrs = estLienExterne(lien) ? ' target="_blank" rel="noopener"' : '';
+      const masque = t.helloasso ? ' data-masque-sticky' : '';
       return `
         <div class="support-card">
           <h3>${c.titre}</h3>
           <p>${c.texte}</p>
-          <a class="btn btn-primary" href="${lien}"${attrs}>${c.bouton}</a>
-        </div>
-      `;
+          ${t.badge ? `<div class="tarif-badge">${t.badge}</div>` : ''}
+          <a class="btn btn-primary" href="${lien}"${attrs}${masque}>${c.bouton}</a>
+        </div>`;
     }).join('');
     const note = document.getElementById('soutenirNote');
-    note.textContent = data.note || '';
-    note.hidden = !data.note;
-  }).catch(() => {
-    document.getElementById('soutenirGrid').innerHTML = "<p>Impossible de charger cette section pour le moment.</p>";
-  });
+    note.textContent = soutien.note || '';
+    note.hidden = !soutien.note;
 
-  Promise.all([fetchJSON('content/adhesion.json'), helloassoPromise]).then(([data, helloasso]) => {
-    const lien = lienOuDefaut(data.lien, helloasso);
+    // --- Encart des modalités d'adhésion
+    const lienAdhesion = lienOuDefaut(adh.lien, helloasso);
+    const liste = (items, balise, classe) => (items || []).length
+      ? `<${balise} class="${classe}">${items.map(x => `<li>${x}</li>`).join('')}</${balise}>` : '';
     document.getElementById('adhererContent').innerHTML = `
-      <div>
-        <p>${data.intro}</p>
-        <div class="tarif-badge">${data.tarif}</div>
-        <div><a class="btn btn-primary btn-adherer" href="${lien}" target="_blank" rel="noopener"><span class="label">${data.bouton}</span><span class="arrow" aria-hidden="true">→</span></a></div>
-      </div>
-      <div class="adherer-cards">
-        <div class="adherer-card">
-          <h3>Avantages</h3>
-          <ul>${(data.avantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
+      <div class="encart-adhesion">
+        <div class="encart-prix">
+          <span class="lib">Cotisation annuelle</span>
+          <span class="montant">${adh.cotisation || ''}</span>
+          <span class="periode">${adh.periode || ''}</span>
         </div>
-        <div class="adherer-card">
-          <h3>Les étapes</h3>
-          <ul>${(data.etapes || []).map(e => `<li>${e}</li>`).join('')}</ul>
+        <div class="encart-corps">
+          <h3>Comment adhérer</h3>
+          ${adh.intro ? `<p class="intro">${adh.intro}</p>` : ''}
+          ${liste(adh.etapes, 'ol', 'etapes')}
+          ${(adh.avantages || []).length ? `<h4>Ce que permet votre adhésion</h4>${liste(adh.avantages, 'ul', 'avantages')}` : ''}
+          ${adh.precisions ? `<p class="precisions">${adh.precisions}</p>` : ''}
+          <a class="btn btn-primary btn-adherer" href="${lienAdhesion}" target="_blank" rel="noopener" data-masque-sticky><span class="label">${adh.bouton}</span><span class="arrow" aria-hidden="true">→</span></a>
         </div>
-      </div>
-    `;
+      </div>`;
   }).catch(() => {
-    document.getElementById('adhererContent').innerHTML = "<p>Impossible de charger cette section pour le moment.</p>";
+    document.getElementById('soutenirGrid').innerHTML = "<p>Impossible de charger cette page pour le moment.</p>";
   });
 </script>
 

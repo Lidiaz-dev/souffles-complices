@@ -150,6 +150,14 @@ function initStickyCta(cta) {
       if (visible > 0) bas = visible + marge;
     }
     cta.style.bottom = bas + 'px';
+
+    // Masqué tant qu'un bouton HelloAsso de la page (marqué data-masque-sticky) est visible à l'écran.
+    const vh = window.innerHeight;
+    const dejaLa = [...document.querySelectorAll('[data-masque-sticky]')].some(el => {
+      const r = el.getBoundingClientRect();
+      return r.bottom > 0 && r.top < vh;
+    });
+    cta.classList.toggle('is-masque', dejaLa);
   }
 
   window.addEventListener('scroll', () => {
@@ -177,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cta.href = lien;
     cta.target = '_blank';
     cta.rel = 'noopener';
-    cta.innerHTML = '<span class="label"><span class="l-full">Soutenir sur HelloAsso</span><span class="l-short">Soutenir</span></span><span class="arrow" aria-hidden="true">→</span>';
+    cta.innerHTML = '<span class="label">Soutenir</span><span class="arrow" aria-hidden="true">→</span>';
     document.body.appendChild(cta);
     initStickyCta(cta);
   });

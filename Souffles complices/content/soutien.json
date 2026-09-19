@@ -2,14 +2,20 @@
   "don": {
     "titre": "Faire un don ponctuel",
     "texte": "Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.",
-    "bouton": "Faire un don sur HelloAsso",
+    "bouton": "Faire un don",
     "lien": ""
   },
   "parrainage": {
     "titre": "Parrainer un animal",
-    "texte": "Parrainez un résident du refuge et suivez son quotidien. Retrouvez tous les animaux parrainables sur la page dédiée.",
-    "bouton": "Voir les animaux parrainables",
+    "texte": "Parrainez un résident du refuge et suivez son quotidien.",
+    "bouton": "Voir les animaux",
     "lien": "animaux.html"
+  },
+  "adhesion": {
+    "titre": "Devenir adhérent",
+    "texte": "Devenez membre de l'association et participez à sa vie tout au long de l'année.",
+    "bouton": "Adhérer",
+    "lien": ""
   },
   "note": ""
 }

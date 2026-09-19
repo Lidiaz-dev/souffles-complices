@@ -85,9 +85,11 @@ collections:
         name: "adhesion"
         fields:
           - { label: "Texte d'introduction", name: "intro", widget: "text" }
-          - { label: "Tarif", name: "tarif", widget: "string" }
-          - { label: "Avantages de l'adhésion", name: "avantages", widget: "list" }
+          - { label: "Montant de la cotisation", name: "cotisation", widget: "string", hint: "Ex : 30 €" }
+          - { label: "Période", name: "periode", widget: "string", hint: "Ex : par an" }
           - { label: "Étapes pour adhérer", name: "etapes", widget: "list" }
+          - { label: "Ce que permet l'adhésion", name: "avantages", widget: "list" }
+          - { label: "Précisions (facultatif)", name: "precisions", widget: "text", required: false, hint: "Ex : moyens de paiement, reçu, durée de validité. Laisse vide pour ne rien afficher." }
           - { label: "Texte du bouton", name: "bouton", widget: "string" }
           - { label: "Lien HelloAsso", name: "lien", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut." }
 
@@ -106,6 +108,14 @@ collections:
               - { label: "Texte", name: "texte", widget: "text" }
               - { label: "Texte du bouton", name: "bouton", widget: "string" }
               - { label: "Lien HelloAsso", name: "lien", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut." }
+          - label: "Adhésion (tuile)"
+            name: "adhesion"
+            widget: "object"
+            fields:
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Texte", name: "texte", widget: "text" }
+              - { label: "Texte du bouton", name: "bouton", widget: "string" }
+              - { label: "Lien HelloAsso", name: "lien", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien de la section Adhésion, sinon le lien HelloAsso par défaut." }
           - label: "Parrainage (encart général)"
             name: "parrainage"
             widget: "object"

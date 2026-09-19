@@ -104,6 +104,21 @@ function initFond() {
   document.body.prepend(f);
 }
 
+// Filet de sécurité : tout lien vers un autre site s'ouvre dans un nouvel onglet,
+// y compris ceux ajoutés plus tard (contenu de l'admin, boutons créés en JavaScript).
+function ouvrirExternesAilleurs(racine) {
+  (racine || document).querySelectorAll('a[href]').forEach(a => {
+    if (!estLienExterne(a.getAttribute('href'))) return;
+    if (a.origin === location.origin) return;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  ouvrirExternesAilleurs();
+  new MutationObserver(() => ouvrirExternesAilleurs()).observe(document.body, { childList: true, subtree: true });
+});
+
 // Un clic sur un animal décoratif le fait sauter.
 document.addEventListener('click', e => {
   const el = e.target.closest('.emoji-vivant');

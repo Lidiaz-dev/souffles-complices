@@ -82,9 +82,10 @@
           ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}">` : `<span class="placeholder">Photo à venir</span>`}
         </div>
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
-        <h3 class="hand">${a.nom}</h3>
+        <h3 class="hand"><a class="card-link" href="animal.html?id=${encodeURIComponent(a.numero)}">${a.nom}</a></h3>
         <div class="meta">${a.espece} · ${a.race} · ${a.age}</div>
         <p class="story">${a.histoire}</p>
+        <span class="more-link">Voir la fiche →</span>
         ${parrainageBtn}
       </article>
     `;
@@ -92,7 +93,10 @@
   }
 
   fetchJSON('content/soutien.json')
-    .then(data => { PARRAINAGE_LIEN_DEFAUT = (data.parrainage && data.parrainage.lien) || ''; })
+    .then(data => {
+      const lien = (data.parrainage && data.parrainage.lien) || '';
+      PARRAINAGE_LIEN_DEFAUT = /^https?:\/\//.test(lien) ? lien : '';
+    })
     .catch(() => {})
     .then(() => fetchJSON('content/animaux.json'))
     .then(data => {

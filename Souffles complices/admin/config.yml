@@ -23,7 +23,7 @@ collections:
             widget: "list"
             summary: "{{nom}} — {{statut}}"
             fields:
-              - { label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312" }
+              - { label: "Numéro de dossier", name: "numero", widget: "string", hint: "Ex : 0312. Doit être unique : il sert d'adresse à la page de la fiche." }
               - { label: "Nom", name: "nom", widget: "string" }
               - { label: "Espèce", name: "espece", widget: "string", hint: "Ex : Cheval, Poney, Âne, Mouton, Poule, Canard..." }
               - label: "Type d'animal (pour le filtre)"
@@ -45,8 +45,12 @@ collections:
                   - { label: "Résident", value: "resident" }
                   - { label: "En soins", value: "soins" }
                   - { label: "Parrainable", value: "parrainable" }
-              - { label: "Histoire", name: "histoire", widget: "text" }
-              - { label: "Photo", name: "photo", widget: "image", required: false }
+              - { label: "Histoire (résumé affiché sur la carte)", name: "histoire", widget: "text" }
+              - { label: "Arrivée au refuge", name: "arrivee", widget: "string", required: false, hint: "Ex : Mars 2023" }
+              - { label: "Caractère", name: "caractere", widget: "string", required: false, hint: "Ex : Curieux, câlin, timide" }
+              - { label: "Histoire complète (page de la fiche)", name: "histoire_complete", widget: "text", required: false, hint: "Laisse une ligne vide entre les paragraphes." }
+              - { label: "Photo principale", name: "photo", widget: "image", required: false }
+              - { label: "Galerie photos", name: "galerie", widget: "list", required: false, field: { label: "Photo", name: "image", widget: "image" } }
               - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien de parrainage général. Utile surtout si le statut est « Parrainable »." }
 
   - name: "association"

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche animal — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
+  </nav>
+</header>
+
+<section>
+  <div class="section-inner">
+    <a class="back-link" href="animaux.html">← Tous les animaux</a>
+    <div id="fiche"><p>Chargement...</p></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Logo Souffles Complices" style="height:40px;width:40px;">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+      </div>
+      <p style="margin-top:14px;">Association loi 1901</p>
+      <p>Refuge équicie & ferme pédagogique</p>
+    </div>
+    <div class="col" id="footerContact"></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function fact(label, value) {
+    return value ? `<div><dt>${label}</dt><dd>${esc(value)}</dd></div>` : '';
+  }
+
+  function paragraphs(text) {
+    return String(text || '').split(/\n\s*\n|\n/).filter(p => p.trim()).map(p => `<p>${esc(p)}</p>`).join('');
+  }
+
+  function renderFiche(a, parrainageDefaut) {
+    document.title = `${a.nom} — Souffles Complices`;
+    const lien = a.lien_parrainage || parrainageDefaut;
+    const parrainBtn = (a.statut === 'parrainable' && lien)
+      ? `<p><a class="btn btn-primary" href="${esc(lien)}" target="_blank" rel="noopener">Parrainer ${esc(a.nom)}</a></p>` : '';
+    const galerie = (a.galerie || []).filter(Boolean);
+    document.getElementById('fiche').innerHTML = `
+      <div class="fiche">
+        <div class="blob-photo">
+          ${a.photo ? `<img src="${esc(a.photo)}" alt="Photo de ${esc(a.nom)}">` : `<span>Photo à venir</span>`}
+        </div>
+        <div>
+          <span class="status-pill ${esc(a.statut)}">${esc(STATUT_LABEL[a.statut] || a.statut)}</span>
+          <h1>${esc(a.nom)}</h1>
+          <dl class="fiche-facts">
+            ${fact('Espèce', a.espece)}${fact('Race', a.race)}${fact('Âge', a.age)}
+            ${fact('Arrivée au refuge', a.arrivee)}${fact('Caractère', a.caractere)}
+          </dl>
+          <div class="fiche-text">
+            ${paragraphs(a.histoire)}
+            ${paragraphs(a.histoire_complete)}
+          </div>
+          ${parrainBtn}
+        </div>
+      </div>
+      ${galerie.length ? `<div class="gallery">${galerie.map(g => `<img src="${esc(g)}" alt="Photo de ${esc(a.nom)}">`).join('')}</div>` : ''}
+    `;
+  }
+
+  const id = new URLSearchParams(location.search).get('id');
+  Promise.all([
+    fetchJSON('content/animaux.json'),
+    fetchJSON('content/soutien.json').catch(() => ({}))
+  ]).then(([data, soutien]) => {
+    const a = (data.animaux || []).find(x => String(x.numero) === id);
+    if (!a) {
+      document.getElementById('fiche').innerHTML = "<p>Cet animal est introuvable. <a href='animaux.html'>Voir tous les animaux</a></p>";
+      return;
+    }
+    const defaut = (soutien.parrainage && soutien.parrainage.lien) || '';
+    renderFiche(a, /^https?:\/\//.test(defaut) ? defaut : '');
+  }).catch(() => {
+    document.getElementById('fiche').innerHTML = "<p>Impossible de charger la fiche pour le moment.</p>";
+  });
+</script>
+
+</body>
+</html>

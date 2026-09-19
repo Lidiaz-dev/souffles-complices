@@ -18,7 +18,8 @@ function renderContact(data) {
 }
 
 function markActiveNav() {
-  const path = location.pathname.split('/').pop() || 'index.html';
+  let path = location.pathname.split('/').pop() || 'index.html';
+  if (path === 'animal.html') path = 'animaux.html';
   document.querySelectorAll('nav.site-nav a').forEach(a => {
     if (a.getAttribute('href') === path) a.classList.add('active');
   });

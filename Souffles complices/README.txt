@@ -16,7 +16,7 @@ et se chargent via js/site.js + content/contact.json.
 Une fois le site déployé sur Netlify (avec Identity + Git Gateway activés),
 tout le contenu ci-dessous est modifiable depuis /admin sans toucher au code :
 
-- content/animaux.json   -> fiches des animaux (statut, histoire, photo, lien de parrainage individuel)
+- content/animaux.json   -> fiches des animaux (statut, histoire, photo, galerie polaroïds avec légendes, lien de parrainage)
 - content/asso.json      -> présentation de l'association + chiffres clés
 - content/adhesion.json  -> section "Comment adhérer" (tarif, avantages, étapes, lien HelloAsso)
 - content/soutien.json   -> cartes "Nous soutenir" (don, parrainage général)

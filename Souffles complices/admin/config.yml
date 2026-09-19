@@ -50,7 +50,14 @@ collections:
               - { label: "Caractère", name: "caractere", widget: "string", required: false, hint: "Ex : Curieux, câlin, timide" }
               - { label: "Photo principale", name: "photo", widget: "image", required: false }
               - { label: "Cadrage de la photo dans la bulle", name: "photo_position", widget: "string", required: false, pattern: ['^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$', "Format attendu : 37% 50%"], hint: "Calculé par l'outil de cadrage (adresse /admin/cadrage.html sur le site) : ajoute la photo, copie le résultat ici. Laisse vide pour un cadrage centré." }
-              - { label: "Galerie photos", name: "galerie", widget: "list", required: false, field: { label: "Photo", name: "image", widget: "image" } }
+              - label: "Galerie photos (polaroïds)"
+                name: "galerie"
+                widget: "list"
+                required: false
+                summary: "{{legende}}"
+                fields:
+                  - { label: "Photo", name: "image", widget: "image" }
+                  - { label: "Légende", name: "legende", widget: "string", required: false, hint: "Facultatif. Ex : Premier jour au refuge" }
               - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut de l'association. Le bouton « Parrainer » n'apparaît que si le statut est « Parrainable »." }
 
   - name: "association"

@@ -471,12 +471,13 @@ html.page-out body > :not(header):not(script):not(.sticky-cta):not(.lightbox):no
 }
 
 /* ---- Fond vivant ---- */
-.fond-vivant{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+body{position:relative;}
+.fond-vivant{position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
 .forme{position:absolute; border-radius:63% 37% 54% 46% / 45% 41% 59% 55%; will-change:transform;}
 .forme.f1{width:52vw; height:52vw; top:-14vw; left:-12vw; background:var(--teal-wash); animation:derive-a 26s ease-in-out infinite alternate;}
-.forme.f2{width:44vw; height:44vw; top:24vh; right:-14vw; background:var(--teal-wash); animation:derive-b 32s ease-in-out infinite alternate;}
-.forme.f3{width:40vw; height:40vw; bottom:-16vw; left:22vw; background:var(--teal-wash); animation:derive-c 30s ease-in-out infinite alternate;}
-.forme.f4{width:26vw; height:26vw; top:52vh; left:-8vw; background:var(--teal-wash); animation:derive-b 22s ease-in-out infinite alternate-reverse;}
+.forme.f2{width:44vw; height:44vw; top:20%; right:-14vw; background:var(--teal-wash); animation:derive-b 32s ease-in-out infinite alternate;}
+.forme.f3{width:40vw; height:40vw; top:48%; left:22vw; background:var(--teal-wash); animation:derive-c 30s ease-in-out infinite alternate;}
+.forme.f4{width:26vw; height:26vw; top:74%; left:-8vw; background:var(--teal-wash); animation:derive-b 22s ease-in-out infinite alternate-reverse;}
 @keyframes derive-a{from{transform:translate(0,0) rotate(0deg) scale(1);} to{transform:translate(12vw,14vh) rotate(38deg) scale(1.14);}}
 @keyframes derive-b{from{transform:translate(0,0) rotate(0deg) scale(1);} to{transform:translate(-10vw,-12vh) rotate(-30deg) scale(1.18);}}
 @keyframes derive-c{from{transform:translate(0,0) rotate(10deg) scale(1.05);} to{transform:translate(-14vw,-9vh) rotate(-24deg) scale(.92);}}

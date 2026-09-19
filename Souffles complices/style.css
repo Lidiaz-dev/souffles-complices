@@ -594,3 +594,42 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   .encart-prix{max-width:210px;}
   .encart-prix .montant{font-size:3rem;}
 }
+
+/* ---- Tuiles : survol, bulles, bouton doré ---- */
+.support-card{
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease, background .3s ease;
+}
+.support-card:hover{
+  transform:translateY(-8px); border-color:var(--teal); background:#fff;
+  box-shadow:0 20px 38px rgba(20,150,149,.18);
+}
+.bulle-tuile{
+  width:150px; height:150px; margin:0 auto 20px; overflow:hidden; flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--teal-pale); border:3px solid var(--teal);
+  border-radius:63% 37% 54% 46% / 45% 41% 59% 55%;
+  animation:bulle-morph 9s ease-in-out infinite;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+}
+.support-card:nth-child(2) .bulle-tuile{animation-duration:11s; animation-delay:-3s;}
+.support-card:nth-child(3) .bulle-tuile{animation-duration:13s; animation-delay:-6s;}
+.bulle-tuile img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+.bulle-tuile .emoji-bulle{font-size:4.2rem; line-height:1;}
+.support-card:hover .bulle-tuile{transform:scale(1.08) rotate(-3deg); box-shadow:0 14px 26px rgba(20,150,149,.3);}
+.support-card:hover .bulle-tuile img{transform:scale(1.1);}
+
+.support-card .btn.btn-or{
+  color:#3a2802; text-shadow:0 1px 0 rgba(255,255,255,.55);
+  background:linear-gradient(120deg,#fff0b0 0%,#f6c948 28%,#d99a0b 55%,#f9dc7a 80%,#e8b230 100%);
+  background-origin:border-box; border:2px solid #c99a1e;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 6px rgba(150,95,0,.25), 0 8px 18px rgba(217,154,11,.38);
+}
+.support-card .btn.btn-or:hover, .support-card .btn.btn-or:focus-visible{
+  background:linear-gradient(120deg,#fff0b0 0%,#f6c948 28%,#d99a0b 55%,#f9dc7a 80%,#e8b230 100%);
+  border-color:#c99a1e; filter:brightness(1.07) saturate(1.1);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 6px rgba(150,95,0,.25), 0 12px 24px rgba(217,154,11,.5);
+}
+@media (prefers-reduced-motion:reduce){
+  .support-card, .bulle-tuile, .bulle-tuile img{transition:none; animation:none;}
+  .support-card:hover, .support-card:hover .bulle-tuile, .support-card:hover .bulle-tuile img{transform:none;}
+}

@@ -3,19 +3,25 @@
     "titre": "Faire un don ponctuel",
     "texte": "Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.",
     "bouton": "Faire un don",
-    "lien": ""
+    "lien": "",
+    "image": "/photos/killerine-2.jpg",
+    "image_position": "50% 20%"
   },
   "parrainage": {
     "titre": "Parrainer un animal",
     "texte": "Parrainez un résident du refuge et suivez son quotidien.",
     "bouton": "Voir les animaux",
-    "lien": "animaux.html"
+    "lien": "animaux.html",
+    "image": "/photos/killerine.jpg",
+    "image_position": "30% 50%"
   },
   "adhesion": {
     "titre": "Devenir adhérent",
     "texte": "Devenez membre de l'association et participez à sa vie tout au long de l'année.",
     "bouton": "Adhérer",
-    "lien": ""
+    "lien": "",
+    "image": "/photos/killerine-1.jpg",
+    "image_position": "50% 20%"
   },
   "note": ""
 }

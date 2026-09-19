@@ -63,14 +63,14 @@
 
 <script src="js/site.js"></script>
 <script>
-  Promise.all([fetchJSON('content/soutien.json'), fetchJSON('content/adhesion.json'), helloassoPromise]).then(([soutien, adh, helloasso]) => {
-    const cotisation = [adh.cotisation, adh.periode].filter(Boolean).join(' ');
+  const EMOJI_TUILE = { don: '🩺', parrainage: '🐴', adhesion: '🤝' };
 
+  Promise.all([fetchJSON('content/soutien.json'), fetchJSON('content/adhesion.json'), helloassoPromise]).then(([soutien, adh, helloasso]) => {
     // --- Les trois tuiles : don, parrainage, adhésion (mêmes tailles, boutons alignés)
     const tuiles = [
       { cle: 'don', helloasso: true },
       { cle: 'parrainage', helloasso: false },
-      { cle: 'adhesion', helloasso: true, badge: cotisation }
+      { cle: 'adhesion', helloasso: true }
     ];
     document.getElementById('soutenirGrid').innerHTML = tuiles.map(t => {
       const c = soutien[t.cle];
@@ -80,12 +80,16 @@
         : (String(c.lien || '').trim() || 'animaux.html');
       const attrs = estLienExterne(lien) ? ' target="_blank" rel="noopener"' : '';
       const masque = t.helloasso ? ' data-masque-sticky' : '';
+      const classeBouton = t.cle === 'parrainage' ? 'btn btn-or' : 'btn btn-primary';
+      const visuel = c.image
+        ? `<img src="${c.image}" alt=""${styleCadrage(c.image_position)}>`
+        : `<span class="emoji-bulle" aria-hidden="true">${EMOJI_TUILE[t.cle] || '🐾'}</span>`;
       return `
         <div class="support-card">
+          <div class="bulle-tuile">${visuel}</div>
           <h3>${c.titre}</h3>
           <p>${c.texte}</p>
-          ${t.badge ? `<div class="tarif-badge">${t.badge}</div>` : ''}
-          <a class="btn btn-primary" href="${lien}"${attrs}${masque}>${c.bouton}</a>
+          <a class="${classeBouton}" href="${lien}"${attrs}${masque}>${c.bouton}</a>
         </div>`;
     }).join('');
     const note = document.getElementById('soutenirNote');

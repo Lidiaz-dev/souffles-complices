@@ -43,8 +43,8 @@ function renderContact(data) {
     <p>${data.email}</p>
     <div class="socials">
       <a href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
-      <a href="${data.helloasso}" target="_blank" rel="noopener">HelloAsso</a>
     </div>
+    <a class="btn btn-primary btn-adherer footer-cta" href="${data.helloasso}" target="_blank" rel="noopener"><span class="label">Soutenir sur HelloAsso</span><span class="arrow" aria-hidden="true">→</span></a>
   `;
 }
 

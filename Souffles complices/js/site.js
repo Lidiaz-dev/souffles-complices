@@ -19,6 +19,12 @@ function lienOuDefaut(lien, defaut) {
   return estLienExterne(lien) ? String(lien).trim() : defaut;
 }
 
+// Cadrage d'une photo dans sa bulle : "37% 50%" (généré par admin/cadrage.html).
+function styleCadrage(position) {
+  const p = String(position || '').trim();
+  return /^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$/.test(p) ? ` style="object-position:${p}"` : '';
+}
+
 // Accepte "1998", "1998-06-24" ou "24/06/1998". Avec la date exacte, l'âge change le jour de l'anniversaire.
 function calculerAge(naissance) {
   const s = String(naissance == null ? '' : naissance).trim();

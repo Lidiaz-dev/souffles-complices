@@ -69,7 +69,7 @@
     document.getElementById('fiche').innerHTML = `
       <div class="fiche">
         <div class="blob-photo">
-          ${a.photo ? `<img src="${esc(a.photo)}" alt="Photo de ${esc(a.nom)}">` : `<span>Photo à venir</span>`}
+          ${a.photo ? `<img src="${esc(a.photo)}" alt="Photo de ${esc(a.nom)}"${styleCadrage(a.photo_position)}>` : `<span>Photo à venir</span>`}
         </div>
         <div>
           <span class="status-pill ${esc(a.statut)}">${esc(STATUT_LABEL[a.statut] || a.statut)}</span>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Outil de cadrage des photos — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .cadrage{display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:start;}
+  .dropzone{
+    display:block; border:3px dashed var(--teal); border-radius:28px; padding:34px 20px; text-align:center;
+    background:var(--paper-soft); cursor:pointer; font-weight:700; color:var(--teal-deep); transition:background .2s, transform .2s;
+  }
+  .dropzone:hover, .dropzone.over{background:var(--teal-pale); transform:scale(1.01);}
+  .dropzone input{display:none;}
+  .stage{position:relative; display:inline-block; margin-top:20px; max-width:100%; line-height:0; border-radius:20px; overflow:hidden; border:3px solid var(--teal-pale); cursor:crosshair; touch-action:none; user-select:none;}
+  .stage img{max-width:100%; max-height:520px; display:block;}
+  .marker{
+    position:absolute; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50%;
+    border:3px solid #fff; box-shadow:0 0 0 3px var(--teal-deep), 0 4px 12px rgba(0,0,0,.35); pointer-events:none;
+  }
+  .marker::after{content:""; position:absolute; left:50%; top:50%; width:8px; height:8px; margin:-4px 0 0 -4px; border-radius:50%; background:var(--teal-deep);}
+  .preview{
+    width:210px; height:210px; border-radius:var(--radius-blob); overflow:hidden; background:var(--teal-pale);
+    border:3px solid var(--teal); display:flex; align-items:center; justify-content:center; color:var(--teal-deep);
+    font-size:.8rem; margin:0 auto 22px;
+  }
+  .preview img{width:100%; height:100%; object-fit:cover;}
+  .result{background:var(--paper-soft); border:2px dashed var(--teal-pale); border-radius:22px; padding:18px; text-align:center;}
+  .result code{display:block; font-size:1.5rem; font-weight:700; color:var(--teal-deep); margin:6px 0 14px;}
+  .result .btn{margin:4px;}
+  #status{margin:14px 0 0; font-weight:600; color:#444; min-height:1.6em;}
+  #status.err{color:#b3402a;}
+  ol.steps{padding-left:20px; margin:0 0 26px;}
+  ol.steps li{margin-bottom:6px;}
+  @media (max-width:820px){ .cadrage{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo-wrap">
+    <img src="../assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </div>
+  <nav class="site-nav"><a href="../index.html">← Retour au site</a></nav>
+</header>
+
+<section class="page-hero">
+  <div class="section-inner">
+    <span class="pill">Outil admin</span>
+    <h1>Cadrage des photos dans les bulles</h1>
+  </div>
+</section>
+
+<section style="padding-top:40px;">
+  <div class="section-inner">
+    <ol class="steps">
+      <li>Choisis la photo de l'animal : l'outil le détecte et propose un cadrage.</li>
+      <li>Si besoin, clique sur la photo à l'endroit qui doit être au centre de la bulle.</li>
+      <li>Copie le cadrage dans la fiche de l'animal (champ « Cadrage de la photo dans la bulle »).</li>
+      <li>Télécharge la photo optimisée et envoie-la comme « Photo principale ».</li>
+    </ol>
+
+    <div class="cadrage">
+      <div>
+        <label class="dropzone" id="drop">
+          <input type="file" id="file" accept="image/*">
+          Glisse une photo ici ou clique pour la choisir
+        </label>
+        <div class="stage" id="stage" hidden>
+          <img id="orig" alt="Photo choisie">
+          <div class="marker" id="marker"></div>
+        </div>
+        <p id="status"></p>
+      </div>
+
+      <div>
+        <div class="preview" id="previewBox"><span>Aperçu de la bulle</span></div>
+        <div class="result" id="result" hidden>
+          <div>Cadrage à copier</div>
+          <code id="out">50% 50%</code>
+          <button class="btn btn-primary" id="copy" type="button">Copier le cadrage</button>
+          <button class="btn btn-outline" id="download" type="button">Télécharger la photo optimisée</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const ANIMAUX_COCO = ['horse', 'sheep', 'cow', 'dog', 'cat', 'bird', 'bear', 'zebra', 'elephant', 'giraffe'];
+  const $ = id => document.getElementById(id);
+  const orig = $('orig'), stage = $('stage'), marker = $('marker'), status = $('status'), previewBox = $('previewBox');
+  let fx = 0.5, fy = 0.5, nomFichier = 'photo', modele = null, chargementModele = null, jeton = 0;
+
+  const clamp = v => Math.min(1, Math.max(0, v));
+
+  // Convertit le point à centrer (fx, fy) en object-position CSS pour une bulle carrée.
+  function positionCss() {
+    const W = orig.naturalWidth, H = orig.naturalHeight, r = W / H;
+    let px = 50, py = 50;
+    if (r > 1) px = clamp((fx * r - 0.5) / (r - 1)) * 100;
+    else if (r < 1) py = clamp((fy / r - 0.5) / (1 / r - 1)) * 100;
+    return `${Math.round(px)}% ${Math.round(py)}%`;
+  }
+
+  function maj() {
+    marker.style.left = (fx * 100) + '%';
+    marker.style.top = (fy * 100) + '%';
+    const pos = positionCss();
+    $('out').textContent = pos;
+    const img = previewBox.querySelector('img');
+    if (img) img.style.objectPosition = pos;
+  }
+
+  function setStatus(msg, erreur) {
+    status.textContent = msg;
+    status.className = erreur ? 'err' : '';
+  }
+
+  function chargerScript(src) {
+    return new Promise((ok, ko) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = ok; s.onerror = () => ko(new Error('Chargement impossible : ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  function chargerModele() {
+    if (!chargementModele) {
+      chargementModele = (async () => {
+        await chargerScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js');
+        await chargerScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js');
+        modele = await cocoSsd.load();
+        return modele;
+      })();
+    }
+    return chargementModele;
+  }
+
+  async function detecter(monJeton) {
+    setStatus('Détection de l\'animal en cours… (le premier chargement peut prendre quelques secondes)');
+    try {
+      const m = await chargerModele();
+      // Détection sur un canvas de taille connue : les coordonnées reviennent alors en pixels de ce canvas.
+      const k = Math.min(1, 1024 / Math.max(orig.naturalWidth, orig.naturalHeight));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(orig.naturalWidth * k); cv.height = Math.round(orig.naturalHeight * k);
+      cv.getContext('2d').drawImage(orig, 0, 0, cv.width, cv.height);
+      const preds = (await m.detect(cv, 20, 0.3)).filter(p => ANIMAUX_COCO.includes(p.class));
+      if (monJeton !== jeton) return;
+      if (!preds.length) {
+        setStatus('Aucun animal détecté : clique sur la photo pour placer le centre de la bulle.', true);
+        return;
+      }
+      // Regroupe tous les animaux sûrs (troupeau) ; sinon garde le meilleur.
+      const surs = preds.filter(p => p.score >= 0.5);
+      const groupe = surs.length ? surs : [preds.sort((a, b) => b.score - a.score)[0]];
+      const x1 = Math.min(...groupe.map(p => p.bbox[0]));
+      const y1 = Math.min(...groupe.map(p => p.bbox[1]));
+      const x2 = Math.max(...groupe.map(p => p.bbox[0] + p.bbox[2]));
+      const y2 = Math.max(...groupe.map(p => p.bbox[1] + p.bbox[3]));
+      fx = clamp(((x1 + x2) / 2) / cv.width);
+      fy = clamp(((y1 + y2) / 2) / cv.height);
+      maj();
+      setStatus(`Animal détecté (${groupe.length > 1 ? groupe.length + ' animaux' : groupe[0].class}). Tu peux ajuster en cliquant sur la photo.`);
+    } catch (e) {
+      if (monJeton === jeton) setStatus('Détection automatique indisponible (connexion ?). Clique sur la photo pour placer le centre de la bulle.', true);
+    }
+  }
+
+  function chargerFichier(fichier) {
+    if (!fichier || !fichier.type.startsWith('image/')) { setStatus('Ce fichier n\'est pas une image.', true); return; }
+    const monJeton = ++jeton;
+    nomFichier = fichier.name.replace(/\.[^.]+$/, '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'photo';
+    const url = URL.createObjectURL(fichier);
+    orig.onload = () => {
+      fx = 0.5; fy = 0.5;
+      stage.hidden = false;
+      $('result').hidden = false;
+      previewBox.innerHTML = `<img src="${url}" alt="Aperçu">`;
+      maj();
+      detecter(monJeton);
+    };
+    orig.src = url;
+  }
+
+  $('file').addEventListener('change', e => chargerFichier(e.target.files[0]));
+  const drop = $('drop');
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => chargerFichier(e.dataTransfer.files[0]));
+
+  function placer(e) {
+    const r = orig.getBoundingClientRect();
+    fx = clamp((e.clientX - r.left) / r.width);
+    fy = clamp((e.clientY - r.top) / r.height);
+    maj();
+  }
+  let glisse = false;
+  stage.addEventListener('pointerdown', e => { glisse = true; stage.setPointerCapture(e.pointerId); placer(e); });
+  stage.addEventListener('pointermove', e => { if (glisse) placer(e); });
+  stage.addEventListener('pointerup', () => { glisse = false; });
+
+  $('copy').addEventListener('click', async () => {
+    const txt = $('out').textContent;
+    try { await navigator.clipboard.writeText(txt); setStatus('Cadrage « ' + txt + ' » copié.'); }
+    catch (e) { setStatus('Copie impossible : sélectionne le texte et copie-le à la main.', true); }
+  });
+
+  // Photo optimisée : 1400 px max, JPEG, nom sans accents.
+  $('download').addEventListener('click', () => {
+    const W = orig.naturalWidth, H = orig.naturalHeight, k = Math.min(1, 1400 / Math.max(W, H));
+    const c = document.createElement('canvas');
+    c.width = Math.round(W * k); c.height = Math.round(H * k);
+    c.getContext('2d').drawImage(orig, 0, 0, c.width, c.height);
+    c.toBlob(b => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(b); a.download = nomFichier + '.jpg';
+      document.body.appendChild(a); a.click(); a.remove();
+      setStatus(`Photo optimisée téléchargée : ${nomFichier}.jpg (${Math.round(b.size / 1024)} Ko).`);
+    }, 'image/jpeg', 0.85);
+  });
+</script>
+
+</body>
+</html>

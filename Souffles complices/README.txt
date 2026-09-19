@@ -30,3 +30,11 @@ Pour activer l'admin :
 
 Le lien HelloAsso par défaut se règle dans l'admin (Coordonnées). Il est utilisé partout
 quand un lien spécifique (don, adhésion, animal) est vide ou invalide.
+
+--- Photos des animaux : outil de cadrage ---
+
+admin/cadrage.html (sur le site : /admin/cadrage.html) détecte l'animal sur une photo,
+propose le meilleur cadrage dans la bulle et permet d'ajuster en cliquant.
+1. Ouvrir l'outil, choisir la photo (la détection utilise TensorFlow.js, connexion internet requise).
+2. Copier le cadrage (ex : 34% 50%) dans le champ "Cadrage de la photo dans la bulle" de la fiche.
+3. Télécharger la photo optimisée (1400 px max, JPEG) et l'envoyer comme "Photo principale".

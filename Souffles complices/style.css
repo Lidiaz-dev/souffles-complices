@@ -163,8 +163,8 @@ section{padding:80px 28px; position:relative;}
 .kcard{transition:transform .15s;}
 .kcard:hover{transform:translateY(-4px);}
 .kcard:hover .more-link{transform:translateX(6px);}
-.kcard:hover .blob-photo{transform:scale(1.07) rotate(-3deg); box-shadow:0 14px 28px rgba(20,150,149,.3);}
-.kcard:hover .blob-photo img{transform:scale(1.1);}
+.kcard:hover .blob-photo{transform:scale(1.05); box-shadow:0 14px 28px rgba(20,150,149,.3);}
+.kcard:hover .blob-photo img{transform:scale(1.04);}
 .kcard p.story{flex:1;}
 .kcard .more-link{display:inline-block; transition:transform .25s ease; font-weight:700; font-size:.85rem; color:var(--teal-deep); margin-top:14px;}
 
@@ -604,8 +604,8 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
 .support-card:nth-child(3) .bulle-tuile{animation-duration:13s; animation-delay:-6s;}
 .bulle-tuile img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
 .bulle-tuile .emoji-bulle{font-size:4.2rem; line-height:1;}
-.support-card:hover .bulle-tuile{transform:scale(1.08) rotate(-3deg); box-shadow:0 14px 26px rgba(20,150,149,.3);}
-.support-card:hover .bulle-tuile img{transform:scale(1.1);}
+.support-card:hover .bulle-tuile{transform:scale(1.05); box-shadow:0 14px 26px rgba(20,150,149,.3);}
+.support-card:hover .bulle-tuile img{transform:scale(1.04);}
 
 .support-card .btn.btn-or{
   color:#3a2802; text-shadow:0 1px 0 rgba(255,255,255,.55);
@@ -657,8 +657,8 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
 .bulle-gardienne .emoji-bulle{font-size:4rem; line-height:1;}
 .gardienne .nom{font-size:2.2rem; line-height:1.1; color:var(--ink);}
 .gardienne .more-link{margin-top:6px; font-weight:700; font-size:.85rem; color:var(--teal-deep); transition:transform .25s ease;}
-.gardienne:hover .bulle-gardienne, .gardienne:focus-visible .bulle-gardienne{transform:scale(1.08) rotate(-3deg); box-shadow:0 14px 28px rgba(20,150,149,.3);}
-.gardienne:hover .bulle-gardienne img{transform:scale(1.1);}
+.gardienne:hover .bulle-gardienne, .gardienne:focus-visible .bulle-gardienne{transform:scale(1.05); box-shadow:0 14px 28px rgba(20,150,149,.3);}
+.gardienne:hover .bulle-gardienne img{transform:scale(1.04);}
 .gardienne:hover .more-link{transform:translateX(6px);}
 .gardienne:focus-visible{outline:none;}
 .kcard.gardienne .status-pill{background:var(--teal-deep);}

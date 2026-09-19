@@ -19,6 +19,14 @@ function lienOuDefaut(lien, defaut) {
   return estLienExterne(lien) ? String(lien).trim() : defaut;
 }
 
+// Version adaptée à l'affichage d'une photo : /photos/x.jpg -> /photos/vignettes/x.jpg.
+// Plus légère et plus nette qu'une grande photo réduite par le navigateur ; repli sur l'originale si elle n'existe pas.
+function attrsImage(chemin) {
+  const p = String(chemin || '');
+  const petite = p.startsWith('/photos/') && !p.startsWith('/photos/vignettes/') ? p.replace('/photos/', '/photos/vignettes/') : p;
+  return `src="${petite}" onerror="this.onerror=null;this.src='${p.replace(/'/g, "\'")}'"`;
+}
+
 // Cadrage d'une photo dans sa bulle : "37% 50%" (généré par admin/cadrage.html).
 function styleCadrage(position) {
   const p = String(position || '').trim();

@@ -85,7 +85,7 @@
       <article class="kcard ${a.statut}" data-status="${a.statut}" style="--i:${Math.min(i, 9)}">
         <div class="bulle-wrap">
           <div class="blob-photo">
-            ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}
+            ${a.photo ? `<img ${attrsImage(a.photo)} alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}
           </div>
         </div>
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
@@ -127,7 +127,7 @@
     document.getElementById('gardiennesGrid').innerHTML = chiens.map((a, i) => `
       <a class="gardienne" href="animal.html?id=${encodeURIComponent(a.numero)}" style="--i:${i}">
         <div class="bulle-gardienne">
-          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="emoji-bulle" aria-hidden="true">🐕</span>`}
+          ${a.photo ? `<img ${attrsImage(a.photo)} alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="emoji-bulle" aria-hidden="true">🐕</span>`}
         </div>
         <span class="nom hand">${a.nom}</span>
         <span class="more-link">Voir la fiche →</span>

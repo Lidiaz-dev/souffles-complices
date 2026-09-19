@@ -82,7 +82,7 @@
       const masque = t.helloasso ? ' data-masque-sticky' : '';
       const classeBouton = t.cle === 'parrainage' ? 'btn btn-or' : 'btn btn-primary';
       const visuel = c.image
-        ? `<img src="${c.image}" alt=""${styleCadrage(c.image_position)}>`
+        ? `<img ${attrsImage(c.image)} alt=""${styleCadrage(c.image_position)}>`
         : `<span class="emoji-bulle" aria-hidden="true">${EMOJI_TUILE[t.cle] || '🐾'}</span>`;
       return `
         <div class="support-card">

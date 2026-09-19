@@ -95,6 +95,15 @@ window.addEventListener('pageshow', e => {
   if (e.persisted) document.documentElement.classList.remove('page-out');
 });
 
+// Fond vivant : grandes formes douces qui dérivent lentement derrière la page.
+function initFond() {
+  const f = document.createElement('div');
+  f.className = 'fond-vivant';
+  f.setAttribute('aria-hidden', 'true');
+  f.innerHTML = '<span class="forme f1"></span><span class="forme f2"></span><span class="forme f3"></span><span class="forme f4"></span>';
+  document.body.prepend(f);
+}
+
 // Un clic sur un animal décoratif le fait sauter.
 document.addEventListener('click', e => {
   const el = e.target.closest('.emoji-vivant');
@@ -146,6 +155,7 @@ function initStickyCta(cta) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initFond();
   markActiveNav();
   decorerPageHero();
   initParade();

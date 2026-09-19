@@ -155,7 +155,8 @@ section{padding:80px 28px; position:relative;}
 .kcard{transition:transform .15s;}
 .kcard:hover{transform:translateY(-4px);}
 .kcard:hover .blob-photo{border-radius:40% 60% 46% 54% / 55% 45% 55% 45%;}
-.kcard .more-link{font-weight:700; font-size:.85rem; color:var(--teal-deep);}
+.kcard p.story{flex:1;}
+.kcard .more-link{font-weight:700; font-size:.85rem; color:var(--teal-deep); margin-top:14px;}
 
 /* ---- Fiche animal ---- */
 .back-link{display:inline-block; margin-bottom:26px; font-weight:700; color:var(--teal-deep); text-decoration:none;}

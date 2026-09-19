@@ -666,3 +666,23 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   .gardienne, .bulle-gardienne, .bulle-gardienne img{animation:none; transition:none;}
   .gardienne:hover .bulle-gardienne, .gardienne:hover .bulle-gardienne img, .gardienne:hover .more-link{transform:none;}
 }
+
+/* ---- Bouton retour de la fiche ---- */
+.back-link{
+  display:inline-flex; align-items:center; gap:10px; margin-bottom:26px; padding:7px 20px 7px 8px;
+  font-family:'Fredoka',sans-serif; font-weight:500; font-size:.98rem; text-decoration:none;
+  color:var(--teal-deep); background:var(--teal-wash); border:2px solid var(--teal-pale); border-radius:999px;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, background .2s ease, border-color .2s ease;
+}
+.back-link:hover, .back-link:focus-visible{
+  text-decoration:none; background:var(--teal-pale); border-color:var(--teal); outline:none;
+  transform:translateX(-4px); box-shadow:0 8px 16px rgba(20,150,149,.2);
+}
+.back-link:active{transform:translateX(0) scale(.97);}
+.back-link .fleche{
+  display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; color:#fff;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-deep) 100%); background-origin:border-box;
+  box-shadow:0 3px 8px rgba(20,150,149,.3); transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.back-link:hover .fleche{transform:translateX(-3px);}
+@media (prefers-reduced-motion:reduce){ .back-link, .back-link .fleche{transition:none;} .back-link:hover, .back-link:hover .fleche{transform:none;} }

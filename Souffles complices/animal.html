@@ -76,8 +76,8 @@
     lb.setAttribute('aria-modal', 'true');
     lb.setAttribute('aria-label', 'Photos de ' + nom);
     lb.innerHTML = `
-      <button type="button" class="lb-btn lb-close" aria-label="Fermer">✕</button>
-      ${items.length > 1 ? '<button type="button" class="lb-btn lb-prev" aria-label="Photo précédente">‹</button><button type="button" class="lb-btn lb-next" aria-label="Photo suivante">›</button>' : ''}
+      <button type="button" class="lb-btn lb-close" aria-label="Fermer"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      ${items.length > 1 ? '<button type="button" class="lb-btn lb-prev" aria-label="Photo précédente"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 5l-7 7 7 7"/></svg></button><button type="button" class="lb-btn lb-next" aria-label="Photo suivante"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 5l7 7-7 7"/></svg></button>' : ''}
       <figure><img alt=""><figcaption></figcaption></figure>
       <div class="lb-count"></div>`;
     document.body.appendChild(lb);

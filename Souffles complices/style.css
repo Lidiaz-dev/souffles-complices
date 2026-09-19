@@ -133,6 +133,8 @@ section{padding:80px 28px; position:relative;}
 }
 .filter-btn.active{background:var(--teal); color:#fff;}
 .filter-btn{transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease, color .2s ease, box-shadow .2s ease;}
+.filter-btn{display:inline-flex; align-items:center; justify-content:center; gap:.45em; line-height:1.2;}
+.filter-btn .emo{font-size:1.1em; line-height:1; display:inline-block; transform:translateY(-.04em);}
 .filter-btn:hover, .filter-btn:focus-visible{transform:translateY(-2px) scale(1.06); box-shadow:0 6px 14px rgba(20,150,149,.22); outline:none;}
 .filter-btn:not(.active):hover{background:var(--teal-pale);}
 .filter-btn:active{transform:scale(.96);}

@@ -132,8 +132,8 @@
     const presents = Object.keys(TYPE_LABEL).filter(t => ANIMAUX.some(a => a.type === t));
     const container = document.getElementById('typeFilters');
     container.innerHTML = presents.length < 2 ? '' :
-      `<button class="filter-btn active" data-filter="all">🐾 Tous les animaux</button>` +
-      presents.map(t => `<button class="filter-btn" data-filter="${t}">${emojiPourType(t)} ${TYPE_LABEL[t]}</button>`).join('');
+      `<button class="filter-btn active" data-filter="all"><span class="emo">🐾</span><span>Tous les animaux</span></button>` +
+      presents.map(t => `<button class="filter-btn" data-filter="${t}"><span class="emo">${emojiPourType(t)}</span><span>${TYPE_LABEL[t]}</span></button>`).join('');
     bindFilters(container, 'type');
   }
 

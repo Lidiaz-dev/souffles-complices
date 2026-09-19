@@ -36,7 +36,7 @@ collections:
                   - { label: "Mouton", value: "mouton" }
                   - { label: "Poule", value: "poule" }
                   - { label: "Canard", value: "canard" }
-              - { label: "Année de naissance", name: "naissance", widget: "number", value_type: "int", min: 1980, max: 2100, required: false, hint: "L'âge est calculé automatiquement sur le site. Laisse vide si inconnue." }
+              - { label: "Naissance", name: "naissance", widget: "string", required: false, pattern: ['^(\d{4}(-\d{2}-\d{2})?|\d{2}/\d{2}/\d{4})$', "Format attendu : 1998, 1998-06-24 ou 24/06/1998"], hint: "Année seule (1998) ou date exacte (1998-06-24 ou 24/06/1998). Seul l'âge est affiché, calculé automatiquement. Laisse vide si inconnue." }
               - label: "Statut"
                 name: "statut"
                 widget: "select"

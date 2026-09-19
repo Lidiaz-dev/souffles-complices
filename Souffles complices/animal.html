@@ -75,8 +75,7 @@
           <span class="status-pill ${esc(a.statut)}">${esc(STATUT_LABEL[a.statut] || a.statut)}</span>
           <h1>${esc(a.nom)}</h1>
           <dl class="fiche-facts">
-            ${fact('Espèce', a.espece)}${fact('Âge', calculerAge(a.naissance))}${fact('Né(e) en', a.naissance)}
-            ${fact('Arrivée au refuge', a.arrivee)}${fact('Caractère', a.caractere)}
+            ${fact('Espèce', a.espece)}${fact('Âge', calculerAge(a.naissance))}            ${fact('Arrivée au refuge', a.arrivee)}${fact('Caractère', a.caractere)}
           </dl>
           <div class="fiche-text">
             ${paragraphs(a.histoire || a.resume)}

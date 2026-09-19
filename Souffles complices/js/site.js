@@ -4,10 +4,17 @@ function fetchJSON(path) {
   return fetch(path, { cache: 'no-cache' }).then(r => r.json());
 }
 
+// Accepte "1998", "1998-06-24" ou "24/06/1998". Avec la date exacte, l'âge change le jour de l'anniversaire.
 function calculerAge(naissance) {
-  const annee = parseInt(naissance, 10);
-  if (!annee) return '';
-  const age = new Date().getFullYear() - annee;
+  const s = String(naissance == null ? '' : naissance).trim();
+  let m = s.match(/^(\d{4})(?:-(\d{2})-(\d{2}))?$/);
+  let annee, mois, jour;
+  if (m) { annee = +m[1]; mois = +m[2] || 0; jour = +m[3] || 0; }
+  else if ((m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/))) { annee = +m[3]; mois = +m[2]; jour = +m[1]; }
+  else return '';
+  const now = new Date();
+  let age = now.getFullYear() - annee;
+  if (mois && (now.getMonth() + 1 < mois || (now.getMonth() + 1 === mois && now.getDate() < jour))) age--;
   if (age < 0) return '';
   if (age === 0) return "Moins d'un an";
   return age + (age > 1 ? ' ans' : ' an');

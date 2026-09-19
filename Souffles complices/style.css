@@ -632,3 +632,37 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   #typeFilters::-webkit-scrollbar{display:none;}
   #typeFilters .filter-btn{flex:0 0 auto; white-space:nowrap;}
 }
+
+/* ---- Encart « Les gardiennes » ---- */
+.gardiennes{background:var(--teal-wash);}
+.gardiennes[hidden]{display:none;}
+.gardiennes-intro{margin:6px 0 0; color:#3a3a3a;}
+.gardiennes-grid{display:flex; flex-wrap:wrap; justify-content:center; gap:44px 36px;}
+.gardienne{
+  display:flex; flex-direction:column; align-items:center; width:200px; text-align:center;
+  text-decoration:none; color:inherit; cursor:pointer;
+  animation:carte-in .6s cubic-bezier(.22,.8,.3,1) backwards; animation-delay:calc(var(--i, 0) * 100ms + 150ms);
+}
+.bulle-gardienne{
+  width:180px; height:180px; overflow:hidden; margin-bottom:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--teal-pale); border:3px solid var(--teal);
+  border-radius:63% 37% 54% 46% / 45% 41% 59% 55%;
+  animation:bulle-morph 9s ease-in-out infinite;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+}
+.gardienne:nth-child(2) .bulle-gardienne{animation-duration:11s; animation-delay:-3s;}
+.gardienne:nth-child(3) .bulle-gardienne{animation-duration:13s; animation-delay:-6s;}
+.bulle-gardienne img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+.bulle-gardienne .emoji-bulle{font-size:4rem; line-height:1;}
+.gardienne .nom{font-size:2.2rem; line-height:1.1; color:var(--ink);}
+.gardienne .more-link{margin-top:6px; font-weight:700; font-size:.85rem; color:var(--teal-deep); transition:transform .25s ease;}
+.gardienne:hover .bulle-gardienne, .gardienne:focus-visible .bulle-gardienne{transform:scale(1.08) rotate(-3deg); box-shadow:0 14px 28px rgba(20,150,149,.3);}
+.gardienne:hover .bulle-gardienne img{transform:scale(1.1);}
+.gardienne:hover .more-link{transform:translateX(6px);}
+.gardienne:focus-visible{outline:none;}
+.kcard.gardienne .status-pill{background:var(--teal-deep);}
+@media (prefers-reduced-motion:reduce){
+  .gardienne, .bulle-gardienne, .bulle-gardienne img{animation:none; transition:none;}
+  .gardienne:hover .bulle-gardienne, .gardienne:hover .bulle-gardienne img, .gardienne:hover .more-link{transform:none;}
+}

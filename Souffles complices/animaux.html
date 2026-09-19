@@ -39,6 +39,17 @@
   </div>
 </section>
 
+<section id="gardiennes" class="gardiennes" hidden>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Nos gardiennes</span>
+      <h2>Les gardiennes du refuge.</h2>
+      <p class="gardiennes-intro">Rencontrez les trois chiennes du refuge.</p>
+    </div>
+    <div class="gardiennes-grid" id="gardiennesGrid"></div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="footer-inner">
     <div class="col">
@@ -55,7 +66,7 @@
 
 <script src="js/site.js"></script>
 <script>
-  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
+  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable", gardienne: "Gardienne" };
   let ANIMAUX = [];
   let PARRAINAGE_LIEN_DEFAUT = HELLOASSO_FALLBACK;
 
@@ -67,7 +78,7 @@
     }
     grid.innerHTML = list.map((a, i) => {
       const parrainageLien = lienOuDefaut(a.lien_parrainage, PARRAINAGE_LIEN_DEFAUT);
-      const parrainageBtn = (a.statut === 'parrainable' && parrainageLien)
+      const parrainageBtn = (a.statut === 'parrainable' && parrainageLien && !a.sans_parrainage)
         ? `<a class="btn btn-primary btn-parrain" href="${parrainageLien}" target="_blank" rel="noopener">Parrainer ${a.nom}</a>`
         : '';
       return `
@@ -94,17 +105,33 @@
     .then(data => {
       ANIMAUX = data.animaux || [];
       renderTypeFilters();
-      renderAnimaux(ANIMAUX);
+      appliquerFiltres();
+      renderGardiennes();
     })
     .catch(() => {
       document.getElementById('animalGrid').innerHTML = "<p>Impossible de charger les fiches animaux pour le moment.</p>";
     });
 
-  const TYPE_LABEL = { cheval: "Chevaux", poney: "Poneys", ane: "Ânes", mouton: "Moutons", poule: "Poules", canard: "Canards" };
+  const TYPE_LABEL = { cheval: "Chevaux", poney: "Poneys", ane: "Ânes", mouton: "Moutons", poule: "Poules", canard: "Canards", chien: "Chiens" };
   const filtres = { type: 'all' };
 
   function appliquerFiltres() {
-    renderAnimaux(ANIMAUX.filter(a => filtres.type === 'all' || a.type === filtres.type));
+    // Les chiennes ont leur propre encart en bas de page : elles n'apparaissent dans la liste qu'avec le filtre « Chiens ».
+    renderAnimaux(ANIMAUX.filter(a => filtres.type === 'all' ? a.type !== 'chien' : a.type === filtres.type));
+  }
+
+  function renderGardiennes() {
+    const chiens = ANIMAUX.filter(a => a.type === 'chien');
+    const section = document.getElementById('gardiennes');
+    section.hidden = !chiens.length;
+    document.getElementById('gardiennesGrid').innerHTML = chiens.map((a, i) => `
+      <a class="gardienne" href="animal.html?id=${encodeURIComponent(a.numero)}" style="--i:${i}">
+        <div class="bulle-gardienne">
+          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="emoji-bulle" aria-hidden="true">🐕</span>`}
+        </div>
+        <span class="nom hand">${a.nom}</span>
+        <span class="more-link">Voir la fiche →</span>
+      </a>`).join('');
   }
 
   function bindFilters(container, key) {

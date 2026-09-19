@@ -36,6 +36,7 @@ collections:
                   - { label: "Mouton", value: "mouton" }
                   - { label: "Poule", value: "poule" }
                   - { label: "Canard", value: "canard" }
+                  - { label: "Chien", value: "chien" }
               - { label: "Naissance", name: "naissance", widget: "string", required: false, pattern: ['^(\d{4}(-\d{2}-\d{2})?|\d{2}/\d{2}/\d{4})$', "Format attendu : 1998, 1998-06-24 ou 24/06/1998"], hint: "Année seule (1998) ou date exacte (1998-06-24 ou 24/06/1998). Seul l'âge est affiché, calculé automatiquement. Laisse vide si inconnue." }
               - label: "Statut"
                 name: "statut"
@@ -44,6 +45,7 @@ collections:
                   - { label: "Résident", value: "resident" }
                   - { label: "En soins", value: "soins" }
                   - { label: "Parrainable", value: "parrainable" }
+                  - { label: "Gardienne", value: "gardienne" }
               - { label: "Résumé (affiché sur la carte)", name: "resume", widget: "text", hint: "Une ou deux phrases courtes." }
               - { label: "Histoire (affichée sur la page de la fiche)", name: "histoire", widget: "text", required: false, hint: "Laisse une ligne vide entre les paragraphes." }
               - { label: "Arrivée au refuge", name: "arrivee", widget: "string", required: false, hint: "Ex : Mars 2023" }
@@ -58,6 +60,7 @@ collections:
                 fields:
                   - { label: "Photo", name: "image", widget: "image" }
                   - { label: "Légende", name: "legende", widget: "string", required: false, hint: "Facultatif. Ex : Premier jour au refuge" }
+              - { label: "Ne pas proposer le parrainage", name: "sans_parrainage", widget: "boolean", default: false, required: false, hint: "Cochez pour les gardiennes : le bouton « Parrainer » n'apparaît ni sur la carte ni sur la fiche." }
               - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut de l'association. Le bouton doré « Parrainer » est toujours affiché sur la fiche ; sur la carte de la liste, le petit bouton n'apparaît que si le statut est « Parrainable »." }
 
   - name: "association"

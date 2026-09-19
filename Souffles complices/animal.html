@@ -46,7 +46,7 @@
 
 <script src="js/site.js"></script>
 <script>
-  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable" };
+  const STATUT_LABEL = { resident: "Résident", soins: "En soins", parrainable: "Parrainable", gardienne: "Gardienne" };
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -129,7 +129,7 @@
   function renderFiche(a, parrainageDefaut) {
     document.title = `${a.nom} — Souffles Complices`;
     const lien = lienOuDefaut(a.lien_parrainage, parrainageDefaut);
-    const btnOr = lien
+    const btnOr = (lien && !a.sans_parrainage)
       ? `<a class="btn-gold" href="${esc(lien)}" target="_blank" rel="noopener">
            <span class="label">
              <span class="ligne1">Parrainer <span class="arrow" aria-hidden="true">→</span></span>

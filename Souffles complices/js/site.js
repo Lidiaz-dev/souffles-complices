@@ -54,7 +54,7 @@ function renderContact(data) {
 }
 
 // Emoji de chaque type d'animal (badges des bulles, filtres).
-const EMOJI_TYPE = { cheval: '🐎', poney: '🐴', ane: '🫏', mouton: '🐑', poule: '🐔', canard: '🦆' };
+const EMOJI_TYPE = { cheval: '🐎', poney: '🐴', ane: '🫏', mouton: '🐑', poule: '🐔', canard: '🦆', chien: '🐕' };
 function emojiPourType(type) { return EMOJI_TYPE[type] || '🐾'; }
 
 // Petits animaux décoratifs autour du titre des pages (attribut data-emojis="🐴 🐑 🐔 🦆").

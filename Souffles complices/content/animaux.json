@@ -32,8 +32,23 @@
       "statut": "resident",
       "resume": "Uddy vit au refuge. Complète son histoire depuis l'espace admin.",
       "histoire": "",
-      "photo": "",
-      "lien_parrainage": ""
+      "photo": "/photos/uddy.jpg",
+      "lien_parrainage": "",
+      "photo_position": "50% 30%",
+      "galerie": [
+        {
+          "image": "/photos/uddy-1.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/uddy-2.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/ouma-1.jpg",
+          "legende": ""
+        }
+      ]
     },
     {
       "numero": "0003",
@@ -44,8 +59,19 @@
       "statut": "resident",
       "resume": "Inesso vit au refuge. Complète son histoire depuis l'espace admin.",
       "histoire": "",
-      "photo": "",
-      "lien_parrainage": ""
+      "photo": "/photos/inesso.jpg",
+      "lien_parrainage": "",
+      "photo_position": "10% 50%",
+      "galerie": [
+        {
+          "image": "/photos/inesso-1.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/inesso-2.jpg",
+          "legende": ""
+        }
+      ]
     },
     {
       "numero": "0004",
@@ -56,8 +82,23 @@
       "statut": "resident",
       "resume": "Les moutons vivent ensemble au refuge. Tu peux créer une fiche par animal si tu préfères.",
       "histoire": "",
-      "photo": "",
-      "lien_parrainage": ""
+      "photo": "/photos/moutons.jpg",
+      "lien_parrainage": "",
+      "photo_position": "50% 50%",
+      "galerie": [
+        {
+          "image": "/photos/moutons-1.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/moutons-2.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/moutons-3.jpg",
+          "legende": ""
+        }
+      ]
     },
     {
       "numero": "0005",
@@ -68,8 +109,15 @@
       "statut": "resident",
       "resume": "Les poules picorent en liberté dans l'enclos pédagogique. Tu peux créer une fiche par animal si tu préfères.",
       "histoire": "",
-      "photo": "",
-      "lien_parrainage": ""
+      "photo": "/photos/poules.jpg",
+      "lien_parrainage": "",
+      "photo_position": "50% 30%",
+      "galerie": [
+        {
+          "image": "/photos/uran.jpg",
+          "legende": ""
+        }
+      ]
     },
     {
       "numero": "0006",
@@ -82,6 +130,69 @@
       "histoire": "",
       "photo": "",
       "lien_parrainage": ""
+    },
+    {
+      "numero": "0007",
+      "nom": "Maika",
+      "espece": "Chienne",
+      "type": "chien",
+      "naissance": "",
+      "statut": "gardienne",
+      "resume": "Maika est l'une des trois gardiennes du refuge.",
+      "histoire": "",
+      "photo": "/photos/maika.jpg",
+      "photo_position": "50% 10%",
+      "lien_parrainage": "",
+      "sans_parrainage": true,
+      "galerie": [
+        {
+          "image": "/photos/maika-1.jpg",
+          "legende": ""
+        }
+      ]
+    },
+    {
+      "numero": "0008",
+      "nom": "Ouma",
+      "espece": "Chienne",
+      "type": "chien",
+      "naissance": "",
+      "statut": "gardienne",
+      "resume": "Ouma est l'une des trois gardiennes du refuge.",
+      "histoire": "",
+      "photo": "/photos/ouma.jpg",
+      "photo_position": "50% 45%",
+      "lien_parrainage": "",
+      "sans_parrainage": true,
+      "galerie": [
+        {
+          "image": "/photos/ouma-1.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/maika.jpg",
+          "legende": ""
+        },
+        {
+          "image": "/photos/inesso-1.jpg",
+          "legende": ""
+        }
+      ]
+    },
+    {
+      "numero": "0009",
+      "nom": "Uran",
+      "espece": "Chienne",
+      "type": "chien",
+      "naissance": "",
+      "statut": "gardienne",
+      "resume": "Uran est l'une des trois gardiennes du refuge.",
+      "histoire": "",
+      "photo": "/photos/uran.jpg",
+      "photo_position": "50% 5%",
+      "lien_parrainage": "",
+      "sans_parrainage": true,
+      "galerie": []
     }
   ]
 }

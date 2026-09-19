@@ -23,7 +23,7 @@
   </nav>
 </header>
 
-<section class="page-hero">
+<section class="page-hero" data-emojis="🐎 🐑 🐔 🦆">
   <div class="section-inner">
     <span class="pill">Fiches animaux</span>
     <h1>Ils vivent au refuge.</h1>
@@ -78,8 +78,11 @@
         : '';
       return `
       <article class="kcard ${a.statut}" data-status="${a.statut}">
-        <div class="blob-photo">
-          ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}
+        <div class="bulle-wrap">
+          <div class="blob-photo">
+            ${a.photo ? `<img src="${a.photo}" alt="Photo de ${a.nom}"${styleCadrage(a.photo_position)}>` : `<span class="placeholder">Photo à venir</span>`}
+          </div>
+          <span class="espece-badge" aria-hidden="true">${emojiPourType(a.type)}</span>
         </div>
         <div class="status-pill">${STATUT_LABEL[a.statut] || a.statut}</div>
         <h3 class="hand"><a class="card-link" href="animal.html?id=${encodeURIComponent(a.numero)}">${a.nom}</a></h3>
@@ -129,8 +132,8 @@
     const presents = Object.keys(TYPE_LABEL).filter(t => ANIMAUX.some(a => a.type === t));
     const container = document.getElementById('typeFilters');
     container.innerHTML = presents.length < 2 ? '' :
-      `<button class="filter-btn active" data-filter="all">Tous les animaux</button>` +
-      presents.map(t => `<button class="filter-btn" data-filter="${t}">${TYPE_LABEL[t]}</button>`).join('');
+      `<button class="filter-btn active" data-filter="all">🐾 Tous les animaux</button>` +
+      presents.map(t => `<button class="filter-btn" data-filter="${t}">${emojiPourType(t)} ${TYPE_LABEL[t]}</button>`).join('');
     bindFilters(container, 'type');
   }
 

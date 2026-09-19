@@ -143,8 +143,11 @@
     document.getElementById('fiche').innerHTML = `
       <div class="fiche">
         <div class="fiche-photo">
+         <div class="bulle-wrap">
          <div class="blob-photo">
           ${a.photo ? `<img src="${esc(a.photo)}" alt="Photo de ${esc(a.nom)}"${styleCadrage(a.photo_position)}>` : `<span>Photo à venir</span>`}
+         </div>
+         <span class="espece-badge emoji-vivant" aria-hidden="true">${emojiPourType(a.type)}</span>
          </div>
          ${parrainBureau}
         </div>

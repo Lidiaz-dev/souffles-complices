@@ -53,6 +53,40 @@ function renderContact(data) {
   `;
 }
 
+// Emoji de chaque type d'animal (badges des bulles, filtres).
+const EMOJI_TYPE = { cheval: '🐎', poney: '🐴', ane: '🫏', mouton: '🐑', poule: '🐔', canard: '🦆' };
+function emojiPourType(type) { return EMOJI_TYPE[type] || '🐾'; }
+
+// Petits animaux décoratifs autour du titre des pages (attribut data-emojis="🐴 🐑 🐔 🦆").
+function decorerPageHero() {
+  const ph = document.querySelector('.page-hero[data-emojis]');
+  if (!ph) return;
+  ph.dataset.emojis.split(/\s+/).filter(Boolean).forEach((e, i) => {
+    const s = document.createElement('span');
+    s.className = `deco emoji-vivant ${i % 2 ? 'droite' : 'gauche'} d${Math.floor(i / 2) + 1}`;
+    s.setAttribute('aria-hidden', 'true');
+    s.textContent = e;
+    ph.appendChild(s);
+  });
+}
+
+// Défilé d'animaux : on duplique la piste pour une boucle sans coupure.
+function initParade() {
+  document.querySelectorAll('.parade-piste').forEach(piste => {
+    [...piste.children].forEach(c => piste.appendChild(c.cloneNode(true)));
+  });
+}
+
+// Un clic sur un animal décoratif le fait sauter.
+document.addEventListener('click', e => {
+  const el = e.target.closest('.emoji-vivant');
+  if (!el) return;
+  el.classList.remove('saute');
+  void el.offsetWidth;
+  el.classList.add('saute');
+  el.addEventListener('animationend', () => el.classList.remove('saute'), { once: true });
+});
+
 function markActiveNav() {
   let path = location.pathname.split('/').pop() || 'index.html';
   if (path === 'animal.html') path = 'animaux.html';
@@ -95,6 +129,8 @@ function initStickyCta(cta) {
 
 document.addEventListener('DOMContentLoaded', () => {
   markActiveNav();
+  decorerPageHero();
+  initParade();
   helloassoPromise.then(lien => {
     const cta = document.createElement('a');
     cta.className = 'btn btn-primary btn-adherer sticky-cta';

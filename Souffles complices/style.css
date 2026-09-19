@@ -243,6 +243,9 @@ section{padding:80px 28px; position:relative;}
 
 /* ---- Animaux qui donnent de la vie ---- */
 .emoji-vivant{display:inline-block; line-height:1; user-select:none; cursor:pointer; -webkit-tap-highlight-color:transparent;}
+.emoji-vivant::after{content:""; position:absolute; inset:-18px;}
+.marcheur{position:relative;}
+.parade-piste:hover{animation-play-state:paused;}
 .hero-anim{position:absolute; z-index:0; font-size:clamp(2.4rem,6vw,4.8rem); animation:flotte 5s ease-in-out infinite;}
 .hero-anim.a1{top:12%; left:5%;}
 .hero-anim.a2{top:8%; right:6%; animation-duration:6.2s; animation-delay:-1.5s;}

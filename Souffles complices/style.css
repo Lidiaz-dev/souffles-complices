@@ -194,6 +194,41 @@ section{padding:80px 28px; position:relative;}
 .fiche-facts dt{font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:#666;}
 .fiche-facts dd{margin:2px 0 0; font-weight:700;}
 .fiche-text p{margin:0 0 14px; color:#3a3a3a;}
+/* ---- Bouton Parrainer (doré) ---- */
+.parrainage-bloc{margin-top:28px; display:flex; flex-direction:column; align-items:flex-start; gap:10px;}
+.btn-gold{
+  position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:12px;
+  padding:16px 32px; border-radius:999px; text-decoration:none; font-weight:800; font-size:1.05rem; letter-spacing:.01em;
+  color:#3a2802; text-shadow:0 1px 0 rgba(255,255,255,.55);
+  background:linear-gradient(120deg,#fff0b0 0%,#f6c948 28%,#d99a0b 55%,#f9dc7a 80%,#e8b230 100%);
+  background-size:220% 220%;
+  border:2px solid #c99a1e;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 6px rgba(150,95,0,.25), 0 10px 24px rgba(217,154,11,.42);
+  animation:gold-shift 6s ease-in-out infinite, gold-glow 2.8s ease-out infinite;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), filter .2s ease;
+}
+.btn-gold .label, .btn-gold .arrow, .btn-gold .etoile{position:relative; z-index:1;}
+.btn-gold .etoile{width:22px; height:22px; fill:#8a5a00; filter:drop-shadow(0 1px 0 rgba(255,255,255,.7)); animation:gold-twinkle 2.4s ease-in-out infinite;}
+.btn-gold .arrow{font-size:1.25em; line-height:1; display:inline-block; animation:adherer-nudge 1.5s ease-in-out infinite;}
+.btn-gold::before{
+  content:""; position:absolute; top:0; left:-80%; width:40%; height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.85),transparent);
+  transform:skewX(-20deg); animation:gold-shine 3.6s ease-in-out infinite;
+}
+.btn-gold:hover, .btn-gold:focus-visible{transform:translateY(-4px) scale(1.06) rotate(-1deg); filter:brightness(1.07) saturate(1.1); outline:none;}
+.btn-gold:hover .etoile{animation-duration:.7s;}
+.btn-gold:active{transform:translateY(0) scale(.98);}
+.gold-note{font-family:'Caveat',cursive; font-size:1.25rem; font-weight:700; color:#8a5a00;}
+@keyframes gold-shift{0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;}}
+@keyframes gold-shine{0%,50%{left:-80%;} 100%{left:140%;}}
+@keyframes gold-glow{
+  0%{box-shadow:inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 6px rgba(150,95,0,.25), 0 10px 24px rgba(217,154,11,.42), 0 0 0 0 rgba(246,201,72,.6);}
+  70%,100%{box-shadow:inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 6px rgba(150,95,0,.25), 0 10px 24px rgba(217,154,11,.42), 0 0 0 20px rgba(246,201,72,0);}
+}
+@keyframes gold-twinkle{0%,100%{transform:scale(1) rotate(0deg);} 50%{transform:scale(1.25) rotate(20deg);}}
+@media (max-width:820px){ .parrainage-bloc{align-items:center;} .gold-note{text-align:center;} }
+@media (prefers-reduced-motion:reduce){ .btn-gold, .btn-gold::before, .btn-gold .etoile, .btn-gold .arrow{animation:none;} .btn-gold{transition:none;} .btn-gold:hover{transform:none;} }
+
 /* ---- Galerie polaroïds ---- */
 .polaroids{margin-top:60px;}
 .polaroids h2{font-family:'Caveat',cursive; font-size:2.4rem; text-align:center; margin-bottom:26px;}

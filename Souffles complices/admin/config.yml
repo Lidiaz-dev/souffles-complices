@@ -58,7 +58,7 @@ collections:
                 fields:
                   - { label: "Photo", name: "image", widget: "image" }
                   - { label: "Légende", name: "legende", widget: "string", required: false, hint: "Facultatif. Ex : Premier jour au refuge" }
-              - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut de l'association. Le bouton « Parrainer » n'apparaît que si le statut est « Parrainable »." }
+              - { label: "Lien de parrainage HelloAsso", name: "lien_parrainage", widget: "string", required: false, hint: "Laisse vide pour utiliser le lien HelloAsso par défaut de l'association. Le bouton doré « Parrainer » est toujours affiché sur la fiche ; sur la carte de la liste, le petit bouton n'apparaît que si le statut est « Parrainable »." }
 
   - name: "association"
     label: "Présentation de l'association"

@@ -129,8 +129,15 @@
   function renderFiche(a, parrainageDefaut) {
     document.title = `${a.nom} — Souffles Complices`;
     const lien = lienOuDefaut(a.lien_parrainage, parrainageDefaut);
-    const parrainBtn = (a.statut === 'parrainable' && lien)
-      ? `<p><a class="btn btn-primary" href="${esc(lien)}" target="_blank" rel="noopener">Parrainer ${esc(a.nom)}</a></p>` : '';
+    const parrainBtn = lien
+      ? `<div class="parrainage-bloc">
+           <a class="btn-gold" href="${esc(lien)}" target="_blank" rel="noopener">
+             <svg class="etoile" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.5 6.8L12 17l-6.2 3.5 1.5-6.8L2.2 9l6.9-.7z"/></svg>
+             <span class="label">Parrainer ${esc(a.nom)}</span>
+             <span class="arrow" aria-hidden="true">→</span>
+           </a>
+           <span class="gold-note">Un geste durable pour ${esc(a.nom)}, via HelloAsso</span>
+         </div>` : '';
     const galerie = normaliserGalerie(a.galerie);
     document.getElementById('fiche').innerHTML = `
       <div class="fiche">

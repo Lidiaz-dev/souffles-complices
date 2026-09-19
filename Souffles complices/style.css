@@ -633,3 +633,4 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   .support-card, .bulle-tuile, .bulle-tuile img{transition:none; animation:none;}
   .support-card:hover, .support-card:hover .bulle-tuile, .support-card:hover .bulle-tuile img{transform:none;}
 }
+.support-card{cursor:pointer;}

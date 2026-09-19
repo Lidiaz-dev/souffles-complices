@@ -119,6 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
   new MutationObserver(() => ouvrirExternesAilleurs()).observe(document.body, { childList: true, subtree: true });
 });
 
+// Cartes d'action (accueil, Nous soutenir) : un clic n'importe où sur la carte suit le lien de son bouton.
+document.addEventListener('click', e => {
+  const carte = e.target.closest('.support-card');
+  if (!carte || e.target.closest('a, button')) return;
+  if (window.getSelection && String(window.getSelection())) return;
+  const lien = carte.querySelector('a.btn');
+  if (lien) lien.click();
+});
+
 // Un clic sur un animal décoratif le fait sauter.
 document.addEventListener('click', e => {
   const el = e.target.closest('.emoji-vivant');

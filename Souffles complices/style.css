@@ -754,20 +754,19 @@ footer .socials a{display:inline-flex; align-items:center; gap:8px; padding:8px 
 .adresse-bloc p{margin:0 0 16px; color:#3a3a3a;}
 
 .formulaire{
-  display:flex; flex-direction:column; gap:18px; max-width:640px; margin:0 auto; padding:34px 36px;
-  background:#fff; border:2px dashed var(--teal); border-radius:36px; box-shadow:0 12px 30px rgba(20,150,149,.10);
+  display:flex; flex-direction:column; gap:18px; max-width:640px; margin:0 auto; padding:0;
 }
 .formulaire label{display:flex; flex-direction:column; gap:7px; font-family:'Fredoka',sans-serif; font-weight:500; color:var(--ink);}
 .formulaire input, .formulaire textarea{
   font:inherit; font-family:'Nunito',sans-serif; font-size:1rem; color:var(--ink); padding:13px 18px;
-  background:var(--paper-soft); border:2px solid var(--teal-pale); border-radius:22px; outline:none; resize:vertical;
+  background:#fff; border:2px solid var(--teal-pale); border-radius:22px; outline:none; resize:vertical;
   transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
 .formulaire input:focus, .formulaire textarea:focus{border-color:var(--teal); background:#fff; box-shadow:0 0 0 4px rgba(43,196,194,.2);}
 .formulaire .btn{align-self:center; height:56px; padding:0 34px; display:flex; align-items:center; justify-content:center;}
 .form-erreur{margin:0; padding:10px 16px; background:#fdecea; color:#b3402a; border-radius:16px; font-weight:600; text-align:center;}
 .form-note{margin:0; text-align:center; font-size:.88rem; color:#555;}
-@media (max-width:820px){ .formulaire{padding:26px 20px;} }
+
 @media (prefers-reduced-motion:reduce){ .contact-card .bulle-icone{animation:none; transition:none;} .contact-card:hover .bulle-icone{transform:none;} }
 
 /* ---- Bloc contact (page L'association) ---- */

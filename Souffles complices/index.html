@@ -31,31 +31,16 @@
     <path fill="var(--teal-wash)" d="M300,50 C360,100 390,190 350,260 C310,330 210,370 140,330 C70,290 30,200 60,130 C90,60 180,10 250,10 C270,10 280,20 300,50 Z"/>
   </svg>
 
-  <div class="hero-inner">
-    <span class="pill">Association loi 1901</span>
-    <h1>Un refuge, une ferme,<br><span class="hand-tag hand">des souffles complices.</span></h1>
-    <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
-    <div class="hero-actions">
-      <a href="animaux.html" class="btn btn-primary">Rencontrer nos animaux</a>
-      <a href="soutenir.html" class="btn btn-outline" id="btnDon" data-masque-sticky>Faire un don</a>
-    </div>
-  </div>
-
-  <span class="hero-anim emoji-vivant a1" aria-hidden="true">🐴</span>
-  <span class="hero-anim emoji-vivant a2" aria-hidden="true">🐑</span>
-  <span class="hero-anim emoji-vivant a3" aria-hidden="true">🐔</span>
-  <span class="hero-anim emoji-vivant a4" aria-hidden="true">🦆</span>
-
-  <div class="parade" aria-hidden="true">
-    <div class="parade-piste">
-      <span class="marcheur emoji-vivant">🐴</span>
-      <span class="marcheur emoji-vivant">🐑</span>
-      <span class="marcheur emoji-vivant">🐔</span>
-      <span class="marcheur emoji-vivant">🫏</span>
-      <span class="marcheur emoji-vivant">🦆</span>
-      <span class="marcheur emoji-vivant">🐎</span>
-      <span class="marcheur emoji-vivant">🐑</span>
-      <span class="marcheur emoji-vivant">🐔</span>
+  <div class="hero-grille">
+    <div class="hero-visuel" id="heroBulles" aria-label="Quelques habitants du refuge"></div>
+    <div class="hero-inner">
+      <span class="pill">Association loi 1901</span>
+      <h1>Un refuge, une ferme,<br><span class="hand-tag hand">des souffles complices.</span></h1>
+      <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
+      <div class="hero-actions">
+        <a href="animaux.html" class="btn btn-primary">Rencontrer nos animaux</a>
+        <a href="soutenir.html" class="btn btn-outline" id="btnDon" data-masque-sticky>Faire un don</a>
+      </div>
     </div>
   </div>
 </section>
@@ -108,6 +93,22 @@
     b.href = lienOuDefaut(soutien.don && soutien.don.lien, defaut);
     b.target = '_blank';
     b.rel = 'noopener';
+  });
+
+  // Collage de trois bulles : trois habitants du refuge tirés au hasard (parmi ceux qui ont une photo).
+  fetchJSON('content/animaux.json').catch(() => ({ animaux: [] })).then(data => {
+    const melanger = liste => { const t = [...liste]; for (let i = t.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [t[i], t[j]] = [t[j], t[i]]; } return t; };
+    const choix = melanger((data.animaux || []).filter(a => a.photo)).slice(0, 3);
+    const secours = ['🐴', '🐑', '🐔'];
+    document.getElementById('heroBulles').innerHTML = [0, 1, 2].map(i => {
+      const a = choix[i];
+      if (!a) return `<div class="hb hb${i + 1}"><span class="hb-photo"><span class="emoji-bulle" aria-hidden="true">${secours[i]}</span></span></div>`;
+      return `
+        <a class="hb hb${i + 1}" href="animal.html?id=${encodeURIComponent(a.numero)}" aria-label="Voir la fiche de ${a.nom}">
+          <span class="hb-photo"><img ${attrsImage(a.photo)} alt=""${styleCadrage(a.photo_position)}></span>
+          <span class="hb-nom">${a.nom}</span>
+        </a>`;
+    }).join('');
   });
 
 </script>

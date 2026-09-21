@@ -38,3 +38,13 @@ propose le meilleur cadrage dans la bulle et permet d'ajuster en cliquant.
 1. Ouvrir l'outil, choisir la photo (la détection utilise TensorFlow.js, connexion internet requise).
 2. Copier le cadrage (ex : 34% 50%) dans le champ "Cadrage de la photo dans la bulle" de la fiche.
 3. Télécharger la photo optimisée (1400 px max, JPEG) et l'envoyer comme "Photo principale".
+
+--- Tester l'administration en local (sans mettre le site en ligne) ---
+
+Deux terminaux, dans le dossier du site :
+1. python -m http.server 8123          (le site)
+2. npx decap-server                    (petit serveur qui écrit les modifications dans les fichiers)
+Puis ouvrir http://localhost:8123/admin/ et cliquer sur « Login ».
+Les modifications sont écrites directement dans content/*.json et photos/ ; il faut ensuite les
+envoyer sur GitHub (git add / commit / push) pour qu'elles soient publiées.
+Ne laisser decap-server tourner que le temps des tests (il n'a pas de mot de passe).

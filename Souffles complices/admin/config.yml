@@ -2,6 +2,9 @@ backend:
   name: git-gateway
   branch: main
 
+# Test en local : lancer « npx decap-server » dans ce dossier, puis ouvrir http://localhost:8123/admin/
+local_backend: true
+
 # Là où le CMS écrit le site après une modification
 # Remplace ces deux lignes par l'URL réelle de ton site une fois déployé sur Netlify
 site_url: https://VOTRE-SITE.netlify.app

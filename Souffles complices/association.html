@@ -53,29 +53,6 @@
   </div>
 </section>
 
-<section id="message" style="background:var(--teal-wash);">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="pill">Message</span>
-      <h2>Envoyez-nous un message.</h2>
-    </div>
-    <form class="formulaire" id="formContact" novalidate>
-      <label>Votre nom
-        <input type="text" id="fNom" autocomplete="name" required>
-      </label>
-      <label>Votre adresse email
-        <input type="email" id="fEmail" autocomplete="email" required>
-      </label>
-      <label>Votre message
-        <textarea id="fMessage" rows="6" required></textarea>
-      </label>
-      <p class="form-erreur" id="formErreur" hidden></p>
-      <button class="btn btn-primary" type="submit">Envoyer le message</button>
-      <p class="form-note" id="formNote">Le message s'ouvre dans votre messagerie, prêt à être envoyé.</p>
-    </form>
-  </div>
-</section>
-
 <footer id="contact">
   <div class="footer-inner">
     <div class="col col-marque">
@@ -129,31 +106,6 @@
           <a class="btn btn-outline" href="${carte}">Voir sur la carte</a>
         </div>`;
     }
-  });
-
-  function lienMailto(destinataire, nom, email, message) {
-    const sujet = `Message depuis le site — ${nom}`;
-    const corps = `${message}\n\n—\n${nom}\n${email}`;
-    return `mailto:${destinataire}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-  }
-
-  // Formulaire : prépare un email dans la messagerie du visiteur (aucun serveur nécessaire).
-  document.getElementById('formContact').addEventListener('submit', e => {
-    e.preventDefault();
-    const nom = document.getElementById('fNom').value.trim();
-    const email = document.getElementById('fEmail').value.trim();
-    const message = document.getElementById('fMessage').value.trim();
-    const erreur = document.getElementById('formErreur');
-    const manque = !nom ? 'votre nom' : !/^\S+@\S+\.\S+$/.test(email) ? 'une adresse email valide' : !message ? 'votre message' : '';
-    if (manque) {
-      erreur.textContent = `Merci d'indiquer ${manque}.`;
-      erreur.hidden = false;
-      return;
-    }
-    erreur.hidden = true;
-    if (!CONTACT.email) { erreur.textContent = "L'adresse de contact n'est pas disponible pour le moment."; erreur.hidden = false; return; }
-    location.href = lienMailto(CONTACT.email, nom, email, message);
-    document.getElementById('formNote').textContent = "Votre messagerie s'ouvre avec le message. Il ne reste qu'à l'envoyer.";
   });
 </script>
 

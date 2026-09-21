@@ -24,7 +24,7 @@ function lienOuDefaut(lien, defaut) {
 function attrsImage(chemin) {
   const p = String(chemin || '');
   const petite = p.startsWith('/photos/') && !p.startsWith('/photos/vignettes/') ? p.replace('/photos/', '/photos/vignettes/') : p;
-  return `src="${petite}" onerror="this.onerror=null;this.src='${p.replace(/'/g, "\'")}'"`;
+  return `src="${petite}" onerror="this.onerror=null;this.src='${p.replace(/'/g, "\\'")}'"`;
 }
 
 // Cadrage d'une photo dans sa bulle : "37% 50%" (généré par admin/cadrage.html).
@@ -49,15 +49,48 @@ function calculerAge(naissance) {
   return age + (age > 1 ? ' ans' : ' an');
 }
 
+// Numéro français "06 20 35 14 31" -> "+33620351431" (format attendu par tel: et sms:).
+function versTel(numero) {
+  const brut = String(numero || '').trim();
+  const chiffres = brut.replace(/\D/g, '');
+  if (brut.startsWith('+')) return '+' + chiffres;
+  if (chiffres.length === 10 && chiffres.startsWith('0')) return '+33' + chiffres.slice(1);
+  if (chiffres.startsWith('33')) return '+' + chiffres;
+  return chiffres;
+}
+
+const ICONES = {
+  tel: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  sms: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  mail: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>'
+};
+function icone(nom, taille) {
+  const t = taille || 18;
+  return `<svg viewBox="0 0 24 24" width="${t}" height="${t}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONES[nom]}</svg>`;
+}
+
 function renderContact(data) {
   const el = document.getElementById('footerContact');
   if (!el) return;
+  const tel = versTel(data.telephone);
   el.innerHTML = `
-    <p>${data.telephone}</p>
-    <p>${data.email}</p>
+    <h4>Nous contacter</h4>
+    ${data.telephone ? `
+    <div class="contact-ligne">
+      <span class="pastille-icone">${icone('tel')}</span>
+      <a class="contact-lien" href="tel:${tel}" aria-label="Appeler le ${data.telephone}">${data.telephone}</a>
+      <a class="mini-action" href="sms:${tel}" aria-label="Envoyer un SMS au ${data.telephone}">${icone('sms', 14)}<span>SMS</span></a>
+    </div>` : ''}
+    ${data.email ? `
+    <div class="contact-ligne">
+      <span class="pastille-icone">${icone('mail')}</span>
+      <a class="contact-lien" href="mailto:${data.email}" aria-label="Envoyer un email à ${data.email}">${data.email}</a>
+    </div>` : ''}
+    ${data.facebook ? `
     <div class="socials">
-      <a href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
-    </div>
+      <a href="${data.facebook}" target="_blank" rel="noopener">${icone('fb', 16)}<span>Facebook</span></a>
+    </div>` : ''}
   `;
 }
 

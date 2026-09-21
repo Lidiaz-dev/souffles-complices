@@ -1,10 +1,10 @@
 {
   "association": {
-    "image": "",
-    "image_position": ""
+    "image": "/photos/accueil-association.jpg",
+    "image_position": "20% 50%"
   },
   "soutenir": {
-    "image": "",
-    "image_position": ""
+    "image": "/photos/accueil-soutenir.jpg",
+    "image_position": "30% 50%"
   }
 }

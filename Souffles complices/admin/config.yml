@@ -138,4 +138,5 @@ collections:
           - { label: "Téléphone", name: "telephone", widget: "string", hint: "Ex : 06 20 35 14 31. Le site en fait des liens « Appeler » et « SMS » (numéro français converti automatiquement)." }
           - { label: "Email", name: "email", widget: "string", hint: "Devient un lien qui ouvre la messagerie du visiteur." }
           - { label: "Lien Facebook", name: "facebook", widget: "string" }
+          - { label: "Adresse du refuge (facultatif)", name: "adresse", widget: "text", required: false, hint: "S'affiche sur la page Contact avec un lien vers la carte. Laisse vide pour ne rien afficher." }
           - { label: "Lien HelloAsso par défaut de l'association", name: "helloasso", widget: "string", hint: "Utilisé partout (dons, adhésion, parrainage, pied de page) quand aucun lien spécifique n'est renseigné." }

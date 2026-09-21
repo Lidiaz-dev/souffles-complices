@@ -5,7 +5,7 @@ function fetchJSON(path) {
 }
 
 // Lien HelloAsso de base : utilisé partout dès qu'aucun lien valide n'est renseigné.
-// Modifiable dans l'admin (Coordonnées > Lien HelloAsso par défaut).
+// Modifiable dans content/contact.json (champ "helloasso").
 const HELLOASSO_FALLBACK = 'https://www.helloasso.com/associations/souffles-complices';
 
 function estLienExterne(lien) {
@@ -27,7 +27,7 @@ function attrsImage(chemin) {
   return `src="${petite}" onerror="this.onerror=null;this.src='${p.replace(/'/g, "\\'")}'"`;
 }
 
-// Cadrage d'une photo dans sa bulle : "37% 50%" (généré par admin/cadrage.html).
+// Cadrage d'une photo dans sa bulle : "37% 50%" (calculé avec outils/cadrage.html).
 function styleCadrage(position) {
   const p = String(position || '').trim();
   return /^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$/.test(p) ? ` style="object-position:${p}"` : '';
@@ -146,7 +146,7 @@ function initFond() {
 }
 
 // Filet de sécurité : tout lien vers un autre site s'ouvre dans un nouvel onglet,
-// y compris ceux ajoutés plus tard (contenu de l'admin, boutons créés en JavaScript).
+// y compris ceux ajoutés plus tard (contenus des fichiers JSON, boutons créés en JavaScript).
 function ouvrirExternesAilleurs(racine) {
   (racine || document).querySelectorAll('a[href]').forEach(a => {
     if (!estLienExterne(a.getAttribute('href'))) return;

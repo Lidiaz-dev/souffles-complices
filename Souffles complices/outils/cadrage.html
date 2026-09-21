@@ -17,6 +17,7 @@
   .dropzone:hover, .dropzone.over{background:var(--teal-pale); transform:scale(1.01);}
   .dropzone input{display:none;}
   .stage{position:relative; display:inline-block; margin-top:20px; max-width:100%; line-height:0; border-radius:20px; overflow:hidden; border:3px solid var(--teal-pale); cursor:crosshair; touch-action:none; user-select:none;}
+  .stage[hidden]{display:none;}
   .stage img{max-width:100%; max-height:520px; display:block;}
   .marker{
     position:absolute; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50%;
@@ -51,7 +52,7 @@
 
 <section class="page-hero">
   <div class="section-inner">
-    <span class="pill">Outil admin</span>
+    <span class="pill">Outil photos</span>
     <h1>Cadrage des photos dans les bulles</h1>
   </div>
 </section>
@@ -61,8 +62,8 @@
     <ol class="steps">
       <li>Choisis la photo de l'animal : l'outil le détecte et propose un cadrage.</li>
       <li>Si besoin, clique sur la photo à l'endroit qui doit être au centre de la bulle.</li>
-      <li>Copie le cadrage dans la fiche de l'animal (champ « Cadrage de la photo dans la bulle »).</li>
-      <li>Télécharge la photo optimisée et envoie-la comme « Photo principale ».</li>
+      <li>Copie le cadrage dans le champ <code>photo_position</code> de l'animal, dans <code>content/animaux.json</code>.</li>
+      <li>Prépare la photo avec <code>python outils/preparer-photos.py</code> (ou télécharge la photo optimisée ci-dessous).</li>
     </ol>
 
     <div class="cadrage">

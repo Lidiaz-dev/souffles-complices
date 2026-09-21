@@ -53,16 +53,19 @@
     </div>
     <div class="support-grid">
       <div class="support-card">
+        <div class="bulle-tuile" id="bulleAsso"><span class="emoji-bulle" aria-hidden="true">🏡</span></div>
         <h3>L'association</h3>
         <p>Notre mission, nos actions et notre engagement auprès des animaux en difficulté.</p>
-        <a class="btn btn-primary" href="association.html">Découvrir l'association</a>
+        <a class="btn btn-primary" href="association.html">Découvrir</a>
       </div>
       <div class="support-card">
+        <div class="bulle-tuile" id="bulleAnimaux"><span class="emoji-bulle" aria-hidden="true">🐴</span></div>
         <h3>Les animaux</h3>
         <p>Chevaux, ânes, moutons, poules, canards... rencontrez les résidents du refuge.</p>
         <a class="btn btn-primary" href="animaux.html">Voir les animaux</a>
       </div>
       <div class="support-card">
+        <div class="bulle-tuile" id="bulleSoutenir"><span class="emoji-bulle" aria-hidden="true">🤝</span></div>
         <h3>Nous soutenir</h3>
         <p>Don, parrainage ou adhésion : plusieurs façons d'aider le refuge dès aujourd'hui.</p>
         <a class="btn btn-primary" href="soutenir.html">Nous soutenir</a>
@@ -98,7 +101,8 @@
   // Collage de trois bulles : trois habitants du refuge tirés au hasard (parmi ceux qui ont une photo).
   fetchJSON('content/animaux.json').catch(() => ({ animaux: [] })).then(data => {
     const melanger = liste => { const t = [...liste]; for (let i = t.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [t[i], t[j]] = [t[j], t[i]]; } return t; };
-    const choix = melanger((data.animaux || []).filter(a => a.photo)).slice(0, 3);
+    const avecPhoto = melanger((data.animaux || []).filter(a => a.photo));
+    const choix = avecPhoto.slice(0, 3);
     const secours = ['🐴', '🐑', '🐔'];
     document.getElementById('heroBulles').innerHTML = [0, 1, 2].map(i => {
       const a = choix[i];
@@ -109,6 +113,22 @@
           <span class="hb-nom">${a.nom}</span>
         </a>`;
     }).join('');
+
+    // Carte « Les animaux » : un autre habitant que ceux du collage (le même s'il n'y en a pas assez).
+    const pourCarte = avecPhoto[3] || avecPhoto[0];
+    if (pourCarte) {
+      document.getElementById('bulleAnimaux').innerHTML = `<img ${attrsImage(pourCarte.photo)} alt=""${styleCadrage(pourCarte.photo_position)}>`;
+    }
+  });
+
+  // Cartes « L'association » et « Nous soutenir » : images choisies dans content/accueil.json (sinon emoji).
+  fetchJSON('content/accueil.json').catch(() => ({})).then(cfg => {
+    [['association', 'bulleAsso'], ['soutenir', 'bulleSoutenir']].forEach(([cle, id]) => {
+      const c = cfg[cle];
+      if (c && c.image) {
+        document.getElementById(id).innerHTML = `<img ${attrsImage(c.image)} alt=""${styleCadrage(c.image_position)}>`;
+      }
+    });
   });
 
 </script>

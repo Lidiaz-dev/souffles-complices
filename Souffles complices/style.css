@@ -769,3 +769,8 @@ footer .socials a{display:inline-flex; align-items:center; gap:8px; padding:8px 
 .form-note{margin:0; text-align:center; font-size:.88rem; color:#555;}
 @media (max-width:820px){ .formulaire{padding:26px 20px;} }
 @media (prefers-reduced-motion:reduce){ .contact-card .bulle-icone{animation:none; transition:none;} .contact-card:hover .bulle-icone{transform:none;} }
+
+/* ---- Bloc contact (page L'association) ---- */
+#nous-contacter, #message{scroll-margin-top:130px;}
+footer h4 a.titre-contact{color:inherit; text-decoration:none; transition:color .2s ease;}
+footer h4 a.titre-contact:hover, footer h4 a.titre-contact:focus-visible{color:#fff; outline:none;}

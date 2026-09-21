@@ -20,7 +20,6 @@
     <a href="association.html">L'association</a>
     <a href="animaux.html">Les animaux</a>
     <a href="soutenir.html">Nous soutenir</a>
-    <a href="contact.html">Contact</a>
   </nav>
 </header>
 
@@ -40,6 +39,40 @@
         <ul id="assoActions"></ul>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="nous-contacter">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Contact</span>
+      <h2>Une question ? Écrivez-nous.</h2>
+    </div>
+    <div class="contact-grid" id="contactGrid"></div>
+    <div id="adresseBloc"></div>
+  </div>
+</section>
+
+<section id="message" style="background:var(--teal-wash);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Message</span>
+      <h2>Envoyez-nous un message.</h2>
+    </div>
+    <form class="formulaire" id="formContact" novalidate>
+      <label>Votre nom
+        <input type="text" id="fNom" autocomplete="name" required>
+      </label>
+      <label>Votre adresse email
+        <input type="email" id="fEmail" autocomplete="email" required>
+      </label>
+      <label>Votre message
+        <textarea id="fMessage" rows="6" required></textarea>
+      </label>
+      <p class="form-erreur" id="formErreur" hidden></p>
+      <button class="btn btn-primary" type="submit">Envoyer le message</button>
+      <p class="form-note" id="formNote">Le message s'ouvre dans votre messagerie, prêt à être envoyé.</p>
+    </form>
   </div>
 </section>
 
@@ -64,6 +97,63 @@
     document.getElementById('assoActions').innerHTML = (data.actions || []).map(a => `<li>${a}</li>`).join('');
   }).catch(() => {
     document.getElementById('assoIntro').innerHTML = "<p>Impossible de charger la présentation pour le moment.</p>";
+  });
+
+  let CONTACT = {};
+
+  contactPromise.then(data => {
+    CONTACT = data || {};
+    const tel = versTel(CONTACT.telephone);
+    const cartes = [
+      CONTACT.telephone && { icone: 'tel', titre: 'Appeler', texte: 'Une question, une visite, un renseignement ? Appelez-nous.', valeur: CONTACT.telephone, bouton: 'Appeler', lien: `tel:${tel}` },
+      CONTACT.telephone && { icone: 'sms', titre: 'Envoyer un SMS', texte: 'Vous préférez écrire ? Envoyez-nous un SMS.', valeur: CONTACT.telephone, bouton: 'Envoyer un SMS', lien: `sms:${tel}` },
+      CONTACT.email && { icone: 'mail', titre: 'Écrire un email', texte: 'Écrivez-nous depuis votre messagerie.', valeur: CONTACT.email, bouton: 'Écrire', lien: `mailto:${CONTACT.email}` },
+      CONTACT.facebook && { icone: 'fb', titre: 'Facebook', texte: 'Suivez la vie du refuge sur notre page.', valeur: 'Souffles Complices', bouton: 'Voir la page', lien: CONTACT.facebook }
+    ].filter(Boolean);
+
+    document.getElementById('contactGrid').innerHTML = cartes.map(c => `
+      <div class="support-card contact-card">
+        <div class="bulle-icone">${icone(c.icone, 40)}</div>
+        <h3>${c.titre}</h3>
+        <p>${c.texte}</p>
+        <div class="contact-valeur">${c.valeur}</div>
+        <a class="btn btn-primary" href="${c.lien}">${c.bouton}</a>
+      </div>`).join('');
+
+    if (CONTACT.adresse) {
+      const carte = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CONTACT.adresse);
+      document.getElementById('adresseBloc').innerHTML = `
+        <div class="adresse-bloc">
+          <h3>Où nous trouver</h3>
+          <p>${String(CONTACT.adresse).replace(/\n/g, '<br>')}</p>
+          <a class="btn btn-outline" href="${carte}">Voir sur la carte</a>
+        </div>`;
+    }
+  });
+
+  function lienMailto(destinataire, nom, email, message) {
+    const sujet = `Message depuis le site — ${nom}`;
+    const corps = `${message}\n\n—\n${nom}\n${email}`;
+    return `mailto:${destinataire}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+  }
+
+  // Formulaire : prépare un email dans la messagerie du visiteur (aucun serveur nécessaire).
+  document.getElementById('formContact').addEventListener('submit', e => {
+    e.preventDefault();
+    const nom = document.getElementById('fNom').value.trim();
+    const email = document.getElementById('fEmail').value.trim();
+    const message = document.getElementById('fMessage').value.trim();
+    const erreur = document.getElementById('formErreur');
+    const manque = !nom ? 'votre nom' : !/^\S+@\S+\.\S+$/.test(email) ? 'une adresse email valide' : !message ? 'votre message' : '';
+    if (manque) {
+      erreur.textContent = `Merci d'indiquer ${manque}.`;
+      erreur.hidden = false;
+      return;
+    }
+    erreur.hidden = true;
+    if (!CONTACT.email) { erreur.textContent = "L'adresse de contact n'est pas disponible pour le moment."; erreur.hidden = false; return; }
+    location.href = lienMailto(CONTACT.email, nom, email, message);
+    document.getElementById('formNote').textContent = "Votre messagerie s'ouvre avec le message. Il ne reste qu'à l'envoyer.";
   });
 </script>
 

@@ -75,7 +75,7 @@ function renderContact(data) {
   if (!el) return;
   const tel = versTel(data.telephone);
   el.innerHTML = `
-    <h4>Nous contacter</h4>
+    <h4><a class="titre-contact" href="association.html#nous-contacter">Nous contacter</a></h4>
     ${data.telephone ? `
     <div class="contact-ligne">
       <span class="pastille-icone">${icone('tel')}</span>

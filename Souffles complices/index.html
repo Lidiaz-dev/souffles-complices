@@ -101,19 +101,9 @@
 
   // Collage de trois bulles : trois habitants du refuge tirés au hasard (parmi ceux qui ont une photo).
   fetchJSON('content/animaux.json').catch(() => ({ animaux: [] })).then(data => {
-    const melanger = liste => { const t = [...liste]; for (let i = t.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [t[i], t[j]] = [t[j], t[i]]; } return t; };
     const avecPhoto = melanger((data.animaux || []).filter(a => a.photo));
     const choix = avecPhoto.slice(0, 3);
-    const secours = ['🐴', '🐑', '🐔'];
-    document.getElementById('heroBulles').innerHTML = [0, 1, 2].map(i => {
-      const a = choix[i];
-      if (!a) return `<div class="hb hb${i + 1}"><span class="hb-photo"><span class="emoji-bulle" aria-hidden="true">${secours[i]}</span></span></div>`;
-      return `
-        <a class="hb hb${i + 1}" href="animal.html?id=${encodeURIComponent(a.numero)}" aria-label="Voir la fiche de ${a.nom}">
-          <span class="hb-photo"><img ${attrsImage(a.photo)} alt=""${styleCadrage(a.photo_position)}></span>
-          <span class="hb-nom">${a.nom}</span>
-        </a>`;
-    }).join('');
+    remplirCollageBulles('heroBulles', choix, ['🐴', '🐑', '🐔']);
 
     // Carte « Les animaux » : un autre habitant que ceux du collage (le même s'il n'y en a pas assez).
     const pourCarte = avecPhoto[3] || avecPhoto[0];

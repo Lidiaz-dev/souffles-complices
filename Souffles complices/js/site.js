@@ -94,6 +94,32 @@ function renderContact(data) {
   `;
 }
 
+// Mélange une liste au hasard (Fisher-Yates), sans modifier l'originale.
+function melanger(liste) {
+  const t = [...liste];
+  for (let i = t.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [t[i], t[j]] = [t[j], t[i]];
+  }
+  return t;
+}
+
+// Affiche jusqu'à 3 bulles photo (collage) dans l'élément ciblé, à partir d'une liste d'animaux
+// déjà filtrée et mélangée. secours = emoji affichés quand il manque des photos.
+function remplirCollageBulles(idElement, animaux, secours) {
+  const cible = document.getElementById(idElement);
+  if (!cible) return;
+  cible.innerHTML = [0, 1, 2].map(i => {
+    const a = animaux[i];
+    if (!a) return `<div class="hb hb${i + 1}"><span class="hb-photo"><span class="emoji-bulle" aria-hidden="true">${secours[i % secours.length]}</span></span></div>`;
+    return `
+      <a class="hb hb${i + 1}" href="animal.html?id=${encodeURIComponent(a.numero)}" aria-label="Voir la fiche de ${a.nom}">
+        <span class="hb-photo"><img ${attrsImage(a.photo)} alt=""${styleCadrage(a.photo_position)}></span>
+        <span class="hb-nom">${a.nom}</span>
+      </a>`;
+  }).join('');
+}
+
 // Emoji de chaque type d'animal (badges des bulles, filtres).
 const EMOJI_TYPE = { cheval: '🐎', poney: '🐴', ane: '🫏', mouton: '🐑', poule: '🐔', canard: '🦆', chien: '🐕' };
 function emojiPourType(type) { return EMOJI_TYPE[type] || '🐾'; }

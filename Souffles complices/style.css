@@ -607,6 +607,15 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
 .support-card.carte-info{cursor:default;}
 .tarif-suffixe{margin:0; font-size:.85rem; color:#666;}
 
+/* ---- Page Équicie : texte + collage de bulles ---- */
+.equicie-intro-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:50px; align-items:center;}
+.equicie-intro-grid .hero-visuel{max-width:380px;}
+@media (max-width:900px){
+  .equicie-intro-grid{grid-template-columns:1fr;}
+  .equicie-intro-grid .hero-visuel{max-width:320px; margin:0 auto;}
+}
+
+
 /* ---- Filtre des animaux : une seule rangée, compacte ---- */
 #typeFilters{gap:6px; margin-bottom:32px;}
 #typeFilters .filter-btn{padding:7px 12px; font-size:.82rem; gap:.35em;}

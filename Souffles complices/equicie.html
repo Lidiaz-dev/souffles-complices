@@ -34,12 +34,15 @@
 
 <section>
   <div class="section-inner">
-    <div class="about-grid">
-      <div id="equicieIntro"></div>
-      <div class="about-card">
-        <h3>Ce que permet l'équicie</h3>
-        <ul id="equicieBienfaits"></ul>
+    <div class="equicie-intro-grid">
+      <div>
+        <div id="equicieIntro"></div>
+        <div class="about-card">
+          <h3>Ce que permet l'équicie</h3>
+          <ul id="equicieBienfaits"></ul>
+        </div>
       </div>
+      <div class="hero-visuel" id="equicieBulles" aria-label="Quelques chevaux du refuge"></div>
     </div>
   </div>
 </section>
@@ -95,6 +98,12 @@
 
 <script src="js/site.js"></script>
 <script>
+  // Collage de bulles : des chevaux du refuge tirés au hasard (parmi ceux qui ont une photo).
+  fetchJSON('content/animaux.json').catch(() => ({ animaux: [] })).then(data => {
+    const chevaux = melanger((data.animaux || []).filter(a => a.photo && (a.type === 'cheval' || a.type === 'poney')));
+    remplirCollageBulles('equicieBulles', chevaux.slice(0, 3), ['🐴', '🐎']);
+  });
+
   fetchJSON('content/equicie.json').then(data => {
     if (data.soustitre) document.getElementById('equicieSoustitre').textContent = data.soustitre;
     document.getElementById('equicieIntro').innerHTML = (data.intro || []).map(p => `<p>${p}</p>`).join('');

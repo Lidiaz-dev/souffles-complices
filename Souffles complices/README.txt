@@ -4,6 +4,7 @@ SOUFFLES COMPLICES - site vitrine (HTML / CSS / JavaScript, sans outil de compil
 
 index.html          Accueil
 association.html    L'association (présentation + bloc Contact en bas de page)
+equicie.html        Équicie (principe de la médiation par le cheval, renvoie vers le contact)
 animaux.html        Liste des animaux (filtre par espèce, encart "Les gardiennes")
 animal.html         Fiche d'un animal (animal.html?id=0001)
 soutenir.html       Nous soutenir (don, parrainage, adhésion)
@@ -28,6 +29,8 @@ content/contact.json   -> téléphone, email, facebook, adresse (facultatif), li
 content/accueil.json   -> images des cartes « L'association » et « Nous soutenir » de l'accueil
                           ("image": "/photos/x.jpg", "image_position": "50% 50%") ; la carte « Les animaux »
                           affiche au hasard la photo d'un animal
+content/equicie.json   -> page Équicie : soustitre, intro, bienfaits, public, tarifs (liste de
+                          { libelle, prix }), tarifs_note, cta_intro, cta_bouton
 
 Lien HelloAsso par défaut : champ "helloasso" de content/contact.json. Il est utilisé partout
 (don, adhésion, parrainage, bouton fixe) dès qu'un lien précis est vide ou invalide.

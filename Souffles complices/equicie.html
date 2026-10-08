@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Équicie — Souffles Complices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <a class="logo-wrap" href="index.html" aria-label="Souffles Complices, retour à l'accueil">
+    <img src="assets/logo.jpg" alt="Logo Souffles Complices">
+    <div class="logo-word">Souffles <span>Complices</span></div>
+  </a>
+  <nav class="site-nav">
+    <a href="index.html">Accueil</a>
+    <a href="association.html">L'association</a>
+    <a href="equicie.html">Équicie</a>
+    <a href="animaux.html">Les animaux</a>
+    <a href="soutenir.html">Nous soutenir</a>
+  </nav>
+</header>
+
+<section class="page-hero" data-emojis="🐴 🐑 🐔 🦆">
+  <div class="section-inner">
+    <span class="pill">Équicie</span>
+    <h1>L'équicie</h1>
+    <p class="hero-sous-titre hand" id="equicieSoustitre"></p>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="about-grid">
+      <div id="equicieIntro"></div>
+      <div class="about-card">
+        <h3>Ce que permet l'équicie</h3>
+        <ul id="equicieBienfaits"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--teal-wash);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Public</span>
+      <h2>Qui peut en bénéficier ?</h2>
+    </div>
+    <div class="about-card" style="max-width:640px; margin:0 auto;">
+      <ul id="equiciePublic"></ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Tarifs</span>
+      <h2>Les séances d'équicie.</h2>
+    </div>
+    <div class="support-grid" id="equicieTarifs"></div>
+    <div class="helloasso-note hand" id="equicieTarifsNote" style="font-size:1.1rem;"></div>
+  </div>
+</section>
+
+<section style="background:var(--teal-wash);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="pill">Nous contacter</span>
+      <h2 id="equicieCta">Envie d'en savoir plus ou de réserver une séance ?</h2>
+    </div>
+    <div style="text-align:center;">
+      <a class="btn btn-primary" id="equicieBtn" href="association.html#nous-contacter">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="col col-marque">
+      <a class="footer-logo" href="index.html" aria-label="Souffles Complices, retour à l'accueil"><img src="assets/logo.jpg" alt="Logo Souffles Complices"></a>
+      <div class="marque-texte">
+        <div class="logo-word">Souffles <span>Complices</span></div>
+        <p>Association loi 1901</p>
+        <p>Refuge équicie &amp; ferme pédagogique</p>
+      </div>
+    </div>
+    <div class="col col-contact" id="footerContact"></div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+  fetchJSON('content/equicie.json').then(data => {
+    if (data.soustitre) document.getElementById('equicieSoustitre').textContent = data.soustitre;
+    document.getElementById('equicieIntro').innerHTML = (data.intro || []).map(p => `<p>${p}</p>`).join('');
+    document.getElementById('equicieBienfaits').innerHTML = (data.bienfaits || []).map(b => `<li>${b}</li>`).join('');
+    document.getElementById('equiciePublic').innerHTML = (data.public || []).map(p => `<li>${p}</li>`).join('');
+    document.getElementById('equicieTarifs').innerHTML = (data.tarifs || []).map(t => `
+      <div class="support-card">
+        <h3>${t.libelle}</h3>
+        <div class="tarif-badge">${t.prix}</div>
+      </div>`).join('');
+    document.getElementById('equicieTarifsNote').textContent = data.tarifs_note || '';
+    if (data.cta_intro) document.getElementById('equicieCta').textContent = data.cta_intro;
+    if (data.cta_bouton) document.getElementById('equicieBtn').textContent = data.cta_bouton;
+  }).catch(() => {
+    document.getElementById('equicieIntro').innerHTML = "<p>Impossible de charger cette page pour le moment.</p>";
+  });
+</script>
+
+</body>
+</html>

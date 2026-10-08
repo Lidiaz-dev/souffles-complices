@@ -58,6 +58,7 @@ nav.site-nav a:hover, nav.site-nav a:focus-visible{transform:translateY(-2px);}
 .page-hero{background:var(--teal-wash); padding:56px 28px 46px; text-align:center;}
 .page-hero .pill{background:transparent; color:var(--teal-deep); border:2px solid var(--teal);}
 .page-hero h1{font-size:clamp(1.8rem,3.6vw,2.5rem); margin:0;}
+.hero-sous-titre{font-size:1.5rem; color:var(--teal-deep); margin:6px 0 0;}
 
 /* ---- Hero ---- */
 .hero{

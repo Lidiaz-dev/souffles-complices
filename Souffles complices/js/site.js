@@ -155,6 +155,23 @@ function ouvrirExternesAilleurs(racine) {
     a.rel = 'noopener noreferrer';
   });
 }
+// Si l'adresse contient une ancre (#xxx), on la rejoint une fois le contenu
+// injecté par les fetch JSON : le saut natif du navigateur a souvent lieu avant
+// que la page ait atteint sa hauteur finale, et rate alors sa cible.
+if (location.hash) {
+  window.addEventListener('load', () => {
+    const corrigerAncre = () => {
+      let cible;
+      try { cible = document.querySelector(location.hash); } catch (e) { return; }
+      if (cible) cible.scrollIntoView({ behavior: 'auto', block: 'start' });
+    };
+    corrigerAncre();
+    const observateur = new MutationObserver(corrigerAncre);
+    observateur.observe(document.body, { childList: true, subtree: true });
+    setTimeout(() => observateur.disconnect(), 2000);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   ouvrirExternesAilleurs();
   new MutationObserver(() => ouvrirExternesAilleurs()).observe(document.body, { childList: true, subtree: true });

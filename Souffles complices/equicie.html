@@ -101,9 +101,10 @@
     document.getElementById('equicieBienfaits').innerHTML = (data.bienfaits || []).map(b => `<li>${b}</li>`).join('');
     document.getElementById('equiciePublic').innerHTML = (data.public || []).map(p => `<li>${p}</li>`).join('');
     document.getElementById('equicieTarifs').innerHTML = (data.tarifs || []).map(t => `
-      <div class="support-card">
+      <div class="support-card carte-info">
         <h3>${t.libelle}</h3>
         <div class="tarif-badge">${t.prix}</div>
+        ${t.suffixe ? `<p class="tarif-suffixe">${t.suffixe}</p>` : ''}
       </div>`).join('');
     document.getElementById('equicieTarifsNote').textContent = data.tarifs_note || '';
     if (data.cta_intro) document.getElementById('equicieCta').textContent = data.cta_intro;

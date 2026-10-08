@@ -16,7 +16,7 @@
   "tarifs": [
     { "libelle": "Séance individuelle", "prix": "55 €" },
     { "libelle": "Séance, forfait 5 séances", "prix": "45 €" },
-    { "libelle": "Séance en groupe (jusqu'à 4 personnes)", "prix": "35 €" }
+    { "libelle": "Séance en groupe (jusqu'à 4 personnes)", "prix": "35 €", "suffixe": "par personne" }
   ],
   "tarifs_note": "Sur rendez-vous uniquement.",
   "cta_intro": "Envie d'en savoir plus ou de réserver une séance ?",

@@ -604,6 +604,8 @@ header.site nav.site-nav a.active, .btn-adherer, .btn-adherer:hover, .btn-adhere
   .support-card:hover, .support-card:hover .bulle-tuile, .support-card:hover .bulle-tuile img{transform:none;}
 }
 .support-card{cursor:pointer;}
+.support-card.carte-info{cursor:default;}
+.tarif-suffixe{margin:0; font-size:.85rem; color:#666;}
 
 /* ---- Filtre des animaux : une seule rangée, compacte ---- */
 #typeFilters{gap:6px; margin-bottom:32px;}

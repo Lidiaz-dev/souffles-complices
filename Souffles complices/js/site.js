@@ -150,10 +150,11 @@ function identifiantDepuisTexte(texte) {
 }
 
 // Sommaire cliquable en haut de page : transforme les pastilles ("pill") du titre et de chaque
-// section en liens d'ancrage, affichés sous le titre de la page. Les sections déjà pourvues d'un
-// id gardent le leur (utilisé ailleurs, ex. "#nous-contacter") ; les autres en reçoivent un
-// dérivé de leur texte. Un lien se masque tout seul si sa section est cachée (ex. "Nos
-// gardiennes" tant qu'aucune chienne n'est enregistrée).
+// section en liens d'ancrage, affichés au-dessus du titre de la page (premier élément du bloc
+// d'en-tête). Les sections déjà pourvues d'un id gardent le leur (utilisé ailleurs, ex.
+// "#nous-contacter") ; les autres en reçoivent un dérivé de leur texte. Un lien se masque tout
+// seul si sa section est cachée (ex. "Nos gardiennes" tant qu'aucune chienne n'est enregistrée).
+// N'apparaît que s'il y a au moins 3 sections à lister : sous ce seuil, un sommaire n'apporte rien.
 function construireSommaire() {
   const hero = document.querySelector('.page-hero');
   const heroPill = hero && hero.querySelector('.pill');
@@ -167,13 +168,13 @@ function construireSommaire() {
     if (!section.id) section.id = identifiantDepuisTexte(pill.textContent);
     items.push({ id: section.id, texte: pill.textContent });
   });
-  if (items.length < 2) return;
+  if (items.length < 3) return;
 
   const nav = document.createElement('nav');
   nav.className = 'page-toc';
   nav.setAttribute('aria-label', 'Sommaire de la page');
   nav.innerHTML = items.map(it => `<a href="#${it.id}">${it.texte}</a>`).join('');
-  hero.querySelector('.section-inner').appendChild(nav);
+  hero.querySelector('.section-inner').prepend(nav);
 
   const majVisibilite = () => {
     nav.querySelectorAll('a').forEach(a => {
@@ -229,6 +230,27 @@ function ouvrirExternesAilleurs(racine) {
     a.rel = 'noopener noreferrer';
   });
 }
+// Défilement doux fait "à la main" (et non via le scroll-behavior CSS, qui se fait court-circuiter
+// par nos propres tentatives répétées ci-dessous). window.scrollTo(x, y) ignore toujours le
+// scroll-behavior CSS, ce qui le rend fiable même en pleine correction d'ancre.
+let defilementAnimId = null;
+function defilerVersDouceur(cible, duree = 500) {
+  if (defilementAnimId) cancelAnimationFrame(defilementAnimId);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    cible.scrollIntoView({ behavior: 'auto', block: 'start' });
+    return;
+  }
+  const depart = window.scrollY;
+  const distance = cible.getBoundingClientRect().top;
+  const t0 = performance.now();
+  (function etape(t) {
+    const p = Math.min((t - t0) / duree, 1);
+    const adouci = 1 - Math.pow(1 - p, 3); // easeOutCubic
+    window.scrollTo(0, depart + distance * adouci);
+    defilementAnimId = p < 1 ? requestAnimationFrame(etape) : null;
+  })(t0);
+}
+
 // Rejoint l'ancre de l'adresse (#xxx) et la maintient en vue un court instant : le contenu
 // de la page est injecté par des fetch JSON, et le saut natif du navigateur (ou un clic sur un
 // lien d'ancrage de la page) a souvent lieu avant que la page ait atteint sa hauteur finale,
@@ -238,15 +260,15 @@ function allerVersAncre() {
   let cible;
   try { cible = document.querySelector(location.hash); } catch (e) { return; }
   if (!cible) return;
-  // Sur une page déjà chargée, ce saut passe par le défilement doux global (html{scroll-behavior:smooth}),
-  // qui peut entrer en conflit avec nos tentatives répétées ci-dessous et laisser le défilement bloqué
-  // à mi-chemin. On le désactive le temps de la correction, puis on remet la valeur d'origine.
+  // Sur une page déjà chargée, le saut natif du navigateur passe par le défilement doux global
+  // (html{scroll-behavior:smooth}), qui peut entrer en conflit avec notre propre correction ci-dessous
+  // et laisser le défilement bloqué à mi-chemin. On le désactive le temps de la correction.
   const defilementInitial = document.documentElement.style.scrollBehavior;
   document.documentElement.style.scrollBehavior = 'auto';
-  cible.scrollIntoView({ behavior: 'auto', block: 'start' });
+  defilerVersDouceur(cible);
   // On réessaie tant que le contenu s'injecte (childList) ou qu'une section cachée apparaît
   // (ex. "Nos gardiennes", masquée tant qu'aucune chienne n'est enregistrée).
-  const observateur = new MutationObserver(() => cible.scrollIntoView({ behavior: 'auto', block: 'start' }));
+  const observateur = new MutationObserver(() => defilerVersDouceur(cible));
   observateur.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
   setTimeout(() => {
     observateur.disconnect();

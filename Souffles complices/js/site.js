@@ -143,6 +143,48 @@ function decorerPageHero() {
   });
 }
 
+// "mon-titre" à partir de "Mon Titre" : identifiant d'ancre lisible, sans accents ni espaces.
+function identifiantDepuisTexte(texte) {
+  return String(texte).normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Sommaire cliquable en haut de page : transforme les pastilles ("pill") du titre et de chaque
+// section en liens d'ancrage, affichés sous le titre de la page. Les sections déjà pourvues d'un
+// id gardent le leur (utilisé ailleurs, ex. "#nous-contacter") ; les autres en reçoivent un
+// dérivé de leur texte. Un lien se masque tout seul si sa section est cachée (ex. "Nos
+// gardiennes" tant qu'aucune chienne n'est enregistrée).
+function construireSommaire() {
+  const hero = document.querySelector('.page-hero');
+  const heroPill = hero && hero.querySelector('.pill');
+  if (!hero || !heroPill) return;
+  if (!hero.id) hero.id = identifiantDepuisTexte(heroPill.textContent);
+
+  const items = [{ id: hero.id, texte: heroPill.textContent }];
+  document.querySelectorAll('section .section-head .pill').forEach(pill => {
+    const section = pill.closest('section');
+    if (!section || section === hero) return;
+    if (!section.id) section.id = identifiantDepuisTexte(pill.textContent);
+    items.push({ id: section.id, texte: pill.textContent });
+  });
+  if (items.length < 2) return;
+
+  const nav = document.createElement('nav');
+  nav.className = 'page-toc';
+  nav.setAttribute('aria-label', 'Sommaire de la page');
+  nav.innerHTML = items.map(it => `<a href="#${it.id}">${it.texte}</a>`).join('');
+  hero.querySelector('.section-inner').appendChild(nav);
+
+  const majVisibilite = () => {
+    nav.querySelectorAll('a').forEach(a => {
+      const section = document.getElementById(a.getAttribute('href').slice(1));
+      a.hidden = !!(section && section.hidden);
+    });
+  };
+  majVisibilite();
+  new MutationObserver(majVisibilite).observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
+}
+
 // Défilé d'animaux : on duplique la piste pour une boucle sans coupure.
 function initParade() {
   document.querySelectorAll('.parade-piste').forEach(piste => {
@@ -187,22 +229,32 @@ function ouvrirExternesAilleurs(racine) {
     a.rel = 'noopener noreferrer';
   });
 }
-// Si l'adresse contient une ancre (#xxx), on la rejoint une fois le contenu
-// injecté par les fetch JSON : le saut natif du navigateur a souvent lieu avant
-// que la page ait atteint sa hauteur finale, et rate alors sa cible.
-if (location.hash) {
-  window.addEventListener('load', () => {
-    const corrigerAncre = () => {
-      let cible;
-      try { cible = document.querySelector(location.hash); } catch (e) { return; }
-      if (cible) cible.scrollIntoView({ behavior: 'auto', block: 'start' });
-    };
-    corrigerAncre();
-    const observateur = new MutationObserver(corrigerAncre);
-    observateur.observe(document.body, { childList: true, subtree: true });
-    setTimeout(() => observateur.disconnect(), 2000);
-  });
+// Rejoint l'ancre de l'adresse (#xxx) et la maintient en vue un court instant : le contenu
+// de la page est injecté par des fetch JSON, et le saut natif du navigateur (ou un clic sur un
+// lien d'ancrage de la page) a souvent lieu avant que la page ait atteint sa hauteur finale,
+// ratant alors sa cible pendant que d'autres sections finissent de se remplir au-dessus.
+function allerVersAncre() {
+  if (!location.hash) return;
+  let cible;
+  try { cible = document.querySelector(location.hash); } catch (e) { return; }
+  if (!cible) return;
+  // Sur une page déjà chargée, ce saut passe par le défilement doux global (html{scroll-behavior:smooth}),
+  // qui peut entrer en conflit avec nos tentatives répétées ci-dessous et laisser le défilement bloqué
+  // à mi-chemin. On le désactive le temps de la correction, puis on remet la valeur d'origine.
+  const defilementInitial = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = 'auto';
+  cible.scrollIntoView({ behavior: 'auto', block: 'start' });
+  // On réessaie tant que le contenu s'injecte (childList) ou qu'une section cachée apparaît
+  // (ex. "Nos gardiennes", masquée tant qu'aucune chienne n'est enregistrée).
+  const observateur = new MutationObserver(() => cible.scrollIntoView({ behavior: 'auto', block: 'start' }));
+  observateur.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  setTimeout(() => {
+    observateur.disconnect();
+    document.documentElement.style.scrollBehavior = defilementInitial;
+  }, 1500);
 }
+if (location.hash) window.addEventListener('load', allerVersAncre);
+window.addEventListener('hashchange', allerVersAncre);
 
 document.addEventListener('DOMContentLoaded', () => {
   ouvrirExternesAilleurs();
@@ -292,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   markActiveNav();
   decorerPageHero();
+  construireSommaire();
   initParade();
   helloassoPromise.then(lien => {
     const cta = document.createElement('a');

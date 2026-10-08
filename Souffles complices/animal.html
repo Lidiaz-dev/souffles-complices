@@ -179,13 +179,13 @@
   }
 
   const id = new URLSearchParams(location.search).get('id');
-  Promise.all([fetchJSON('content/animaux.json'), helloassoPromise]).then(([data, helloasso]) => {
+  Promise.all([fetchJSON('content/animaux.json'), helloassoParrainagePromise]).then(([data, parrainageDefaut]) => {
     const a = (data.animaux || []).find(x => String(x.numero) === id);
     if (!a) {
       document.getElementById('fiche').innerHTML = "<p>Cet animal est introuvable. <a href='animaux.html'>Voir tous les animaux</a></p>";
       return;
     }
-    renderFiche(a, helloasso);
+    renderFiche(a, parrainageDefaut);
   }).catch(() => {
     document.getElementById('fiche').innerHTML = "<p>Impossible de charger la fiche pour le moment.</p>";
   });

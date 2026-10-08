@@ -26,6 +26,8 @@ content/asso.json      -> "intro" (liste de paragraphes) et "actions" (liste)
 content/adhesion.json  -> cotisation, période, étapes, avantages, précisions (facultatif), bouton, lien
 content/soutien.json   -> tuiles don / parrainage / adhésion (titre, texte, bouton, lien, photo)
 content/contact.json   -> téléphone, email, facebook, adresse (facultatif), lien HelloAsso par défaut
+                          ("helloasso") et lien HelloAsso dédié au parrainage ("helloasso_parrainage",
+                          utilisé par défaut sur les boutons « Parrainer » des animaux sans lien propre)
 content/accueil.json   -> images des cartes « L'association » et « Nous soutenir » de l'accueil
                           ("image": "/photos/x.jpg", "image_position": "50% 50%") ; la carte « Les animaux »
                           affiche au hasard la photo d'un animal

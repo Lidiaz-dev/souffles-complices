@@ -15,6 +15,12 @@ function estLienExterne(lien) {
 const contactPromise = fetchJSON('content/contact.json').catch(() => ({}));
 const helloassoPromise = contactPromise.then(d => estLienExterne(d.helloasso) ? d.helloasso.trim() : HELLOASSO_FALLBACK);
 
+// Lien HelloAsso dedie au parrainage (formulaire specifique) ; repli sur le lien general si absent.
+// Modifiable dans content/contact.json (champ "helloasso_parrainage").
+const helloassoParrainagePromise = Promise.all([contactPromise, helloassoPromise]).then(([d, general]) =>
+  estLienExterne(d.helloasso_parrainage) ? d.helloasso_parrainage.trim() : general
+);
+
 function lienOuDefaut(lien, defaut) {
   return estLienExterne(lien) ? String(lien).trim() : defaut;
 }

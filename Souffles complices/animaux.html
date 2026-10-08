@@ -100,7 +100,7 @@
     }).join('');
   }
 
-  helloassoPromise
+  helloassoParrainagePromise
     .then(lien => { PARRAINAGE_LIEN_DEFAUT = lien; })
     .then(() => fetchJSON('content/animaux.json'))
     .then(data => {

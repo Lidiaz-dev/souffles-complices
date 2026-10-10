@@ -94,8 +94,9 @@ function renderContact(data) {
         <a class="contact-lien" href="mailto:${data.email}" aria-label="Envoyer un email à ${data.email}">${data.email}</a>
       </div>` : ''}
       ${data.facebook ? `
-      <div class="socials">
-        <a href="${data.facebook}" target="_blank" rel="noopener">${icone('fb', 16)}<span>Facebook</span></a>
+      <div class="contact-ligne">
+        <span class="pastille-icone">${icone('fb')}</span>
+        <a class="contact-lien" href="${data.facebook}" target="_blank" rel="noopener">Facebook</a>
       </div>` : ''}
     `;
   }

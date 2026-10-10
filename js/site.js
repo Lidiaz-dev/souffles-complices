@@ -78,26 +78,38 @@ function icone(nom, taille) {
 
 function renderContact(data) {
   const el = document.getElementById('footerContact');
-  if (!el) return;
-  const tel = versTel(data.telephone);
-  el.innerHTML = `
-    <h4><a class="titre-contact" href="association.html#nous-contacter">Nous contacter</a></h4>
-    ${data.telephone ? `
-    <div class="contact-ligne">
-      <span class="pastille-icone">${icone('tel')}</span>
-      <a class="contact-lien" href="tel:${tel}" aria-label="Appeler le ${data.telephone}">${data.telephone}</a>
-      <a class="mini-action" href="sms:${tel}" aria-label="Envoyer un SMS au ${data.telephone}">${icone('sms', 14)}<span>SMS</span></a>
-    </div>` : ''}
-    ${data.email ? `
-    <div class="contact-ligne">
-      <span class="pastille-icone">${icone('mail')}</span>
-      <a class="contact-lien" href="mailto:${data.email}" aria-label="Envoyer un email à ${data.email}">${data.email}</a>
-    </div>` : ''}
-    ${data.facebook ? `
-    <div class="socials">
-      <a href="${data.facebook}" target="_blank" rel="noopener">${icone('fb', 16)}<span>Facebook</span></a>
-    </div>` : ''}
-  `;
+  if (el) {
+    const tel = versTel(data.telephone);
+    el.innerHTML = `
+      <h4><a class="titre-contact" href="association.html#nous-contacter">Nous contacter</a></h4>
+      ${data.telephone ? `
+      <div class="contact-ligne">
+        <span class="pastille-icone">${icone('tel')}</span>
+        <a class="contact-lien" href="tel:${tel}" aria-label="Appeler le ${data.telephone}">${data.telephone}</a>
+        <a class="mini-action" href="sms:${tel}" aria-label="Envoyer un SMS au ${data.telephone}">${icone('sms', 14)}<span>SMS</span></a>
+      </div>` : ''}
+      ${data.email ? `
+      <div class="contact-ligne">
+        <span class="pastille-icone">${icone('mail')}</span>
+        <a class="contact-lien" href="mailto:${data.email}" aria-label="Envoyer un email à ${data.email}">${data.email}</a>
+      </div>` : ''}
+      ${data.facebook ? `
+      <div class="socials">
+        <a href="${data.facebook}" target="_blank" rel="noopener">${icone('fb', 16)}<span>Facebook</span></a>
+      </div>` : ''}
+    `;
+  }
+
+  const partenaires = document.getElementById('footerPartenaires');
+  if (partenaires && Array.isArray(data.partenaires) && data.partenaires.length) {
+    partenaires.innerHTML = `
+      <h4>Partenaires</h4>
+      ${data.partenaires.map(p => `
+      <div class="contact-ligne">
+        <a class="contact-lien" href="${p.lien}" target="_blank" rel="noopener">${p.nom}</a>
+      </div>`).join('')}
+    `;
+  }
 }
 
 // Mélange une liste au hasard (Fisher-Yates), sans modifier l'originale.
@@ -379,6 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initStickyCta(cta);
   });
   contactPromise.then(d => {
-    if (d.telephone || d.email) renderContact(d);
+    if (d.telephone || d.email || (d.partenaires && d.partenaires.length)) renderContact(d);
   });
 });

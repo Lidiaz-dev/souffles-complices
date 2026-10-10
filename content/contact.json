@@ -4,5 +4,10 @@
   "facebook": "https://www.facebook.com/people/Souffles-Complices/61592465876250/",
   "helloasso": "https://www.helloasso.com/associations/souffles-complices",
   "adresse": "",
-  "helloasso_parrainage": "https://www.helloasso.com/associations/souffles-complices/formulaires/2"
+  "helloasso_parrainage": "https://www.helloasso.com/associations/souffles-complices/formulaires/2",
+  "partenaires": [
+    { "nom": "Mairie de Cinq-Mars-la-Pile", "lien": "https://cinqmarslapile.fr/" },
+    { "nom": "Agir Sport et Santé", "lien": "https://agirsportsante.fr/" },
+    { "nom": "Agora Langeais", "lien": "https://www.agora-asso.fr/" }
+  ]
 }

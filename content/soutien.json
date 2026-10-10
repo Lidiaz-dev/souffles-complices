@@ -4,7 +4,7 @@
     "texte": "Chaque don finance les soins vétérinaires, l'alimentation et l'entretien du refuge.",
     "bouton": "Faire un don",
     "lien": "https://www.helloasso.com/associations/souffles-complices/formulaires/1",
-    "image": "/photos/killerine-2.jpg",
+    "image": "photos/killerine-2.jpg",
     "image_position": "50% 20%"
   },
   "parrainage": {
@@ -12,7 +12,7 @@
     "texte": "Parrainez un résident du refuge et suivez son quotidien.",
     "bouton": "Voir les animaux",
     "lien": "animaux.html",
-    "image": "/photos/killerine.jpg",
+    "image": "photos/killerine.jpg",
     "image_position": "30% 50%"
   },
   "adhesion": {
@@ -20,7 +20,7 @@
     "texte": "Devenez membre de l'association et participez à sa vie tout au long de l'année.",
     "bouton": "Adhérer",
     "lien": "",
-    "image": "/photos/killerine-1.jpg",
+    "image": "photos/killerine-1.jpg",
     "image_position": "50% 20%"
   },
   "note": ""

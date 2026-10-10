@@ -29,7 +29,7 @@ content/contact.json   -> téléphone, email, facebook, adresse (facultatif), li
                           ("helloasso") et lien HelloAsso dédié au parrainage ("helloasso_parrainage",
                           utilisé par défaut sur les boutons « Parrainer » des animaux sans lien propre)
 content/accueil.json   -> images des cartes « L'association » et « Nous soutenir » de l'accueil
-                          ("image": "/photos/x.jpg", "image_position": "50% 50%") ; la carte « Les animaux »
+                          ("image": "photos/x.jpg", "image_position": "50% 50%") ; la carte « Les animaux »
                           affiche au hasard la photo d'un animal
 content/equicie.json   -> page Équicie : soustitre, intro, bienfaits, public, tarifs (liste de
                           { libelle, prix }), tarifs_note, cta_intro, cta_bouton
@@ -53,9 +53,9 @@ Dans content/animaux.json, copier un bloc existant à la suite des autres et mod
   "statut"           resident, soins, parrainable ou gardienne (étiquette sur la carte)
   "resume"           court texte de la carte
   "histoire"         texte de la fiche (ligne vide = nouveau paragraphe) ; vide = le résumé est repris
-  "photo"            "/photos/nom.jpg" (voir Photos) ; vide = "Photo à venir"
+  "photo"            "photos/nom.jpg" (voir Photos) ; vide = "Photo à venir"
   "photo_position"   cadrage dans la bulle, ex : "30% 50%" (voir outils/cadrage.html) ; vide = centré
-  "galerie"          liste de { "image": "/photos/x.jpg", "legende": "..." } (polaroïds de la fiche)
+  "galerie"          liste de { "image": "photos/x.jpg", "legende": "..." } (polaroïds de la fiche)
   "lien_parrainage"  lien HelloAsso propre à l'animal (vide = lien par défaut)
   "sans_parrainage"  true pour ne pas proposer le parrainage (cas des gardiennes)
   "arrivee", "caractere"  facultatifs, affichés sur la fiche
@@ -69,7 +69,7 @@ en bas de la page animaux et le filtre "Chiens".
        python outils/preparer-photos.py "C:/chemin/photo.jpg" nom-de-la-photo
    (nécessite Pillow : pip install pillow). Crée photos/nom-de-la-photo.jpg et
    photos/vignettes/nom-de-la-photo.jpg.
-2. Dans content/animaux.json : "photo": "/photos/nom-de-la-photo.jpg"
+2. Dans content/animaux.json : "photo": "photos/nom-de-la-photo.jpg"
    (toujours la photo complète : le site prend seul la vignette quand elle existe).
 3. Cadrage dans la bulle : ouvrir outils/cadrage.html (voir plus bas), copier le résultat
    dans "photo_position".
@@ -94,5 +94,5 @@ puis ouvrir http://localhost:8123
 Site statique : aucun outil de compilation. Il suffit de publier le contenu du dossier chez
 n'importe quel hébergeur de sites statiques (Netlify, GitHub Pages, Cloudflare Pages...).
 Avec GitHub :  git add .  ;  git commit -m "..."  ;  git push
-Les chemins des photos commencent par "/" (ex : /photos/x.jpg) : le site doit donc être publié à la
+Les chemins des photos commencent par "/" (ex : photos/x.jpg) : le site doit donc être publié à la
 racine d'un domaine, pas dans un sous-dossier d'adresse.

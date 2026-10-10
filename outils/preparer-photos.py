@@ -8,7 +8,7 @@ Crée deux fichiers dans le dossier du site :
   photos/vignettes/nom-de-la-photo.jpg    version réduite (petit côté 560 px), affichée dans les bulles
 
 Dans content/animaux.json, on référence toujours la photo complète :
-  "photo": "/photos/nom-de-la-photo.jpg"
+  "photo": "photos/nom-de-la-photo.jpg"
 Le site utilise tout seul la vignette quand elle existe.
 
 Nécessite Pillow : pip install pillow
@@ -57,7 +57,7 @@ def main():
 
     print(f"Photo complète : {chemin_complete} ({complete.width}x{complete.height}, {os.path.getsize(chemin_complete) // 1024} Ko)")
     print(f"Vignette       : {chemin_vignette} ({vignette.width}x{vignette.height}, {os.path.getsize(chemin_vignette) // 1024} Ko)")
-    print(f'\nÀ mettre dans content/animaux.json :  "photo": "/photos/{nom}.jpg"')
+    print(f'\nÀ mettre dans content/animaux.json :  "photo": "photos/{nom}.jpg"')
 
 
 if __name__ == "__main__":

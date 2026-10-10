@@ -37,7 +37,7 @@
     <div class="hero-inner">
       <span class="pill">Association loi 1901</span>
       <h1>Un refuge, une ferme,<br><span class="hand-tag hand">des souffles complices.</span></h1>
-      <p class="lead">Refuge équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
+      <p class="lead">Refuge, équicie et ferme pédagogique, nous accueillons des animaux en difficulté et proposons des temps de médiation animale. Rencontrez Killerine, Uddy, Inesso et les autres.</p>
       <div class="hero-actions">
         <a href="animaux.html" class="btn btn-primary">Rencontrer nos animaux</a>
         <a href="soutenir.html" class="btn btn-outline" id="btnDon" data-masque-sticky>Faire un don</a>
@@ -50,7 +50,7 @@
   <div class="section-inner">
     <div class="section-head">
       <span class="pill">Bienvenue</span>
-      <h2>Trois façons de découvrir le refuge.</h2>
+      <h2>Découvrir Souffles Complices.</h2>
     </div>
     <div class="support-grid">
       <div class="support-card">
@@ -66,10 +66,10 @@
         <a class="btn btn-primary" href="animaux.html">Voir les animaux</a>
       </div>
       <div class="support-card">
-        <div class="bulle-tuile" id="bulleSoutenir"><span class="emoji-bulle" aria-hidden="true">🤝</span></div>
-        <h3>Nous soutenir</h3>
-        <p>Don, parrainage ou adhésion : plusieurs façons d'aider le refuge dès aujourd'hui.</p>
-        <a class="btn btn-primary" href="soutenir.html">Nous soutenir</a>
+        <div class="bulle-tuile" id="bulleEquicie"><span class="emoji-bulle" aria-hidden="true">🐴</span></div>
+        <h3>Équicie</h3>
+        <p>La médiation avec le cheval, pour apaiser les émotions et favoriser l'inclusion.</p>
+        <a class="btn btn-primary" href="equicie.html">Découvrir l'équicie</a>
       </div>
     </div>
   </div>
@@ -110,16 +110,20 @@
     if (pourCarte) {
       document.getElementById('bulleAnimaux').innerHTML = `<img ${attrsImage(pourCarte.photo)} alt=""${styleCadrage(pourCarte.photo_position)}>`;
     }
+
+    // Carte « Équicie » : un cheval ou poney du refuge tiré au hasard.
+    const cheval = melanger((data.animaux || []).filter(a => a.photo && (a.type === 'cheval' || a.type === 'poney')))[0];
+    if (cheval) {
+      document.getElementById('bulleEquicie').innerHTML = `<img ${attrsImage(cheval.photo)} alt=""${styleCadrage(cheval.photo_position)}>`;
+    }
   });
 
-  // Cartes « L'association » et « Nous soutenir » : images choisies dans content/accueil.json (sinon emoji).
+  // Carte « L'association » : image choisie dans content/accueil.json (sinon emoji).
   fetchJSON('content/accueil.json').catch(() => ({})).then(cfg => {
-    [['association', 'bulleAsso'], ['soutenir', 'bulleSoutenir']].forEach(([cle, id]) => {
-      const c = cfg[cle];
-      if (c && c.image) {
-        document.getElementById(id).innerHTML = `<img ${attrsImage(c.image)} alt=""${styleCadrage(c.image_position)}>`;
-      }
-    });
+    const c = cfg.association;
+    if (c && c.image) {
+      document.getElementById('bulleAsso').innerHTML = `<img ${attrsImage(c.image)} alt=""${styleCadrage(c.image_position)}>`;
+    }
   });
 
 </script>
